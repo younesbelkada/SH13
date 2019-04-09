@@ -1,0 +1,52 @@
+ fork - create a child process
+ Code dans C :
+ #include <sys/types.h>
+ #include <unistd.h>
+ pid_t fork(void);
+  Under Linux, fork() is implemented using copy-on-write pages, so the
+       only penalty that it incurs is the time and memory required to
+       duplicate the parent's page tables, and to create a unique task
+       structure for the child.
+fork() creates a new process by duplicating the calling process.  The
+       new process is referred to as the child process.  The calling process
+       is referred to as the parent process.
+
+       The child process and the parent process run in separate memory
+       spaces.  At the time of fork() both memory spaces have the same
+       content.  Memory writes, file mappings (mmap(2)), and unmappings
+       (munmap(2)) performed by one of the processes do not affect the
+       other.
+
+       The child process is an exact duplicate of the parent process except
+       for the following points:
+
+       *  The child has its own unique process ID, and this PID does not
+          match the ID of any existing process group (setpgid(2)) or
+          session.
+
+       *  The child's parent process ID is the same as the parent's process
+          ID.
+
+       *  The child does not inherit its parent's memory locks (mlock(2),
+          mlockall(2)).
+
+       *  Process resource utilizations (getrusage(2)) and CPU time counters
+          (times(2)) are reset to zero in the child.
+
+       *  The child's set of pending signals is initially empty
+          (sigpending(2)).
+
+       *  The child does not inherit semaphore adjustments from its parent
+          (semop(2)).
+
+       *  The child does not inherit process-associated record locks from
+          its parent (fcntl(2)).  (On the other hand, it does inherit
+          fcntl(2) open file description locks and flock(2) locks from its
+          parent.)
+
+       *  The child does not inherit timers from its parent (setitimer(2),
+          alarm(2), timer_create(2)).
+
+       *  The child does not inherit outstanding asynchronous I/O operations
+          from its parent (aio_read(3), aio_write(3)), nor does it inherit
+          any asynchronous I/O contexts from its parent (see io_setup(2)).
