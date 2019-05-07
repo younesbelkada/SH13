@@ -35,7 +35,7 @@ char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
   "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
   "Mrs. Hudson", "Mary Morstan", "James Moriarty"};
 
-volatile int synchro;
+volatile int synchro; // Passage par dessus le cache, direction la memoire pour les problemes de plusieurs cache chacun une copie de syncro
 
 void *fn_serveur_tcp(void *arg)
 {
@@ -61,7 +61,6 @@ void *fn_serveur_tcp(void *arg)
                 printf("bind error\n");
                 exit(1);
         }
-
         listen(sockfd,5);
         clilen = sizeof(cli_addr);
         while (1)
@@ -157,31 +156,31 @@ int main(int argc, char ** argv)
 
     SDL_Surface *deck[13],*objet[8],*gobutton,*connectbutton;
 
-	deck[0] = IMG_Load("../Image/SH13_0.png");
-	deck[1] = IMG_Load("../Image/SH13_1.png");
-	deck[2] = IMG_Load("../Image/SH13_2.png");
-	deck[3] = IMG_Load("../Image/SH13_3.png");
-	deck[4] = IMG_Load("../Image/SH13_4.png");
-	deck[5] = IMG_Load("../Image/SH13_5.png");
-	deck[6] = IMG_Load("../Image/SH13_6.png");
-	deck[7] = IMG_Load("../Image/SH13_7.png");
-	deck[8] = IMG_Load("../Image/SH13_8.png");
-	deck[9] = IMG_Load("../Image/SH13_9.png");
-	deck[10] = IMG_Load("../Image/SH13_10.png");
-	deck[11] = IMG_Load("../Image/SH13_11.png");
-	deck[12] = IMG_Load("../Image/SH13_12.png");
+	deck[0] = IMG_Load("../../Image/SH13_0.png");
+	deck[1] = IMG_Load("../../Image/SH13_1.png");
+	deck[2] = IMG_Load("../../Image/SH13_2.png");
+	deck[3] = IMG_Load("../../Image/SH13_3.png");
+	deck[4] = IMG_Load("../../Image/SH13_4.png");
+	deck[5] = IMG_Load("../../Image/SH13_5.png");
+	deck[6] = IMG_Load("../../Image/SH13_6.png");
+	deck[7] = IMG_Load("../../Image/SH13_7.png");
+	deck[8] = IMG_Load("../../Image/SH13_8.png");
+	deck[9] = IMG_Load("../../Image/SH13_9.png");
+	deck[10] = IMG_Load("../../Image/SH13_10.png");
+	deck[11] = IMG_Load("../../Image/SH13_11.png");
+	deck[12] = IMG_Load("../../Image/SH13_12.png");
 
-	objet[0] = IMG_Load("../Image/SH13_pipe_120x120.png");
-	objet[1] = IMG_Load("../Image/SH13_ampoule_120x120.png");
-	objet[2] = IMG_Load("../Image/SH13_poing_120x120.png");
-	objet[3] = IMG_Load("../Image/SH13_couronne_120x120.png");
-	objet[4] = IMG_Load("../Image/SH13_carnet_120x120.png");
-	objet[5] = IMG_Load("../Image/SH13_collier_120x120.png");
-	objet[6] = IMG_Load("../Image/SH13_oeil_120x120.png");
-	objet[7] = IMG_Load("../Image/SH13_crane_120x120.png");
+	objet[0] = IMG_Load("../../Image/SH13_pipe_120x120.png");
+	objet[1] = IMG_Load("../../Image/SH13_ampoule_120x120.png");
+	objet[2] = IMG_Load("../../Image/SH13_poing_120x120.png");
+	objet[3] = IMG_Load("../../Image/SH13_couronne_120x120.png");
+	objet[4] = IMG_Load("../../Image/SH13_carnet_120x120.png");
+	objet[5] = IMG_Load("../../Image/SH13_collier_120x120.png");
+	objet[6] = IMG_Load("../../Image/SH13_oeil_120x120.png");
+	objet[7] = IMG_Load("../../Image/SH13_crane_120x120.png");
 
-	gobutton = IMG_Load("gobutton.png");
-	connectbutton = IMG_Load("connectbutton.png");
+	gobutton = IMG_Load("../../Image/Gobutton.png");
+	connectbutton = IMG_Load("../../Image/connectbutton.png");
 
 	strcpy(gNames[0],"-");
 	strcpy(gNames[1],"-");
