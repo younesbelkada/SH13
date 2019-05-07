@@ -1,0 +1,2 @@
+sh13.o: Source/sh13/sh13.c
+server.o: Source/server/server.c
