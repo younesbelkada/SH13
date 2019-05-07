@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 
@@ -53,9 +53,9 @@ void melangerDeck()
 void createTable()
 {
 	// Le joueur 0 possede les cartes d'indice 0,1,2
-	// Le joueur 1 possede les cartes d'indice 3,4,5 
-	// Le joueur 2 possede les cartes d'indice 6,7,8 
-	// Le joueur 3 possede les cartes d'indice 9,10,11 
+	// Le joueur 1 possede les cartes d'indice 3,4,5
+	// Le joueur 2 possede les cartes d'indice 6,7,8
+	// Le joueur 3 possede les cartes d'indice 9,10,11
 	// Le coupable est la carte d'indice 12
 	int i,j,c;
 
@@ -84,55 +84,55 @@ void createTable()
 					tableCartes[i][6]++;
 					tableCartes[i][4]++;
 					break;
-				case 3: // Inspector Gregson 
+				case 3: // Inspector Gregson
 					tableCartes[i][3]++;
 					tableCartes[i][2]++;
 					tableCartes[i][4]++;
 					break;
-				case 4: // Inspector Baynes 
+				case 4: // Inspector Baynes
 					tableCartes[i][3]++;
 					tableCartes[i][1]++;
 					break;
-				case 5: // Inspector Bradstreet 
+				case 5: // Inspector Bradstreet
 					tableCartes[i][3]++;
 					tableCartes[i][2]++;
 					break;
-				case 6: // Inspector Hopkins 
+				case 6: // Inspector Hopkins
 					tableCartes[i][3]++;
 					tableCartes[i][0]++;
 					tableCartes[i][6]++;
 					break;
-				case 7: // Sherlock Holmes 
+				case 7: // Sherlock Holmes
 					tableCartes[i][0]++;
 					tableCartes[i][1]++;
 					tableCartes[i][2]++;
 					break;
-				case 8: // John Watson 
+				case 8: // John Watson
 					tableCartes[i][0]++;
 					tableCartes[i][6]++;
 					tableCartes[i][2]++;
 					break;
-				case 9: // Mycroft Holmes 
+				case 9: // Mycroft Holmes
 					tableCartes[i][0]++;
 					tableCartes[i][1]++;
 					tableCartes[i][4]++;
 					break;
-				case 10: // Mrs. Hudson 
+				case 10: // Mrs. Hudson
 					tableCartes[i][0]++;
 					tableCartes[i][5]++;
 					break;
-				case 11: // Mary Morstan 
+				case 11: // Mary Morstan
 					tableCartes[i][4]++;
 					tableCartes[i][5]++;
 					break;
-				case 12: // James Moriarty 
+				case 12: // James Moriarty
 					tableCartes[i][7]++;
 					tableCartes[i][1]++;
 					break;
 			}
 		}
 	}
-} 
+}
 
 void printDeck()
 {
@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
          exit(1);
      }
      sockfd = socket(AF_INET, SOCK_STREAM, 0);
-     if (sockfd < 0) 
+     if (sockfd < 0)
         error("ERROR opening socket");
      bzero((char *) &serv_addr, sizeof(serv_addr));
      portno = atoi(argv[1]);
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
      serv_addr.sin_addr.s_addr = INADDR_ANY;
      serv_addr.sin_port = htons(portno);
      if (bind(sockfd, (struct sockaddr *) &serv_addr,
-              sizeof(serv_addr)) < 0) 
+              sizeof(serv_addr)) < 0)
               error("ERROR on binding");
      listen(sockfd,5);
      clilen = sizeof(cli_addr);
@@ -259,16 +259,16 @@ int main(int argc, char *argv[])
 	}
 
      while (1)
-     {    
-     	newsockfd = accept(sockfd, 
-                 (struct sockaddr *) &cli_addr, 
+     {
+     	newsockfd = accept(sockfd,
+                 (struct sockaddr *) &cli_addr,
                  &clilen);
-     	if (newsockfd < 0) 
+     	if (newsockfd < 0)
           	error("ERROR on accept");
 
      	bzero(buffer,256);
      	n = read(newsockfd,buffer,255);
-     	if (n < 0) 
+     	if (n < 0)
 		error("ERROR reading from socket");
 
         printf("Received packet from %s:%d\nData: [%s]\n\n",
@@ -313,15 +313,24 @@ int main(int argc, char *argv[])
                                 if (nbClients==4)
 				{
 					// On envoie ses cartes au joueur 0, ainsi que la ligne qui lui correspond dans tableCartes
+          int k = 0;
+          for ( i = 0; i < 4; i++) {
+            sprintf(reply,"D %d %d %d",deck[i+k],deck[i+k+1],deck[i+k+2]);
+            k+=2;
+            sendMessageToClient(tcpClients[i].ipAddress,
+                   tcpClients[i].port,
+                   reply);
+            sprintf(reply,"V %d %d %d %d %d %d %d %d ", tableCartes[i][0] ,tableCartes[i][1],tableCartes[i][2],tableCartes[i][3],tableCartes[i][4],tableCartes[i][5],tableCartes[i][6],tableCartes[i][7]);
+            sendMessageToClient(tcpClients[i].ipAddress,
+                          tcpClients[i].port,
+                          reply);
+          }
 
-					// On envoie ses cartes au joueur 1, ainsi que la ligne qui lui correspond dans tableCartes
 
-					// On envoie ses cartes au joueur 2, ainsi que la ligne qui lui correspond dans tableCartes
 
-					// On envoie ses cartes au joueur 3, ainsi que la ligne qui lui correspond dans tableCartes
 
-					// On envoie enfin un message a tout le monde pour definir qui est le joueur courant=0
-
+					sprintf(reply,"M %d", joueurCourant);
+          broadcastMessage(reply);
                                         fsmServer=1;
 				}
 				break;
@@ -347,5 +356,5 @@ int main(int argc, char *argv[])
      	close(newsockfd);
      }
      close(sockfd);
-     return 0; 
+     return 0;
 }

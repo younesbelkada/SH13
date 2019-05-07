@@ -12,7 +12,8 @@ sh13: $(LIB_SRC_c)
 	$(CC) $(LIB_SRC_c)  $(FLAGS)    $@
 clean:
 	rm -rf *.o server sh13
-
+generate:
+	./server localhost 32000 
 .depend:
 	$(CC) -MM $(LIB_SRC_c) $(LIB_SRC_s) > .depend ;
 

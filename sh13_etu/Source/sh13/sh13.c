@@ -179,7 +179,7 @@ int main(int argc, char ** argv)
 	objet[6] = IMG_Load("./Image/SH13_oeil_120x120.png");
 	objet[7] = IMG_Load("./Image/SH13_crane_120x120.png");
 
-	gobutton = IMG_Load("./Image/Gobutton.png");
+	gobutton = IMG_Load("./Image/gobutton.png");
 	connectbutton = IMG_Load("./Image/connectbutton.png");
 
 	strcpy(gNames[0],"-");
@@ -240,7 +240,9 @@ int main(int argc, char ** argv)
 				{
 					sprintf(sendBuffer,"C %s %d %s",gClientIpAddress,gClientPort,gName);
 
-					// RAJOUTER DU CODE ICI
+	       // COMPLETED
+
+          sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
 
 					connectEnabled=0;
 				}
@@ -312,28 +314,31 @@ int main(int argc, char ** argv)
 			// Message 'I' : le joueur recoit son Id
 			case 'I':
 				// RAJOUTER DU CODE ICI
-
+        sscanf(gbuffer,"I %d",&gId);
 				break;
 			// Message 'L' : le joueur recoit la liste des joueurs
 			case 'L':
-				// RAJOUTER DU CODE ICI
-
+        sscanf(gbuffer,"L %s %s %s %s",gNames[0],gNames[1],gNames[2],gNames[3]);
 				break;
 			// Message 'D' : le joueur recoit ses trois cartes
 			case 'D':
 				// RAJOUTER DU CODE ICI
-
+        sscanf(gbuffer,"D %d %d %d",&b[0],&b[1], &b[2]);
+        //printf("%s\n", nbnoms[b[0]]);
 				break;
 			// Message 'M' : le joueur recoit le n° du joueur courant
-			// Cela permet d'affecter goEnabled pour autoriser l'affichage du bouton go
+			// Cela permet d'affecter goEnabled pour autoriser l'affichage du bouton g
 			case 'M':
 				// RAJOUTER DU CODE ICI
-
+        sscanf(gbuffer,"M %d",&id);
+        if (id == gId) {
+          goEnabled = 1;
+        }
 				break;
 			// Message 'V' : le joueur recoit une valeur de tableCartes
 			case 'V':
 				// RAJOUTER DU CODE ICI
-
+        sscanf(gbuffer,"V %d %d %d %d %d %d %d %d ",&tableCartes[gId][0],&tableCartes[gId][1], &tableCartes[gId][2], &tableCartes[gId][3], &tableCartes[gId][4], &tableCartes[gId][5], &tableCartes[gId][6], &tableCartes[gId][7]);
 				break;
 		}
 		synchro=0;
