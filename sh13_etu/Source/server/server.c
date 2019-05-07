@@ -342,7 +342,7 @@ int main(int argc, char *argv[])
 		switch (buffer[0])
 		{
                 	case 'G': // Persond id pense que coupable est 2
-                  sscanf(gbuffer,"G %d %d",&idDemande,&guiltSel);
+                  sscanf(reply,"G %d %d",&idDemande,&guiltSel);
                   if (guiltSel == deck[12] ) {
                     sprintf(reply,"Gagnant : %d", idDemande);
                     broadcastMessage(reply);
@@ -353,9 +353,9 @@ int main(int argc, char *argv[])
 				break;
                   char c1[4];
                 	case 'O':
-                  sscanf(gbuffer,"O %d %d",&idDemande,&objetSel);
+                  sscanf(reply,"O %d %d",&idDemande,&objetSel);
                   for (size_t i = 0; i < 4; i++) {
-                    if (tableCartes[i][objetSel] != 0;) {
+                    if (tableCartes[i][objetSel] != 0) {
                       c1[i] = '*';
                     }
                     else{c1[i] = 0;}
