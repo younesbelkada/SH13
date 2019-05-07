@@ -309,6 +309,8 @@ int main(int argc, char ** argv)
         {
                 pthread_mutex_lock( &mutex );
                 printf("consomme |%s|\n",gbuffer);
+    int ob;
+    char c1[4];
 		switch (gbuffer[0])
 		{
 			// Message 'I' : le joueur recoit son Id
@@ -342,8 +344,10 @@ int main(int argc, char ** argv)
 				break;
       case 'O':
   				// RAJOUTER DU CODE ICI
-          int ob;
-          sscanf(gbuffer,"O %d %s",&ob,&tableCartes[0][ob],&tableCartes[1][ob],&tableCartes[2][ob],&tableCartes[3][ob]);
+          sscanf(gbuffer,"O %d %s",&ob, &c1);
+          for (size_t i = 0; i < 4; i++) {
+            tableCartes[i][ob] = c1[i];
+          }
   				break;
 		}
 		synchro=0;

@@ -351,7 +351,7 @@ int main(int argc, char *argv[])
                   }
 				// RAJOUTER DU CODE ICI
 				break;
-                  char c1[5];
+                  char c1[4];
                 	case 'O':
                   sscanf(gbuffer,"O %d %d",&idDemande,&objetSel);
                   for (size_t i = 0; i < 4; i++) {
