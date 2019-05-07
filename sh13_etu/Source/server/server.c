@@ -338,16 +338,37 @@ int main(int argc, char *argv[])
 	}
 	else if (fsmServer==1)
 	{
+    int idDemande,guiltSel,joueurSel,objetSel;
 		switch (buffer[0])
 		{
-                	case 'G':
+                	case 'G': // Persond id pense que coupable est 2
+                  sscanf(gbuffer,"G %d %d",&idDemande,&guiltSel);
+                  if (guiltSel == deck[12] ) {
+                    sprintf(reply,"Gagnant : %d", idDemande);
+                    broadcastMessage(reply);
+                    // On arrete pour le moment
+
+                  }
 				// RAJOUTER DU CODE ICI
 				break;
+                  char c1[5];
                 	case 'O':
-				// RAJOUTER DU CODE ICI
+                  sscanf(gbuffer,"O %d %d",&idDemande,&objetSel);
+                  for (size_t i = 0; i < 4; i++) {
+                    if (tableCartes[i][objetSel] != 0;) {
+                      c1[i] = '*';
+                    }
+                    else{c1[i] = 0;}
+
+                  }
+                  sprintf(reply,"O %d %s", objetSel,c1);
+                  broadcastMessage(reply);
+
+				// Qui a cb de objet
+
 				break;
 			case 'S':
-				// RAJOUTER DU CODE ICI
+				// Tu as cb d'objet?????
 				break;
                 	default:
                         	break;

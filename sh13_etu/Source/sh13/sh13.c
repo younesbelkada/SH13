@@ -273,21 +273,21 @@ int main(int argc, char ** argv)
 					if (guiltSel!=-1)
 					{
 						sprintf(sendBuffer,"G %d %d",gId, guiltSel);
-
+            sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
 					// RAJOUTER DU CODE ICI
 
 					}
 					else if ((objetSel!=-1) && (joueurSel==-1))
 					{
 						sprintf(sendBuffer,"O %d %d",gId, objetSel);
-
+            sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
 					// RAJOUTER DU CODE ICI
 
 					}
 					else if ((objetSel!=-1) && (joueurSel!=-1))
 					{
 						sprintf(sendBuffer,"S %d %d %d",gId, joueurSel,objetSel);
-
+            sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
 					// RAJOUTER DU CODE ICI
 
 					}
@@ -340,6 +340,11 @@ int main(int argc, char ** argv)
 				// RAJOUTER DU CODE ICI
         sscanf(gbuffer,"V %d %d %d %d %d %d %d %d ",&tableCartes[gId][0],&tableCartes[gId][1], &tableCartes[gId][2], &tableCartes[gId][3], &tableCartes[gId][4], &tableCartes[gId][5], &tableCartes[gId][6], &tableCartes[gId][7]);
 				break;
+      case 'O':
+  				// RAJOUTER DU CODE ICI
+          int ob;
+          sscanf(gbuffer,"O %d %s",&ob,&tableCartes[0][ob],&tableCartes[1][ob],&tableCartes[2][ob],&tableCartes[3][ob]);
+  				break;
 		}
 		synchro=0;
                 pthread_mutex_unlock( &mutex );
