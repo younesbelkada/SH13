@@ -342,11 +342,13 @@ int main(int argc, char ** argv)
           sscanf(gbuffer,"O %d %c %c %c %c",&ob, &c1[0], &c1[1], &c1[2], &c1[3]);
           for (int i = 0; i < 4; i++) {
             if (i!= gId) {
-
+              if (tableCartes[i][ob] == 0 || tableCartes[i][ob] == 100 ) {
                 if (c1[i] == '0') {
                   tableCartes[i][ob] = 0;
                 }
                 else{tableCartes[i][ob] = 100;}
+              }
+
 
             }
           }

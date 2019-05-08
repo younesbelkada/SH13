@@ -325,10 +325,6 @@ void broadcastMessage(char *mess)
                       tcpClients[i].port,
                       reply);
                     }
-
-
-
-
                     sprintf(reply,"M %d", joueurCourant);
                     broadcastMessage(reply);
                     fsmServer=1;
@@ -374,6 +370,11 @@ void broadcastMessage(char *mess)
                     break;
                   }
                 }
+                if (joueurCourant < 3) {
+                  joueurCourant++;
+                }
+                else{joueurCourant = 0;}
+
                 close(newsockfd);
               }
               close(sockfd);
