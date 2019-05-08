@@ -365,18 +365,12 @@ void broadcastMessage(char *mess)
                     break;
                   case 'S':
                     sscanf(reply,"S %d %d %d",&idDemande,&joueurSel,&objetSel);
-                    printf("Bug ICI??\n");
-                    printf("tablecartes[%d][%d]\n",joueurSel, objetSel );
-                    printClients();
                     sprintf(reply,"S %d %d %d",joueurSel, objetSel,tableCartes[joueurSel][objetSel]);
-                    printf("Erreur à l'envoie?\n" );
                     sendMessageToClient(tcpClients[idDemande].ipAddress,
                       tcpClients[idDemande].port,
                       reply);
                     break;
-                  default: if (joueurCourant != 3)
-                    joueurCourant++;
-                  else{joueurCourant = 0;}
+                  default:
                     break;
                   }
                 }
