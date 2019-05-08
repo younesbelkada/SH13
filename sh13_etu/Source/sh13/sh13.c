@@ -274,21 +274,18 @@ int main(int argc, char ** argv)
 					{
 						sprintf(sendBuffer,"G %d %d",gId, guiltSel);
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-					// RAJOUTER DU CODE ICI
 
 					}
 					else if ((objetSel!=-1) && (joueurSel==-1))
 					{
 						sprintf(sendBuffer,"O %d %d",gId, objetSel);
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-					// RAJOUTER DU CODE ICI
 
 					}
 					else if ((objetSel!=-1) && (joueurSel!=-1))
 					{
 						sprintf(sendBuffer,"S %d %d %d",gId, joueurSel,objetSel);
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-					// RAJOUTER DU CODE ICI
 
 					}
 				}
@@ -310,7 +307,7 @@ int main(int argc, char ** argv)
                 pthread_mutex_lock( &mutex );
                 printf("consomme |%s|\n",gbuffer);
     int ob;
-    char c1[4];
+    char c1[5];
 		switch (gbuffer[0])
 		{
 			// Message 'I' : le joueur recoit son Id
@@ -339,14 +336,19 @@ int main(int argc, char ** argv)
 				break;
 			// Message 'V' : le joueur recoit une valeur de tableCartes
 			case 'V':
-				// RAJOUTER DU CODE ICI
         sscanf(gbuffer,"V %d %d %d %d %d %d %d %d ",&tableCartes[gId][0],&tableCartes[gId][1], &tableCartes[gId][2], &tableCartes[gId][3], &tableCartes[gId][4], &tableCartes[gId][5], &tableCartes[gId][6], &tableCartes[gId][7]);
 				break;
       case 'O':
-  				// RAJOUTER DU CODE ICI
           sscanf(gbuffer,"O %d %c %c %c %c",&ob, &c1[0], &c1[1], &c1[2], &c1[3]);
-          for (size_t i = 0; i < 4; i++) {
-            tableCartes[i][ob] = c1[i];
+          for (int i = 0; i < 4; i++) {
+            if (i!= gId) {
+              if (tableCartes[i][ob] == NULL) {
+                if (c1[i] == '0') {
+                  tableCartes[i][ob] = 0;
+                }
+                else{tableCartes[i][ob] = 100;}
+              }
+            }
           }
   				break;
       case 'S':
