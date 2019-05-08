@@ -361,7 +361,7 @@ int main(int argc, char *argv[])
                     else{c1[i] = 0;}
 
                   }
-                  sprintf(reply,"O %d %s", objetSel,c1);
+                  sprintf(reply,"O %d %c %c %c %c", objetSel,c1[0],c1[1],c1[2],c1[3]);
                   broadcastMessage(reply);
 
 				// Qui a cb de objet
@@ -369,6 +369,11 @@ int main(int argc, char *argv[])
 				break;
 			case 'S':
 				// Tu as cb d'objet?????
+        sscanf(reply,"S %d %d %d",&idDemande,&joueurSel,&objetSel);
+        sprintf(reply,"S %d %d %d",joueurSel, objetSel,tableCartes[joueurSel][objetSel]);
+        sendMessageToClient(tcpClients[idDemande].ipAddress,
+                      tcpClients[idDemande].port,
+                      reply);
 				break;
                 	default:
                         	break;

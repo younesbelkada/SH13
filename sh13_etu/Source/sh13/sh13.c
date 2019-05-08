@@ -344,11 +344,15 @@ int main(int argc, char ** argv)
 				break;
       case 'O':
   				// RAJOUTER DU CODE ICI
-          sscanf(gbuffer,"O %d %s",&ob, &c1);
+          sscanf(gbuffer,"O %d %c %c %c %c",&ob, &c1[0], &c1[1], &c1[2], &c1[3]);
           for (size_t i = 0; i < 4; i++) {
             tableCartes[i][ob] = c1[i];
           }
   				break;
+      case 'S':
+          sscanf(gbuffer,"S %d %d %d",&joueurSel, &objetSel, &ob);
+          tableCartes[joueurSel][objetSel] = ob;
+      break;
 		}
 		synchro=0;
                 pthread_mutex_unlock( &mutex );
