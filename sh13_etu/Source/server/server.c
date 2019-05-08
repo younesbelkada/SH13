@@ -326,6 +326,10 @@ void broadcastMessage(char *mess)
                       reply);
                     }
                     sprintf(reply,"M %d", joueurCourant);
+                    if (joueurCourant < 3) {
+                      joueurCourant++;
+                    }
+                    else{joueurCourant = 0;}
                     broadcastMessage(reply);
                     fsmServer=1;
                   }
@@ -337,15 +341,14 @@ void broadcastMessage(char *mess)
 
                 switch (buffer[0])
                 {
-                  case 'G': // Persond id pense que coupable est 2
+                  case 'G':
                   sscanf(reply,"G %d %d",&idDemande,&guiltSel);
                   if (guiltSel == deck[12] ) {
                     sprintf(reply,"Gagnant : %d", idDemande);
                     broadcastMessage(reply);
-                    // On arrete pour le moment
+                    exit(0);
 
                   }
-                  // RAJOUTER DU CODE ICI
                   break;
                   char c1[5];
                   case 'O':
@@ -370,11 +373,6 @@ void broadcastMessage(char *mess)
                     break;
                   }
                 }
-                if (joueurCourant < 3) {
-                  joueurCourant++;
-                }
-                else{joueurCourant = 0;}
-
                 close(newsockfd);
               }
               close(sockfd);
