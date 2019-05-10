@@ -3,7 +3,7 @@ LIB_OBJ_s = $(LIB_SRC_s:.c=.o)
 LIB_SRC_c = $(wildcard ./Source/sh13/*.c)
 LIB_OBJ_c = $(LIB_SRC_c:.c=.o)
 CC = gcc
-FLAGS = -Wall  -I/usr/local/include/SDL2 -lSDL2_image -lSDL2_ttf -lSDL2 -lpthread -o
+FLAGS = -Wall  -I/usr/include/SDL2 -lSDL2_image -lSDL2_ttf -lSDL2 -lpthread -o
 all: server sh13
 
 server: $(LIB_SRC_s)

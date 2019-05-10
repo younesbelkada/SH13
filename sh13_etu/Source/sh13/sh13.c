@@ -351,7 +351,7 @@ int main(int argc, char ** argv)
                 tableCartes[i][ob] = 0;
               }
               else{tableCartes[i][ob] = 100;}
-            
+
 
 
           }
@@ -361,6 +361,7 @@ int main(int argc, char ** argv)
         sscanf(gbuffer,"S %d %d %d",&joueurSel, &objetSel, &ob);
         tableCartes[joueurSel][objetSel] = ob;
         break;
+        case 'W': exit(1);
       }
       synchro=0;
       pthread_mutex_unlock( &mutex );

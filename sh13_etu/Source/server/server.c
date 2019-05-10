@@ -7,7 +7,6 @@ The port number is passed as an argument */
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-
 #include <netdb.h>
 #include <arpa/inet.h>
 
@@ -211,15 +210,14 @@ void broadcastMessage(char *mess)
     mess);
   }
 
-  int main(int argc, char *argv[])
-  {
+int main(int argc, char *argv[]){
     int sockfd, newsockfd, portno;
     socklen_t clilen;
     char buffer[256];
     struct sockaddr_in serv_addr, cli_addr;
     int n;
     int i;
-
+    //int idDemande,guiltSel,joueurSel,objetSel;
     char com;
     char clientIpAddress[256], clientName[256];
     int clientPort;
@@ -261,8 +259,7 @@ void broadcastMessage(char *mess)
     while (1)
     {
       newsockfd = accept(sockfd,
-        (struct sockaddr *) &cli_addr,
-        &clilen);
+        (struct sockaddr *) &cli_addr,&clilen);
         if (newsockfd < 0)
         error("ERROR on accept");
 
@@ -326,10 +323,6 @@ void broadcastMessage(char *mess)
                       reply);
                     }
                     sprintf(reply,"M %d", joueurCourant);
-                    if (joueurCourant < 3) {
-                      joueurCourant++;
-                    }
-                    else{joueurCourant = 0;}
                     broadcastMessage(reply);
                     fsmServer=1;
                   }
@@ -338,21 +331,20 @@ void broadcastMessage(char *mess)
               }
               else if (fsmServer==1)
               {
-
                 switch (buffer[0])
                 {
                   case 'G':
-                  sscanf(reply,"G %d %d",&idDemande,&guiltSel);
+                  sscanf(buffer,"G %d %d",&idDemande,&guiltSel);
                   if (guiltSel == deck[12] ) {
-                    sprintf(reply,"Gagnant : %d", idDemande);
+                    sprintf(reply,"Winner : %d", idDemande);
                     broadcastMessage(reply);
-                    exit(0);
+                    exit(1); // Reset le serveur
 
                   }
                   break;
                   char c1[5];
                   case 'O':
-                    sscanf(reply,"O %d %d",&idDemande,&objetSel);
+                    sscanf(buffer,"O %d %d",&idDemande,&objetSel);
                     for (int i = 0; i < 4; i++) {
                       if (tableCartes[i][objetSel] != 0) {
                         c1[i] = '*';
@@ -363,7 +355,8 @@ void broadcastMessage(char *mess)
                     broadcastMessage(reply);
                     break;
                   case 'S':
-                    sscanf(reply,"S %d %d %d",&idDemande,&joueurSel,&objetSel);
+                    sscanf(buffer,"S %d %d %d",&idDemande,&joueurSel,&objetSel);
+                    printf("%d %d %d",idDemande,joueurSel,objetSel );
                     sprintf(reply,"S %d %d %d",joueurSel, objetSel,tableCartes[joueurSel][objetSel]);
                     sendMessageToClient(tcpClients[idDemande].ipAddress,
                       tcpClients[idDemande].port,
@@ -372,6 +365,9 @@ void broadcastMessage(char *mess)
                   default:
                     break;
                   }
+                  joueurCourant = (++joueurCourant)%4; // Pour valoir zero en 4
+                  sprintf(reply,"M %d", joueurCourant);
+                  broadcastMessage(reply);
                 }
                 close(newsockfd);
               }
