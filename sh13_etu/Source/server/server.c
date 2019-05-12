@@ -1,5 +1,14 @@
-/* A simple server in the internet domain using TCP
-The port number is passed as an argument */
+/**
+ * \file server.c
+ * \brief server soutenant le jeu Sherlock Holmes
+ * \author Arthur & Younes
+ * \version 1.1
+ * \date 10 mai 2019
+ *
+ * Ce serveur propose un autre protocol que HTTP, pour
+ * comprendre comment ce dernier fonctionne.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,23 +19,54 @@ The port number is passed as an argument */
 #include <netdb.h>
 #include <arpa/inet.h>
 
+
+/**
+ * \struct _client
+ * \brief Objet client se connectant au serveur
+ *
+ *_client permet de stocker l'adresse iP, le port et le nom du client se connectant au serveur
+ */
+
 struct _client
 {
   char ipAddress[40];
   int port;
   char name[40];
 } tcpClients[4];
+//! Stock le nombre total de clients
 int nbClients;
 int fsmServer;
-int idDemande,guiltSel,joueurSel,objetSel;
-int deck[13]={0,1,2,3,4,5,6,7,8,9,10,11,12};
+//! Permet de stocker l'adresse IP du client effectuant une demande
+int idDemande;
+//! Permet de stocker le coupable qu'accuse le client
+int guiltSel;
+//! Permet de stocker le joueur dont le client souhaite connaitre le nombre d'objet
+int joueurSel;
+//! Permet de stocker le objet qui interèsse le joueur effectuant une demande
+int objetSel;
+//! Stock le deck de cartes du jeu
+int deck[13]={0,1,2,3,4,5,6,7,8,9,10,11,12};  //! Stock la quantité d'objet que possède chacun des joueurs
 int tableCartes[4][8];
+//! Permet de faire correspondre le deck aux noms
+
 char *nomcartes[]=
 {"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "inspector Gregson", "inspector Baynes", "inspector Bradstreet",
 "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
 "Mrs. Hudson", "Mary Morstan", "James Moriarty"};
+ //! Indice du joueur ayant la main
 int joueurCourant;
+
+/**
+ * \fn void   error (const char *msg)
+ * \brief Fonction de gestion d'erreur
+ * \param const char *msg est le message à renvoyer
+ */
+
+/**
+ * \fn void   melangerDeck ()
+ * \brief Fonction de mélange du deck de cartes afin de les distribuer
+ */
 
 void error(const char *msg)
 {
@@ -175,9 +215,7 @@ void sendMessageToClient(char *clientip,int clientport,char *mess)
   struct sockaddr_in serv_addr;
   struct hostent *server;
   char buffer[256];
-
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
-
   server = gethostbyname(clientip);
   if (server == NULL) {
     fprintf(stderr,"ERROR, no such host\n");
@@ -200,15 +238,13 @@ void sendMessageToClient(char *clientip,int clientport,char *mess)
   close(sockfd);
 }
 
-void broadcastMessage(char *mess)
-{
+void broadcastMessage(char *mess){
   int i;
-
   for (i=0;i<nbClients;i++)
   sendMessageToClient(tcpClients[i].ipAddress,
     tcpClients[i].port,
     mess);
-  }
+}
 
 int main(int argc, char *argv[]){
     int sockfd, newsockfd, portno;

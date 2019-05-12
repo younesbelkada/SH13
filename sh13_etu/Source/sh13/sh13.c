@@ -1,3 +1,14 @@
+/**
+ * \file sh13.c
+ * \brief client permettant de se connecter au serveur
+ * \author Arthur & Younes
+ * \version 1.1
+ * \date 10 mai 2019
+ *
+ * Le client sh13 permet de se connecter au serveur proposant un autre protocol que HTTP, pour
+ * comprendre comment ce dernier fonctionne.
+ */
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -10,15 +21,18 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
+
 pthread_t thread_serveur_tcp_id;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 char gbuffer[256];
+//! Enum pointer.
+/*! Details. */
 char gServerIpAddress[256];
 int gServerPort;
 char gClientIpAddress[256];
 int gClientPort;
 char gName[256];
-char gNames[4][256];
+char gNames[4][256]; /*!< Detailed description after the member */
 int gId;
 int joueurSel;
 int objetSel;
@@ -36,7 +50,11 @@ char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "Mrs. Hudson", "Mary Morstan", "James Moriarty"};
 
 volatile int synchro; // Passage par dessus le cache, direction la memoire pour les problemes de plusieurs cache chacun une copie de syncro
-
+/**
+ * \fn void   *fn_serveur_tcp (void *arg)
+ * \brief Fonction passée en argument aux thread qui l'executera
+ * \param void *arg sont les arguments de la fonction
+ */
 void *fn_serveur_tcp(void *arg)
 {
   int sockfd, newsockfd, portno;
@@ -92,6 +110,9 @@ void *fn_serveur_tcp(void *arg)
 
 void sendMessageToServer(char *ipAddress, int portno, char *mess)
 {
+  /**
+  * SEnvoie un message au serveur \brief Normal
+  */
   int sockfd, n;
   struct sockaddr_in serv_addr;
   struct hostent *server;
@@ -155,20 +176,12 @@ int main(int argc, char ** argv)
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 
   SDL_Surface *deck[13],*objet[8],*gobutton,*connectbutton;
+  char path[256] ;
 
-  deck[0] = IMG_Load("./Image/SH13_0.png");
-  deck[1] = IMG_Load("./Image/SH13_1.png");
-  deck[2] = IMG_Load("./Image/SH13_2.png");
-  deck[3] = IMG_Load("./Image/SH13_3.png");
-  deck[4] = IMG_Load("./Image/SH13_4.png");
-  deck[5] = IMG_Load("./Image/SH13_5.png");
-  deck[6] = IMG_Load("./Image/SH13_6.png");
-  deck[7] = IMG_Load("./Image/SH13_7.png");
-  deck[8] = IMG_Load("./Image/SH13_8.png");
-  deck[9] = IMG_Load("./Image/SH13_9.png");
-  deck[10] = IMG_Load("./Image/SH13_10.png");
-  deck[11] = IMG_Load("./Image/SH13_11.png");
-  deck[12] = IMG_Load("./Image/SH13_12.png");
+  for (int i = 0; i < 13; i++) {
+    sprintf(path,"./Image/SH13_%d.png",i);
+    deck[i] = IMG_Load(path);
+  }
 
   objet[0] = IMG_Load("./Image/SH13_pipe_120x120.png");
   objet[1] = IMG_Load("./Image/SH13_ampoule_120x120.png");
@@ -178,14 +191,11 @@ int main(int argc, char ** argv)
   objet[5] = IMG_Load("./Image/SH13_collier_120x120.png");
   objet[6] = IMG_Load("./Image/SH13_oeil_120x120.png");
   objet[7] = IMG_Load("./Image/SH13_crane_120x120.png");
-
-  gobutton = IMG_Load("./Image/gobutton.png");
-  connectbutton = IMG_Load("./Image/connectbutton.png");
-
-  strcpy(gNames[0],"-");
-  strcpy(gNames[1],"-");
-  strcpy(gNames[2],"-");
-  strcpy(gNames[3],"-");
+  gobutton = IMG_Load("./Image/GoStartChat.png");
+  connectbutton = IMG_Load("./Image/ConnectButton.jpg");
+  for (int i = 0; i < 4; i++) {
+    strcpy(gNames[i],"-");
+  }
 
   joueurSel=-1;
   objetSel=-1;
@@ -215,7 +225,7 @@ int main(int argc, char ** argv)
   texture_gobutton = SDL_CreateTextureFromSurface(renderer, gobutton);
   texture_connectbutton = SDL_CreateTextureFromSurface(renderer, connectbutton);
 
-  TTF_Font* Sans = TTF_OpenFont("sans.ttf", 15);
+  TTF_Font* Sans = TTF_OpenFont("./sans.ttf", 15);
   printf("Sans=%p\n",Sans);
 
   /* Creation du thread serveur tcp. */
@@ -239,11 +249,7 @@ int main(int argc, char ** argv)
         if ((mx<200) && (my<50) && (connectEnabled==1))
         {
           sprintf(sendBuffer,"C %s %d %s",gClientIpAddress,gClientPort,gName);
-
-          // COMPLETED
-
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-
           connectEnabled=0;
         }
         else if ((mx>=0) && (mx<200) && (my>=90) && (my<330))
@@ -312,7 +318,6 @@ int main(int argc, char ** argv)
       {
         // Message 'I' : le joueur recoit son Id
         case 'I':
-        // RAJOUTER DU CODE ICI
         sscanf(gbuffer,"I %d",&gId);
         break;
         // Message 'L' : le joueur recoit la liste des joueurs
@@ -321,14 +326,12 @@ int main(int argc, char ** argv)
         break;
         // Message 'D' : le joueur recoit ses trois cartes
         case 'D':
-        // RAJOUTER DU CODE ICI
         sscanf(gbuffer,"D %d %d %d",&b[0],&b[1], &b[2]);
         //printf("%s\n", nbnoms[b[0]]);
         break;
         // Message 'M' : le joueur recoit le n° du joueur courant
         // Cela permet d'affecter goEnabled pour autoriser l'affichage du bouton g
         case 'M':
-        // RAJOUTER DU CODE ICI
         sscanf(gbuffer,"M %d",&id);
         if (id == gId) {
           goEnabled = 1;
@@ -336,7 +339,6 @@ int main(int argc, char ** argv)
         else{
           goEnabled = 0;
         }
-
         break;
         // Message 'V' : le joueur recoit une valeur de tableCartes
         case 'V':
@@ -420,7 +422,6 @@ int main(int argc, char ** argv)
     {
       SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, nbobjets[i], col1);
       SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-
       SDL_Rect Message_rect; //create a rect
       Message_rect.x = 230+i*60;  //controls the rect's x coordinate
       Message_rect.y = 50; // controls the rect's y coordinte
@@ -631,13 +632,18 @@ int main(int argc, char ** argv)
     }
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderDrawLine(renderer, 0,30+60,680,30+60);
+    for (int i = 1; i < 6; i++) {
+      SDL_RenderDrawLine(renderer, 0,30+i*60,680,30+i*60);
+    }
+    /*SDL_RenderDrawLine(renderer, 0,30+60,680,30+60);
     SDL_RenderDrawLine(renderer, 0,30+120,680,30+120);
     SDL_RenderDrawLine(renderer, 0,30+180,680,30+180);
     SDL_RenderDrawLine(renderer, 0,30+240,680,30+240);
-    SDL_RenderDrawLine(renderer, 0,30+300,680,30+300);
-
-    SDL_RenderDrawLine(renderer, 200,0,200,330);
+    SDL_RenderDrawLine(renderer, 0,30+300,680,30+300);*/
+    for (int i = 0; i < 9; i++) {
+      SDL_RenderDrawLine(renderer, 200+i*60,0,200+i*60,330);
+    }
+    /*SDL_RenderDrawLine(renderer, 200,0,200,330);
     SDL_RenderDrawLine(renderer, 260,0,260,330);
     SDL_RenderDrawLine(renderer, 320,0,320,330);
     SDL_RenderDrawLine(renderer, 380,0,380,330);
@@ -645,7 +651,7 @@ int main(int argc, char ** argv)
     SDL_RenderDrawLine(renderer, 500,0,500,330);
     SDL_RenderDrawLine(renderer, 560,0,560,330);
     SDL_RenderDrawLine(renderer, 620,0,620,330);
-    SDL_RenderDrawLine(renderer, 680,0,680,330);
+    SDL_RenderDrawLine(renderer, 680,0,680,330);*/
 
     for (i=0;i<14;i++)
     SDL_RenderDrawLine(renderer, 0,350+i*30,300,350+i*30);

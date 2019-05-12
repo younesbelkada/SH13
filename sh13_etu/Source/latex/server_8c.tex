@@ -1,0 +1,139 @@
+\hypertarget{server_8c}{}\section{server/server.c File Reference}
+\label{server_8c}\index{server/server.c@{server/server.c}}
+
+
+server soutenant le jeu Sherlock Holmes  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$netdb.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct__client}{\+\_\+client}}
+\begin{DoxyCompactList}\small\item\em Objet client se connectant au serveur. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{server_8c_a4866b2d37ffc80c5ba705d3fcd1e0ecf}{error}} (const char $\ast$msg)
+\begin{DoxyCompactList}\small\item\em Fonction de gestion d\textquotesingle{}erreur. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{server_8c_a0cb95e508c0ffc0101b4108ff250c870}\label{server_8c_a0cb95e508c0ffc0101b4108ff250c870}} 
+void \mbox{\hyperlink{server_8c_a0cb95e508c0ffc0101b4108ff250c870}{melanger\+Deck}} ()
+\begin{DoxyCompactList}\small\item\em Fonction de mélange du deck de cartes afin de les distribuer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{server_8c_a349b93f883bcada89b4cf66d7a92bb21}\label{server_8c_a349b93f883bcada89b4cf66d7a92bb21}} 
+void {\bfseries create\+Table} ()
+\item 
+\mbox{\Hypertarget{server_8c_a30dedb21b81bcab75c0b351087b64fa1}\label{server_8c_a30dedb21b81bcab75c0b351087b64fa1}} 
+void {\bfseries print\+Deck} ()
+\item 
+\mbox{\Hypertarget{server_8c_a3be7017ee4476744e47456935c39c509}\label{server_8c_a3be7017ee4476744e47456935c39c509}} 
+void {\bfseries print\+Clients} ()
+\item 
+\mbox{\Hypertarget{server_8c_a07f7f1553a2d1708276200adf61e7d02}\label{server_8c_a07f7f1553a2d1708276200adf61e7d02}} 
+int {\bfseries find\+Client\+By\+Name} (char $\ast$name)
+\item 
+\mbox{\Hypertarget{server_8c_af9aa1e493ee18081ffa952fc677c8ba1}\label{server_8c_af9aa1e493ee18081ffa952fc677c8ba1}} 
+void {\bfseries send\+Message\+To\+Client} (char $\ast$clientip, int clientport, char $\ast$mess)
+\item 
+\mbox{\Hypertarget{server_8c_a9cf4c7aa19d28eb76c9635b2267df762}\label{server_8c_a9cf4c7aa19d28eb76c9635b2267df762}} 
+void {\bfseries broadcast\+Message} (char $\ast$mess)
+\item 
+\mbox{\Hypertarget{server_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{server_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+int {\bfseries main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{server_8c_aaa2664f0bc76752d46e18fc781bb44b7}\label{server_8c_aaa2664f0bc76752d46e18fc781bb44b7}} 
+struct \mbox{\hyperlink{struct__client}{\+\_\+client}} {\bfseries tcp\+Clients} \mbox{[}4\mbox{]}
+\item 
+\mbox{\Hypertarget{server_8c_a2d4c98e5c74f88a941b51fb44756ac1e}\label{server_8c_a2d4c98e5c74f88a941b51fb44756ac1e}} 
+int \mbox{\hyperlink{server_8c_a2d4c98e5c74f88a941b51fb44756ac1e}{nb\+Clients}}
+\begin{DoxyCompactList}\small\item\em Stock le nombre total de clients. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{server_8c_a73a162241fb3895e5df5b930dddd1f8f}\label{server_8c_a73a162241fb3895e5df5b930dddd1f8f}} 
+int {\bfseries fsm\+Server}
+\item 
+\mbox{\Hypertarget{server_8c_aa4c3e1e6e5357e73d2bc03c664e96617}\label{server_8c_aa4c3e1e6e5357e73d2bc03c664e96617}} 
+int \mbox{\hyperlink{server_8c_aa4c3e1e6e5357e73d2bc03c664e96617}{id\+Demande}}
+\begin{DoxyCompactList}\small\item\em Permet de stocker l\textquotesingle{}adresse IP du client effectuant une demande. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{server_8c_a45d3ea8306836d64c4faa2084d98f8c7}\label{server_8c_a45d3ea8306836d64c4faa2084d98f8c7}} 
+int \mbox{\hyperlink{server_8c_a45d3ea8306836d64c4faa2084d98f8c7}{guilt\+Sel}}
+\begin{DoxyCompactList}\small\item\em Permet de stocker le coupable qu\textquotesingle{}accuse le client. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{server_8c_acc38e9aa67011ce24b4c8a882d068c1d}\label{server_8c_acc38e9aa67011ce24b4c8a882d068c1d}} 
+int \mbox{\hyperlink{server_8c_acc38e9aa67011ce24b4c8a882d068c1d}{joueur\+Sel}}
+\begin{DoxyCompactList}\small\item\em Permet de stocker le joueur dont le client souhaite connaitre le nombre d\textquotesingle{}objet. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{server_8c_a86a6b495ecef125da850e79bcd62aba7}\label{server_8c_a86a6b495ecef125da850e79bcd62aba7}} 
+int \mbox{\hyperlink{server_8c_a86a6b495ecef125da850e79bcd62aba7}{objet\+Sel}}
+\begin{DoxyCompactList}\small\item\em Permet de stocker le objet qui interèsse le joueur effectuant une demande. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{server_8c_ae2efdbabfeef978d67002518e95f00ca}\label{server_8c_ae2efdbabfeef978d67002518e95f00ca}} 
+int \mbox{\hyperlink{server_8c_ae2efdbabfeef978d67002518e95f00ca}{deck}} \mbox{[}13\mbox{]} =\{0,1,2,3,4,5,6,7,8,9,10,11,12\}
+\begin{DoxyCompactList}\small\item\em Stock le deck de cartes du jeu. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{server_8c_a5136e762f5d03123aca3b44ee5428ae9}\label{server_8c_a5136e762f5d03123aca3b44ee5428ae9}} 
+int \mbox{\hyperlink{server_8c_a5136e762f5d03123aca3b44ee5428ae9}{table\+Cartes}} \mbox{[}4\mbox{]}\mbox{[}8\mbox{]}
+\begin{DoxyCompactList}\small\item\em Stock la quantité d\textquotesingle{}objet que possède chacun des joueurs. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{server_8c_a024375796156f9da42ef17ecd803b484}{nomcartes}} \mbox{[}$\,$\mbox{]}
+\begin{DoxyCompactList}\small\item\em Permet de faire correspondre le deck aux noms. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{server_8c_a2350ff80e84ae74a929a397c3b1e152f}\label{server_8c_a2350ff80e84ae74a929a397c3b1e152f}} 
+int \mbox{\hyperlink{server_8c_a2350ff80e84ae74a929a397c3b1e152f}{joueur\+Courant}}
+\begin{DoxyCompactList}\small\item\em Indice du joueur ayant la main. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+server soutenant le jeu Sherlock Holmes 
+
+\begin{DoxyAuthor}{Author}
+Arthur \& Younes 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+10 mai 2019
+\end{DoxyDate}
+Ce serveur propose un autre protocol que H\+T\+TP, pour comprendre comment ce dernier fonctionne. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{server_8c_a4866b2d37ffc80c5ba705d3fcd1e0ecf}\label{server_8c_a4866b2d37ffc80c5ba705d3fcd1e0ecf}} 
+\index{server.c@{server.c}!error@{error}}
+\index{error@{error}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{error()}{error()}}
+{\footnotesize\ttfamily void error (\begin{DoxyParamCaption}\item[{const char $\ast$}]{msg }\end{DoxyParamCaption})}
+
+
+
+Fonction de gestion d\textquotesingle{}erreur. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em const} & char $\ast$msg est le message à renvoyer \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{server_8c_a024375796156f9da42ef17ecd803b484}\label{server_8c_a024375796156f9da42ef17ecd803b484}} 
+\index{server.c@{server.c}!nomcartes@{nomcartes}}
+\index{nomcartes@{nomcartes}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{nomcartes}{nomcartes}}
+{\footnotesize\ttfamily char$\ast$ nomcartes\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\{\textcolor{stringliteral}{"Sebastian Moran"}, \textcolor{stringliteral}{"irene Adler"}, \textcolor{stringliteral}{"inspector Lestrade"},}
+\DoxyCodeLine{\textcolor{stringliteral}{"inspector Gregson"}, \textcolor{stringliteral}{"inspector Baynes"}, \textcolor{stringliteral}{"inspector Bradstreet"},}
+\DoxyCodeLine{\textcolor{stringliteral}{"inspector Hopkins"}, \textcolor{stringliteral}{"Sherlock Holmes"}, \textcolor{stringliteral}{"John Watson"}, \textcolor{stringliteral}{"Mycroft Holmes"},}
+\DoxyCodeLine{\textcolor{stringliteral}{"Mrs. Hudson"}, \textcolor{stringliteral}{"Mary Morstan"}, \textcolor{stringliteral}{"James Moriarty"}\}}
+
+\end{DoxyCode}
+
+
+Permet de faire correspondre le deck aux noms. 
+

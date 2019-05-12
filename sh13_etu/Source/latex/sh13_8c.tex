@@ -1,0 +1,162 @@
+\hypertarget{sh13_8c}{}\section{sh13/sh13.c File Reference}
+\label{sh13_8c}\index{sh13/sh13.c@{sh13/sh13.c}}
+
+
+client permettant de se connecter au serveur  
+
+
+{\ttfamily \#include $<$S\+D\+L.\+h$>$}\newline
+{\ttfamily \#include $<$S\+D\+L\+\_\+image.\+h$>$}\newline
+{\ttfamily \#include $<$S\+D\+L\+\_\+ttf.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$netdb.\+h$>$}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \mbox{\hyperlink{sh13_8c_a2e05d0dede42b6aeb364340373554df6}{fn\+\_\+serveur\+\_\+tcp}} (void $\ast$arg)
+\begin{DoxyCompactList}\small\item\em Fonction passée en argument aux thread qui l\textquotesingle{}executera. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sh13_8c_aa6fd4f7eb54362ed558cdaeb5e5bd927}{send\+Message\+To\+Server}} (char $\ast$ip\+Address, int portno, char $\ast$mess)
+\item 
+\mbox{\Hypertarget{sh13_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{sh13_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+int {\bfseries main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sh13_8c_a1f65882538200c7d69cdfabe03250dde}\label{sh13_8c_a1f65882538200c7d69cdfabe03250dde}} 
+pthread\+\_\+t {\bfseries thread\+\_\+serveur\+\_\+tcp\+\_\+id}
+\item 
+\mbox{\Hypertarget{sh13_8c_a4acff8232e4aec9cd5c6dc200ac55ef3}\label{sh13_8c_a4acff8232e4aec9cd5c6dc200ac55ef3}} 
+pthread\+\_\+mutex\+\_\+t {\bfseries mutex} = P\+T\+H\+R\+E\+A\+D\+\_\+\+M\+U\+T\+E\+X\+\_\+\+I\+N\+I\+T\+I\+A\+L\+I\+Z\+ER
+\item 
+\mbox{\Hypertarget{sh13_8c_a50048cd5a966cefe7990602b1d48236d}\label{sh13_8c_a50048cd5a966cefe7990602b1d48236d}} 
+char {\bfseries gbuffer} \mbox{[}256\mbox{]}
+\item 
+char \mbox{\hyperlink{sh13_8c_a22909455f360351a0a4cc8188e36cf0c}{g\+Server\+Ip\+Address}} \mbox{[}256\mbox{]}
+\begin{DoxyCompactList}\small\item\em Enum pointer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{sh13_8c_a12c0bec8a0fb1e510dfaf591bd01349c}\label{sh13_8c_a12c0bec8a0fb1e510dfaf591bd01349c}} 
+int {\bfseries g\+Server\+Port}
+\item 
+\mbox{\Hypertarget{sh13_8c_ac91720708b65911aeb77bb7ebda438f2}\label{sh13_8c_ac91720708b65911aeb77bb7ebda438f2}} 
+char {\bfseries g\+Client\+Ip\+Address} \mbox{[}256\mbox{]}
+\item 
+\mbox{\Hypertarget{sh13_8c_ae5b1c45740df6fdc56eec4cdc8cd169e}\label{sh13_8c_ae5b1c45740df6fdc56eec4cdc8cd169e}} 
+int {\bfseries g\+Client\+Port}
+\item 
+\mbox{\Hypertarget{sh13_8c_afde96eb900d9e7c991d7b48d3c80b20d}\label{sh13_8c_afde96eb900d9e7c991d7b48d3c80b20d}} 
+char {\bfseries g\+Name} \mbox{[}256\mbox{]}
+\item 
+char \mbox{\hyperlink{sh13_8c_a47b35689e3a2c648f1761f1a9cc514b5}{g\+Names}} \mbox{[}4\mbox{]}\mbox{[}256\mbox{]}
+\item 
+\mbox{\Hypertarget{sh13_8c_a007dd1e55a60f09d2b85af990f9e372d}\label{sh13_8c_a007dd1e55a60f09d2b85af990f9e372d}} 
+int {\bfseries g\+Id}
+\item 
+\mbox{\Hypertarget{sh13_8c_acc38e9aa67011ce24b4c8a882d068c1d}\label{sh13_8c_acc38e9aa67011ce24b4c8a882d068c1d}} 
+int {\bfseries joueur\+Sel}
+\item 
+\mbox{\Hypertarget{sh13_8c_a86a6b495ecef125da850e79bcd62aba7}\label{sh13_8c_a86a6b495ecef125da850e79bcd62aba7}} 
+int {\bfseries objet\+Sel}
+\item 
+\mbox{\Hypertarget{sh13_8c_a45d3ea8306836d64c4faa2084d98f8c7}\label{sh13_8c_a45d3ea8306836d64c4faa2084d98f8c7}} 
+int {\bfseries guilt\+Sel}
+\item 
+\mbox{\Hypertarget{sh13_8c_aa704d8bf7756d37154c6c63c744a3b27}\label{sh13_8c_aa704d8bf7756d37154c6c63c744a3b27}} 
+int {\bfseries guilt\+Guess} \mbox{[}13\mbox{]}
+\item 
+\mbox{\Hypertarget{sh13_8c_a5136e762f5d03123aca3b44ee5428ae9}\label{sh13_8c_a5136e762f5d03123aca3b44ee5428ae9}} 
+int {\bfseries table\+Cartes} \mbox{[}4\mbox{]}\mbox{[}8\mbox{]}
+\item 
+\mbox{\Hypertarget{sh13_8c_a3967759bccdcfb06da6822fd26742f73}\label{sh13_8c_a3967759bccdcfb06da6822fd26742f73}} 
+int {\bfseries b} \mbox{[}3\mbox{]}
+\item 
+\mbox{\Hypertarget{sh13_8c_a0f8b74793505a9fb124ee0a2ea9d7e06}\label{sh13_8c_a0f8b74793505a9fb124ee0a2ea9d7e06}} 
+int {\bfseries go\+Enabled}
+\item 
+\mbox{\Hypertarget{sh13_8c_a0bf9ab38af165134864e46ce2e56d087}\label{sh13_8c_a0bf9ab38af165134864e46ce2e56d087}} 
+int {\bfseries connect\+Enabled}
+\item 
+\mbox{\Hypertarget{sh13_8c_aa63407817c0cca8a80fb934277a0b8a0}\label{sh13_8c_aa63407817c0cca8a80fb934277a0b8a0}} 
+char $\ast$ {\bfseries nbobjets} \mbox{[}$\,$\mbox{]} =\{\char`\"{}5\char`\"{},\char`\"{}5\char`\"{},\char`\"{}5\char`\"{},\char`\"{}5\char`\"{},\char`\"{}4\char`\"{},\char`\"{}3\char`\"{},\char`\"{}3\char`\"{},\char`\"{}3\char`\"{}\}
+\item 
+char $\ast$ {\bfseries nbnoms} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\Hypertarget{sh13_8c_a8225f160aecfab1365666fd07d1af31c}\label{sh13_8c_a8225f160aecfab1365666fd07d1af31c}} 
+volatile int {\bfseries synchro}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+client permettant de se connecter au serveur 
+
+\begin{DoxyAuthor}{Author}
+Arthur \& Younes 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+10 mai 2019
+\end{DoxyDate}
+Le client sh13 permet de se connecter au serveur proposant un autre protocol que H\+T\+TP, pour comprendre comment ce dernier fonctionne. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{sh13_8c_a2e05d0dede42b6aeb364340373554df6}\label{sh13_8c_a2e05d0dede42b6aeb364340373554df6}} 
+\index{sh13.c@{sh13.c}!fn\_serveur\_tcp@{fn\_serveur\_tcp}}
+\index{fn\_serveur\_tcp@{fn\_serveur\_tcp}!sh13.c@{sh13.c}}
+\subsubsection{\texorpdfstring{fn\_serveur\_tcp()}{fn\_serveur\_tcp()}}
+{\footnotesize\ttfamily void $\ast$ fn\+\_\+serveur\+\_\+tcp (\begin{DoxyParamCaption}\item[{void $\ast$}]{arg }\end{DoxyParamCaption})}
+
+
+
+Fonction passée en argument aux thread qui l\textquotesingle{}executera. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em void} & $\ast$arg sont les arguments de la fonction \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sh13_8c_aa6fd4f7eb54362ed558cdaeb5e5bd927}\label{sh13_8c_aa6fd4f7eb54362ed558cdaeb5e5bd927}} 
+\index{sh13.c@{sh13.c}!sendMessageToServer@{sendMessageToServer}}
+\index{sendMessageToServer@{sendMessageToServer}!sh13.c@{sh13.c}}
+\subsubsection{\texorpdfstring{sendMessageToServer()}{sendMessageToServer()}}
+{\footnotesize\ttfamily void send\+Message\+To\+Server (\begin{DoxyParamCaption}\item[{char $\ast$}]{ip\+Address,  }\item[{int}]{portno,  }\item[{char $\ast$}]{mess }\end{DoxyParamCaption})}
+
+S\+Envoie un message au serveur\+Normal
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{sh13_8c_a47b35689e3a2c648f1761f1a9cc514b5}\label{sh13_8c_a47b35689e3a2c648f1761f1a9cc514b5}} 
+\index{sh13.c@{sh13.c}!gNames@{gNames}}
+\index{gNames@{gNames}!sh13.c@{sh13.c}}
+\subsubsection{\texorpdfstring{gNames}{gNames}}
+{\footnotesize\ttfamily char g\+Names\mbox{[}4\mbox{]}\mbox{[}256\mbox{]}}
+
+Detailed description after the member \mbox{\Hypertarget{sh13_8c_a22909455f360351a0a4cc8188e36cf0c}\label{sh13_8c_a22909455f360351a0a4cc8188e36cf0c}} 
+\index{sh13.c@{sh13.c}!gServerIpAddress@{gServerIpAddress}}
+\index{gServerIpAddress@{gServerIpAddress}!sh13.c@{sh13.c}}
+\subsubsection{\texorpdfstring{gServerIpAddress}{gServerIpAddress}}
+{\footnotesize\ttfamily char g\+Server\+Ip\+Address\mbox{[}256\mbox{]}}
+
+
+
+Enum pointer. 
+
+Details. \mbox{\Hypertarget{sh13_8c_a170deefee6944bfd9474e64879d21284}\label{sh13_8c_a170deefee6944bfd9474e64879d21284}} 
+\index{sh13.c@{sh13.c}!nbnoms@{nbnoms}}
+\index{nbnoms@{nbnoms}!sh13.c@{sh13.c}}
+\subsubsection{\texorpdfstring{nbnoms}{nbnoms}}
+{\footnotesize\ttfamily char$\ast$ nbnoms\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\{\textcolor{stringliteral}{"Sebastian Moran"}, \textcolor{stringliteral}{"irene Adler"}, \textcolor{stringliteral}{"inspector Lestrade"},}
+\DoxyCodeLine{\textcolor{stringliteral}{"inspector Gregson"}, \textcolor{stringliteral}{"inspector Baynes"}, \textcolor{stringliteral}{"inspector Bradstreet"},}
+\DoxyCodeLine{\textcolor{stringliteral}{"inspector Hopkins"}, \textcolor{stringliteral}{"Sherlock Holmes"}, \textcolor{stringliteral}{"John Watson"}, \textcolor{stringliteral}{"Mycroft Holmes"},}
+\DoxyCodeLine{\textcolor{stringliteral}{"Mrs. Hudson"}, \textcolor{stringliteral}{"Mary Morstan"}, \textcolor{stringliteral}{"James Moriarty"}\}}
+
+\end{DoxyCode}
