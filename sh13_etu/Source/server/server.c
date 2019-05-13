@@ -1,11 +1,11 @@
 /**
  * \file server.c
- * \brief server soutenant le jeu Sherlock Holmes
+ * \brief server soutenant le jeu Sherlock Holmes. On exécute le server une fois et 4 clients afin de commencer un jeu
  * \author Arthur & Younes
  * \version 1.1
- * \date 10 mai 2019
+ * \date 13 mai 2019
  *
- * Ce serveur propose un autre protocol que HTTP, pour
+ * Ce serveur propose un autre protocole que HTTP, pour
  * comprendre comment ce dernier fonctionne.
  */
 
@@ -35,7 +35,7 @@ struct _client
 } tcpClients[4];
 //! Stock le nombre total de clients
 int nbClients;
-int fsmServer;
+int fsmServer; //! Tant que tout les clients ne sont pas connectés fsmServer = 0
 //! Permet de stocker l'adresse IP du client effectuant une demande
 int idDemande;
 //! Permet de stocker le coupable qu'accuse le client
@@ -44,7 +44,7 @@ int guiltSel;
 int joueurSel;
 //! Permet de stocker le objet qui interèsse le joueur effectuant une demande
 int objetSel;
-//! Stock le deck de cartes du jeu
+//! Stocke le deck de cartes du jeu
 int deck[13]={0,1,2,3,4,5,6,7,8,9,10,11,12};  //! Stock la quantité d'objet que possède chacun des joueurs
 int tableCartes[4][8];
 //! Permet de faire correspondre le deck aux noms
@@ -66,6 +66,45 @@ int joueurCourant;
 /**
  * \fn void   melangerDeck ()
  * \brief Fonction de mélange du deck de cartes afin de les distribuer
+ */
+
+/**
+ * \fn void   createTable ()
+ * \brief Fonction de création de la table de carte qui est une variable globale.
+ */
+
+/**
+ * \fn void   printDeck ()
+ * \brief Fonction d'affichage du deck'
+ */
+
+/**
+ * \fn void   printClients ()
+ * \brief affiche le numéro, adresse IP et numéro de port de chaque client
+ */
+
+/**
+ * \fn int   findClientByName (char* name)
+ * \brief Fonction d'affichage du deck'
+ * \param char* name est le nom du client qu'on souhaite chercher
+ */
+
+/**
+ * \fn int   sendMessageToClient(char *clientip,int clientport,char *mess)
+ * \brief Fonction d'affichage du deck'
+ * \param char* name est le nom du client qu'on souhaite chercher
+ */
+
+/**
+ * \fn int   broadcastMessage (char* mess)
+ * \brief Permet d'envoyer un message à l'ensemble des clients connectés sur le server
+ * \param char* mess est le message à envoyer
+ */
+
+/**
+ * \fn int   main(int argc, char *argv[])
+ * \brief Fonction principale
+ *
  */
 
 void error(const char *msg)
