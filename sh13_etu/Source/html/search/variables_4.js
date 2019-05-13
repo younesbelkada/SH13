@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['nbclients',['nbClients',['../server_8c.html#a2d4c98e5c74f88a941b51fb44756ac1e',1,'server.c']]],
-  ['nomcartes',['nomcartes',['../server_8c.html#a024375796156f9da42ef17ecd803b484',1,'server.c']]]
+  ['joueurcourant',['joueurCourant',['../server_8c.html#a2350ff80e84ae74a929a397c3b1e152f',1,'server.c']]],
+  ['joueursel',['joueurSel',['../server_8c.html#acc38e9aa67011ce24b4c8a882d068c1d',1,'server.c']]]
 ];

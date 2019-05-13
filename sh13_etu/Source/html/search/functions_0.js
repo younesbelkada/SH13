@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['error',['error',['../server_8c.html#a4866b2d37ffc80c5ba705d3fcd1e0ecf',1,'server.c']]]
+  ['broadcastmessage',['broadcastMessage',['../server_8c.html#a9cf4c7aa19d28eb76c9635b2267df762',1,'server.c']]]
 ];

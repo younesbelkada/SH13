@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['joueurcourant',['joueurCourant',['../server_8c.html#a2350ff80e84ae74a929a397c3b1e152f',1,'server.c']]],
-  ['joueursel',['joueurSel',['../server_8c.html#acc38e9aa67011ce24b4c8a882d068c1d',1,'server.c']]]
+  ['iddemande',['idDemande',['../server_8c.html#aa4c3e1e6e5357e73d2bc03c664e96617',1,'server.c']]]
 ];

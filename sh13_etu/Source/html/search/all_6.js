@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['joueurcourant',['joueurCourant',['../server_8c.html#a2350ff80e84ae74a929a397c3b1e152f',1,'server.c']]],
-  ['joueursel',['joueurSel',['../server_8c.html#acc38e9aa67011ce24b4c8a882d068c1d',1,'server.c']]]
+  ['gnames',['gNames',['../sh13_8c.html#a47b35689e3a2c648f1761f1a9cc514b5',1,'sh13.c']]],
+  ['gserveripaddress',['gServerIpAddress',['../sh13_8c.html#a22909455f360351a0a4cc8188e36cf0c',1,'sh13.c']]],
+  ['guiltsel',['guiltSel',['../server_8c.html#a45d3ea8306836d64c4faa2084d98f8c7',1,'server.c']]]
 ];

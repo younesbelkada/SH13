@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tablecartes',['tableCartes',['../server_8c.html#a5136e762f5d03123aca3b44ee5428ae9',1,'server.c']]]
+  ['objetsel',['objetSel',['../server_8c.html#a86a6b495ecef125da850e79bcd62aba7',1,'server.c']]]
 ];

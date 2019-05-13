@@ -1,10 +1,10 @@
 var indexSectionsWithContent =
 {
-  0: "_defgijmnost",
+  0: "_bcdefgijmnopst",
   1: "_",
   2: "s",
-  3: "efms",
-  4: "dgijnot"
+  3: "bcefmps",
+  4: "dfgijnot"
 };
 
 var indexSectionNames =

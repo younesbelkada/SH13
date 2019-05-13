@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['deck',['deck',['../server_8c.html#ae2efdbabfeef978d67002518e95f00ca',1,'server.c']]]
+  ['broadcastmessage',['broadcastMessage',['../server_8c.html#a9cf4c7aa19d28eb76c9635b2267df762',1,'server.c']]]
 ];

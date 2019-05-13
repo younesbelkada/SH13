@@ -76,7 +76,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>server soutenant le jeu Sherlock Holmes  
+<p>server soutenant le jeu Sherlock Holmes. On exécute le server une fois et 4 clients afin de commencer un jeu. Ce jeu nous permet d'aborder les notions fondamentales de la programmation réseau.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
@@ -99,83 +99,111 @@ Functions</h2></td></tr>
 <tr class="memitem:a4866b2d37ffc80c5ba705d3fcd1e0ecf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a4866b2d37ffc80c5ba705d3fcd1e0ecf">error</a> (const char *msg)</td></tr>
 <tr class="memdesc:a4866b2d37ffc80c5ba705d3fcd1e0ecf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction de gestion d'erreur.  <a href="#a4866b2d37ffc80c5ba705d3fcd1e0ecf">More...</a><br /></td></tr>
 <tr class="separator:a4866b2d37ffc80c5ba705d3fcd1e0ecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cb95e508c0ffc0101b4108ff250c870"><td class="memItemLeft" align="right" valign="top"><a id="a0cb95e508c0ffc0101b4108ff250c870"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a0cb95e508c0ffc0101b4108ff250c870">melangerDeck</a> ()</td></tr>
-<tr class="memdesc:a0cb95e508c0ffc0101b4108ff250c870"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction de mélange du deck de cartes afin de les distribuer. <br /></td></tr>
+<tr class="memitem:a0cb95e508c0ffc0101b4108ff250c870"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a0cb95e508c0ffc0101b4108ff250c870">melangerDeck</a> ()</td></tr>
+<tr class="memdesc:a0cb95e508c0ffc0101b4108ff250c870"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction de mélange du deck de cartes afin de les distribuer.  <a href="#a0cb95e508c0ffc0101b4108ff250c870">More...</a><br /></td></tr>
 <tr class="separator:a0cb95e508c0ffc0101b4108ff250c870"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a349b93f883bcada89b4cf66d7a92bb21"><td class="memItemLeft" align="right" valign="top"><a id="a349b93f883bcada89b4cf66d7a92bb21"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>createTable</b> ()</td></tr>
+<tr class="memitem:a349b93f883bcada89b4cf66d7a92bb21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a349b93f883bcada89b4cf66d7a92bb21">createTable</a> ()</td></tr>
+<tr class="memdesc:a349b93f883bcada89b4cf66d7a92bb21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction de création de la table de carte qui est une variable globale.  <a href="#a349b93f883bcada89b4cf66d7a92bb21">More...</a><br /></td></tr>
 <tr class="separator:a349b93f883bcada89b4cf66d7a92bb21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30dedb21b81bcab75c0b351087b64fa1"><td class="memItemLeft" align="right" valign="top"><a id="a30dedb21b81bcab75c0b351087b64fa1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>printDeck</b> ()</td></tr>
+<tr class="memitem:a30dedb21b81bcab75c0b351087b64fa1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a30dedb21b81bcab75c0b351087b64fa1">printDeck</a> ()</td></tr>
+<tr class="memdesc:a30dedb21b81bcab75c0b351087b64fa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction d'affichage du deck'.  <a href="#a30dedb21b81bcab75c0b351087b64fa1">More...</a><br /></td></tr>
 <tr class="separator:a30dedb21b81bcab75c0b351087b64fa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3be7017ee4476744e47456935c39c509"><td class="memItemLeft" align="right" valign="top"><a id="a3be7017ee4476744e47456935c39c509"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>printClients</b> ()</td></tr>
+<tr class="memitem:a3be7017ee4476744e47456935c39c509"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a3be7017ee4476744e47456935c39c509">printClients</a> ()</td></tr>
+<tr class="memdesc:a3be7017ee4476744e47456935c39c509"><td class="mdescLeft">&#160;</td><td class="mdescRight">affiche le numéro, adresse IP et numéro de port de chaque client  <a href="#a3be7017ee4476744e47456935c39c509">More...</a><br /></td></tr>
 <tr class="separator:a3be7017ee4476744e47456935c39c509"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07f7f1553a2d1708276200adf61e7d02"><td class="memItemLeft" align="right" valign="top"><a id="a07f7f1553a2d1708276200adf61e7d02"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>findClientByName</b> (char *name)</td></tr>
+<tr class="memitem:a07f7f1553a2d1708276200adf61e7d02"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a07f7f1553a2d1708276200adf61e7d02">findClientByName</a> (char *name)</td></tr>
+<tr class="memdesc:a07f7f1553a2d1708276200adf61e7d02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction d'affichage du deck'.  <a href="#a07f7f1553a2d1708276200adf61e7d02">More...</a><br /></td></tr>
 <tr class="separator:a07f7f1553a2d1708276200adf61e7d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9aa1e493ee18081ffa952fc677c8ba1"><td class="memItemLeft" align="right" valign="top"><a id="af9aa1e493ee18081ffa952fc677c8ba1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>sendMessageToClient</b> (char *clientip, int clientport, char *mess)</td></tr>
+<tr class="memitem:af9aa1e493ee18081ffa952fc677c8ba1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#af9aa1e493ee18081ffa952fc677c8ba1">sendMessageToClient</a> (char *clientip, int clientport, char *mess)</td></tr>
+<tr class="memdesc:af9aa1e493ee18081ffa952fc677c8ba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction d'affichage du deck'.  <a href="#af9aa1e493ee18081ffa952fc677c8ba1">More...</a><br /></td></tr>
 <tr class="separator:af9aa1e493ee18081ffa952fc677c8ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cf4c7aa19d28eb76c9635b2267df762"><td class="memItemLeft" align="right" valign="top"><a id="a9cf4c7aa19d28eb76c9635b2267df762"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>broadcastMessage</b> (char *mess)</td></tr>
+<tr class="memitem:a9cf4c7aa19d28eb76c9635b2267df762"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a9cf4c7aa19d28eb76c9635b2267df762">broadcastMessage</a> (char *mess)</td></tr>
+<tr class="memdesc:a9cf4c7aa19d28eb76c9635b2267df762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet d'envoyer un message à l'ensemble des clients connectés sur le server.  <a href="#a9cf4c7aa19d28eb76c9635b2267df762">More...</a><br /></td></tr>
 <tr class="separator:a9cf4c7aa19d28eb76c9635b2267df762"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top"><a id="a0ddf1224851353fc92bfbff6f499fa97"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>main</b> (int argc, char *argv[])</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="memdesc:a0ddf1224851353fc92bfbff6f499fa97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction principale. <br /></td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:aaa2664f0bc76752d46e18fc781bb44b7"><td class="memItemLeft" align="right" valign="top"><a id="aaa2664f0bc76752d46e18fc781bb44b7"></a>
-struct <a class="el" href="struct__client.html">_client</a>&#160;</td><td class="memItemRight" valign="bottom"><b>tcpClients</b> [4]</td></tr>
+<tr class="memitem:aaa2664f0bc76752d46e18fc781bb44b7"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct__client.html">_client</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#aaa2664f0bc76752d46e18fc781bb44b7">tcpClients</a> [4]</td></tr>
 <tr class="separator:aaa2664f0bc76752d46e18fc781bb44b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d4c98e5c74f88a941b51fb44756ac1e"><td class="memItemLeft" align="right" valign="top"><a id="a2d4c98e5c74f88a941b51fb44756ac1e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a2d4c98e5c74f88a941b51fb44756ac1e">nbClients</a></td></tr>
-<tr class="memdesc:a2d4c98e5c74f88a941b51fb44756ac1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stock le nombre total de clients. <br /></td></tr>
+<tr class="memitem:a2d4c98e5c74f88a941b51fb44756ac1e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a2d4c98e5c74f88a941b51fb44756ac1e">nbClients</a></td></tr>
 <tr class="separator:a2d4c98e5c74f88a941b51fb44756ac1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73a162241fb3895e5df5b930dddd1f8f"><td class="memItemLeft" align="right" valign="top"><a id="a73a162241fb3895e5df5b930dddd1f8f"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>fsmServer</b></td></tr>
+<tr class="memitem:a73a162241fb3895e5df5b930dddd1f8f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a73a162241fb3895e5df5b930dddd1f8f">fsmServer</a></td></tr>
 <tr class="separator:a73a162241fb3895e5df5b930dddd1f8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4c3e1e6e5357e73d2bc03c664e96617"><td class="memItemLeft" align="right" valign="top"><a id="aa4c3e1e6e5357e73d2bc03c664e96617"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#aa4c3e1e6e5357e73d2bc03c664e96617">idDemande</a></td></tr>
-<tr class="memdesc:aa4c3e1e6e5357e73d2bc03c664e96617"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de stocker l'adresse IP du client effectuant une demande. <br /></td></tr>
+<tr class="memitem:aa4c3e1e6e5357e73d2bc03c664e96617"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#aa4c3e1e6e5357e73d2bc03c664e96617">idDemande</a></td></tr>
 <tr class="separator:aa4c3e1e6e5357e73d2bc03c664e96617"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45d3ea8306836d64c4faa2084d98f8c7"><td class="memItemLeft" align="right" valign="top"><a id="a45d3ea8306836d64c4faa2084d98f8c7"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a45d3ea8306836d64c4faa2084d98f8c7">guiltSel</a></td></tr>
-<tr class="memdesc:a45d3ea8306836d64c4faa2084d98f8c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de stocker le coupable qu'accuse le client. <br /></td></tr>
+<tr class="memitem:a45d3ea8306836d64c4faa2084d98f8c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a45d3ea8306836d64c4faa2084d98f8c7">guiltSel</a></td></tr>
 <tr class="separator:a45d3ea8306836d64c4faa2084d98f8c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc38e9aa67011ce24b4c8a882d068c1d"><td class="memItemLeft" align="right" valign="top"><a id="acc38e9aa67011ce24b4c8a882d068c1d"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#acc38e9aa67011ce24b4c8a882d068c1d">joueurSel</a></td></tr>
-<tr class="memdesc:acc38e9aa67011ce24b4c8a882d068c1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de stocker le joueur dont le client souhaite connaitre le nombre d'objet. <br /></td></tr>
+<tr class="memitem:acc38e9aa67011ce24b4c8a882d068c1d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#acc38e9aa67011ce24b4c8a882d068c1d">joueurSel</a></td></tr>
 <tr class="separator:acc38e9aa67011ce24b4c8a882d068c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86a6b495ecef125da850e79bcd62aba7"><td class="memItemLeft" align="right" valign="top"><a id="a86a6b495ecef125da850e79bcd62aba7"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a86a6b495ecef125da850e79bcd62aba7">objetSel</a></td></tr>
-<tr class="memdesc:a86a6b495ecef125da850e79bcd62aba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de stocker le objet qui interèsse le joueur effectuant une demande. <br /></td></tr>
+<tr class="memitem:a86a6b495ecef125da850e79bcd62aba7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a86a6b495ecef125da850e79bcd62aba7">objetSel</a></td></tr>
 <tr class="separator:a86a6b495ecef125da850e79bcd62aba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2efdbabfeef978d67002518e95f00ca"><td class="memItemLeft" align="right" valign="top"><a id="ae2efdbabfeef978d67002518e95f00ca"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#ae2efdbabfeef978d67002518e95f00ca">deck</a> [13] ={0,1,2,3,4,5,6,7,8,9,10,11,12}</td></tr>
-<tr class="memdesc:ae2efdbabfeef978d67002518e95f00ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stock le deck de cartes du jeu. <br /></td></tr>
+<tr class="memitem:ae2efdbabfeef978d67002518e95f00ca"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#ae2efdbabfeef978d67002518e95f00ca">deck</a> [13] ={0,1,2,3,4,5,6,7,8,9,10,11,12}</td></tr>
 <tr class="separator:ae2efdbabfeef978d67002518e95f00ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5136e762f5d03123aca3b44ee5428ae9"><td class="memItemLeft" align="right" valign="top"><a id="a5136e762f5d03123aca3b44ee5428ae9"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a5136e762f5d03123aca3b44ee5428ae9">tableCartes</a> [4][8]</td></tr>
-<tr class="memdesc:a5136e762f5d03123aca3b44ee5428ae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stock la quantité d'objet que possède chacun des joueurs. <br /></td></tr>
+<tr class="memitem:a5136e762f5d03123aca3b44ee5428ae9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a5136e762f5d03123aca3b44ee5428ae9">tableCartes</a> [4][8]</td></tr>
 <tr class="separator:a5136e762f5d03123aca3b44ee5428ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a024375796156f9da42ef17ecd803b484"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a024375796156f9da42ef17ecd803b484">nomcartes</a> []</td></tr>
-<tr class="memdesc:a024375796156f9da42ef17ecd803b484"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de faire correspondre le deck aux noms.  <a href="#a024375796156f9da42ef17ecd803b484">More...</a><br /></td></tr>
 <tr class="separator:a024375796156f9da42ef17ecd803b484"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2350ff80e84ae74a929a397c3b1e152f"><td class="memItemLeft" align="right" valign="top"><a id="a2350ff80e84ae74a929a397c3b1e152f"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a2350ff80e84ae74a929a397c3b1e152f">joueurCourant</a></td></tr>
-<tr class="memdesc:a2350ff80e84ae74a929a397c3b1e152f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indice du joueur ayant la main. <br /></td></tr>
+<tr class="memitem:a2350ff80e84ae74a929a397c3b1e152f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a2350ff80e84ae74a929a397c3b1e152f">joueurCourant</a></td></tr>
 <tr class="separator:a2350ff80e84ae74a929a397c3b1e152f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>server soutenant le jeu Sherlock Holmes </p>
+<div class="textblock"><p>server soutenant le jeu Sherlock Holmes. On exécute le server une fois et 4 clients afin de commencer un jeu. Ce jeu nous permet d'aborder les notions fondamentales de la programmation réseau. </p>
 <dl class="section author"><dt>Author</dt><dd>Arthur &amp; Younes </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.1 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>10 mai 2019</dd></dl>
-<p>Ce serveur propose un autre protocol que HTTP, pour comprendre comment ce dernier fonctionne. </p>
+<dl class="section date"><dt>Date</dt><dd>13 mai 2019</dd></dl>
+<p>Ce serveur propose un autre protocole que HTTP, pour comprendre comment ce dernier fonctionne. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a9cf4c7aa19d28eb76c9635b2267df762"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cf4c7aa19d28eb76c9635b2267df762">&#9670;&nbsp;</a></span>broadcastMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void broadcastMessage </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>mess</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Permet d'envoyer un message à l'ensemble des clients connectés sur le server. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">char*</td><td>mess est le message à envoyer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Cette fonction ne retourne rien. </dd></dl>
+
+</div>
+</div>
+<a id="a349b93f883bcada89b4cf66d7a92bb21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a349b93f883bcada89b4cf66d7a92bb21">&#9670;&nbsp;</a></span>createTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void createTable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction de création de la table de carte qui est une variable globale. </p>
+<dl class="section return"><dt>Returns</dt><dd>Cette fonction ne retourne rien. </dd></dl>
+
+</div>
+</div>
 <a id="a4866b2d37ffc80c5ba705d3fcd1e0ecf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4866b2d37ffc80c5ba705d3fcd1e0ecf">&#9670;&nbsp;</a></span>error()</h2>
 
@@ -199,10 +227,249 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serve
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Cette fonction ne retourne rien. </dd></dl>
+
+</div>
+</div>
+<a id="a07f7f1553a2d1708276200adf61e7d02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07f7f1553a2d1708276200adf61e7d02">&#9670;&nbsp;</a></span>findClientByName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int findClientByName </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction d'affichage du deck'. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">char*</td><td>name est le nom du client qu'on souhaite chercher </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Faire attention à bien écrire le nom (ne pas se tromper sur les majuscules etc.) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Retourne le id du client, renvoie -1 sinon. </dd></dl>
+
+</div>
+</div>
+<a id="a0cb95e508c0ffc0101b4108ff250c870"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cb95e508c0ffc0101b4108ff250c870">&#9670;&nbsp;</a></span>melangerDeck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void melangerDeck </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction de mélange du deck de cartes afin de les distribuer. </p>
+<dl class="section warning"><dt>Warning</dt><dd>à ne pas confondre deck et nom_cartes, comme on ne peut pas mélanger une liste de chaines de caractères, on mélange leurs indices! </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Cette fonction ne retourne rien, elle exerce sa modification directement sur la variable globale. </dd></dl>
+
+</div>
+</div>
+<a id="a3be7017ee4476744e47456935c39c509"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3be7017ee4476744e47456935c39c509">&#9670;&nbsp;</a></span>printClients()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void printClients </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>affiche le numéro, adresse IP et numéro de port de chaque client </p>
+<dl class="section return"><dt>Returns</dt><dd>Cette fonction ne retourne rien. </dd></dl>
+
+</div>
+</div>
+<a id="a30dedb21b81bcab75c0b351087b64fa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30dedb21b81bcab75c0b351087b64fa1">&#9670;&nbsp;</a></span>printDeck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void printDeck </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction d'affichage du deck'. </p>
+<dl class="section return"><dt>Returns</dt><dd>Cette fonction ne retourne rien. </dd></dl>
+
+</div>
+</div>
+<a id="af9aa1e493ee18081ffa952fc677c8ba1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9aa1e493ee18081ffa952fc677c8ba1">&#9670;&nbsp;</a></span>sendMessageToClient()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sendMessageToClient </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>clientip</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>clientport</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>mess</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction d'affichage du deck'. </p>
+<dl class="section warning"><dt>Warning</dt><dd>En cas d'erreur (faute sur le nom par exemple), le message ne sera pas envoyé </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">char*</td><td>name est le nom du client qu'on souhaite chercher </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Cette fonction ne retourne rien, elle envoie le message directement au client. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="ae2efdbabfeef978d67002518e95f00ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2efdbabfeef978d67002518e95f00ca">&#9670;&nbsp;</a></span>deck</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int deck[13] ={0,1,2,3,4,5,6,7,8,9,10,11,12}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>La variable deck correspond à l'ensemble des indices utilisés afin de parcourir les cartes initialisés dans la variable nom_cartes </p>
+
+</div>
+</div>
+<a id="a73a162241fb3895e5df5b930dddd1f8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73a162241fb3895e5df5b930dddd1f8f">&#9670;&nbsp;</a></span>fsmServer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int fsmServer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Tant que tout les clients ne sont pas connectés fsmServer = 0 </p>
+
+</div>
+</div>
+<a id="a45d3ea8306836d64c4faa2084d98f8c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45d3ea8306836d64c4faa2084d98f8c7">&#9670;&nbsp;</a></span>guiltSel</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int guiltSel</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Permet de stocker le coupable qu'accuse le client </p>
+
+</div>
+</div>
+<a id="aa4c3e1e6e5357e73d2bc03c664e96617"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4c3e1e6e5357e73d2bc03c664e96617">&#9670;&nbsp;</a></span>idDemande</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int idDemande</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Il s'agit de l'id du client qui réalise sa demande </p>
+
+</div>
+</div>
+<a id="a2350ff80e84ae74a929a397c3b1e152f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2350ff80e84ae74a929a397c3b1e152f">&#9670;&nbsp;</a></span>joueurCourant</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int joueurCourant</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indice du joueur ayant la main </p>
+
+</div>
+</div>
+<a id="acc38e9aa67011ce24b4c8a882d068c1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc38e9aa67011ce24b4c8a882d068c1d">&#9670;&nbsp;</a></span>joueurSel</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int joueurSel</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Permet de stocker le joueur dont le client souhaite connaitre le nombre d'objet </p>
+
+</div>
+</div>
+<a id="a2d4c98e5c74f88a941b51fb44756ac1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d4c98e5c74f88a941b51fb44756ac1e">&#9670;&nbsp;</a></span>nbClients</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nbClients</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Le nombre de Clients, comme son nom l'indique </p>
+
+</div>
+</div>
 <a id="a024375796156f9da42ef17ecd803b484"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a024375796156f9da42ef17ecd803b484">&#9670;&nbsp;</a></span>nomcartes</h2>
 
@@ -214,8 +481,52 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serve
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">{<span class="stringliteral">&quot;Sebastian Moran&quot;</span>, <span class="stringliteral">&quot;irene Adler&quot;</span>, <span class="stringliteral">&quot;inspector Lestrade&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;inspector Gregson&quot;</span>, <span class="stringliteral">&quot;inspector Baynes&quot;</span>, <span class="stringliteral">&quot;inspector Bradstreet&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;inspector Hopkins&quot;</span>, <span class="stringliteral">&quot;Sherlock Holmes&quot;</span>, <span class="stringliteral">&quot;John Watson&quot;</span>, <span class="stringliteral">&quot;Mycroft Holmes&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;Mrs. Hudson&quot;</span>, <span class="stringliteral">&quot;Mary Morstan&quot;</span>, <span class="stringliteral">&quot;James Moriarty&quot;</span>}</div></div><!-- fragment -->
-<p>Permet de faire correspondre le deck aux noms. </p>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">{<span class="stringliteral">&quot;Sebastian Moran&quot;</span>, <span class="stringliteral">&quot;irene Adler&quot;</span>, <span class="stringliteral">&quot;inspector Lestrade&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;inspector Gregson&quot;</span>, <span class="stringliteral">&quot;inspector Baynes&quot;</span>, <span class="stringliteral">&quot;inspector Bradstreet&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;inspector Hopkins&quot;</span>, <span class="stringliteral">&quot;Sherlock Holmes&quot;</span>, <span class="stringliteral">&quot;John Watson&quot;</span>, <span class="stringliteral">&quot;Mycroft Holmes&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;Mrs. Hudson&quot;</span>, <span class="stringliteral">&quot;Mary Morstan&quot;</span>, <span class="stringliteral">&quot;James Moriarty&quot;</span>}</div></div><!-- fragment --><p>Liste des cartes avec leur nom, on associe à chaque entier de deck, sa carte correspondate dans cette liste </p>
+
+</div>
+</div>
+<a id="a86a6b495ecef125da850e79bcd62aba7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86a6b495ecef125da850e79bcd62aba7">&#9670;&nbsp;</a></span>objetSel</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int objetSel</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Permet de stocker le objet qui interèsse le joueur effectuant une demande </p>
+
+</div>
+</div>
+<a id="a5136e762f5d03123aca3b44ee5428ae9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5136e762f5d03123aca3b44ee5428ae9">&#9670;&nbsp;</a></span>tableCartes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tableCartes[4][8]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Permet de faire correspondre le deck aux noms </p>
+
+</div>
+</div>
+<a id="aaa2664f0bc76752d46e18fc781bb44b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa2664f0bc76752d46e18fc781bb44b7">&#9670;&nbsp;</a></span>tcpClients</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="struct__client.html">_client</a>  tcpClients[4]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>On a un tableau de 4 clients avec leur adrese IP, numéro de port ainsi que leur nom </p>
 
 </div>
 </div>
