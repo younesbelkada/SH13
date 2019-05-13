@@ -1,6 +1,6 @@
 /**
  * \file server.c
- * \brief server soutenant le jeu Sherlock Holmes. On exécute le server une fois et 4 clients afin de commencer un jeu
+ * \brief server soutenant le jeu Sherlock Holmes. On exécute le server une fois et 4 clients afin de commencer un jeu. Ce jeu nous permet d'aborder les notions fondamentales de la programmation réseau.
  * \author Arthur & Younes
  * \version 1.1
  * \date 13 mai 2019
@@ -32,73 +32,77 @@ struct _client
   char ipAddress[40];
   int port;
   char name[40];
-} tcpClients[4];
-//! Stock le nombre total de clients
-int nbClients;
-int fsmServer; //! Tant que tout les clients ne sont pas connectés fsmServer = 0
-//! Permet de stocker l'adresse IP du client effectuant une demande
-int idDemande;
-//! Permet de stocker le coupable qu'accuse le client
-int guiltSel;
-//! Permet de stocker le joueur dont le client souhaite connaitre le nombre d'objet
-int joueurSel;
-//! Permet de stocker le objet qui interèsse le joueur effectuant une demande
-int objetSel;
-//! Stocke le deck de cartes du jeu
-int deck[13]={0,1,2,3,4,5,6,7,8,9,10,11,12};  //! Stock la quantité d'objet que possède chacun des joueurs
-int tableCartes[4][8];
-//! Permet de faire correspondre le deck aux noms
+} tcpClients[4]; /*!< On a un tableau de 4 clients avec leur adrese IP, numéro de port ainsi que leur nom */
+int nbClients; /*!< Le nombre de Clients, comme son nom l'indique */
+int fsmServer; /*!< Tant que tout les clients ne sont pas connectés fsmServer = 0 */
+int idDemande; /*!< Il s'agit de l'id du client qui réalise sa demande */
+int guiltSel; /*!< Permet de stocker le coupable qu'accuse le client */
+int joueurSel; /*!< Permet de stocker le joueur dont le client souhaite connaitre le nombre d'objet */
+int objetSel; /*!< Permet de stocker le objet qui interèsse le joueur effectuant une demande */
+int deck[13]={0,1,2,3,4,5,6,7,8,9,10,11,12};  /*!< La variable deck correspond à l'ensemble des indices utilisés afin de parcourir les cartes initialisés dans la variable nom_cartes */
+int tableCartes[4][8]; /*!< Permet de faire correspondre le deck aux noms */
 
 char *nomcartes[]=
 {"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "inspector Gregson", "inspector Baynes", "inspector Bradstreet",
 "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
-"Mrs. Hudson", "Mary Morstan", "James Moriarty"};
- //! Indice du joueur ayant la main
-int joueurCourant;
+"Mrs. Hudson", "Mary Morstan", "James Moriarty"}; /*!< Liste des cartes avec leur nom, on associe à chaque entier de deck, sa carte correspondate dans cette liste */
+
+int joueurCourant; /*!< Indice du joueur ayant la main */ 
 
 /**
  * \fn void   error (const char *msg)
  * \brief Fonction de gestion d'erreur
  * \param const char *msg est le message à renvoyer
+ * \return Cette fonction ne retourne rien.
  */
 
 /**
  * \fn void   melangerDeck ()
  * \brief Fonction de mélange du deck de cartes afin de les distribuer
+ * \warning à ne pas confondre deck et nom_cartes, comme on ne peut pas mélanger une liste de chaines de caractères, on mélange leurs indices!
+ * \return Cette fonction ne retourne rien, elle exerce sa modification directement sur la variable globale.
  */
 
 /**
  * \fn void   createTable ()
  * \brief Fonction de création de la table de carte qui est une variable globale.
+ * \return Cette fonction ne retourne rien.
  */
 
 /**
  * \fn void   printDeck ()
  * \brief Fonction d'affichage du deck'
+ * \return Cette fonction ne retourne rien.
  */
 
 /**
  * \fn void   printClients ()
  * \brief affiche le numéro, adresse IP et numéro de port de chaque client
+ * \return Cette fonction ne retourne rien.
  */
 
 /**
  * \fn int   findClientByName (char* name)
  * \brief Fonction d'affichage du deck'
  * \param char* name est le nom du client qu'on souhaite chercher
+ * \warning Faire attention à bien écrire le nom (ne pas se tromper sur les majuscules etc.)
+ * \returns Retourne le id du client, renvoie -1 sinon.
  */
 
 /**
- * \fn int   sendMessageToClient(char *clientip,int clientport,char *mess)
+ * \fn void   sendMessageToClient(char *clientip,int clientport,char *mess)
  * \brief Fonction d'affichage du deck'
+ * \warning En cas d'erreur (faute sur le nom par exemple), le message ne sera pas envoyé 
  * \param char* name est le nom du client qu'on souhaite chercher
+ * \return Cette fonction ne retourne rien, elle envoie le message directement au client.
  */
 
 /**
- * \fn int   broadcastMessage (char* mess)
+ * \fn void   broadcastMessage (char* mess)
  * \brief Permet d'envoyer un message à l'ensemble des clients connectés sur le server
  * \param char* mess est le message à envoyer
+ * \return Cette fonction ne retourne rien.
  */
 
 /**
