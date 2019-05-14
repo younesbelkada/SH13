@@ -8,9 +8,7 @@
  * Ce serveur propose un autre protocole que HTTP, pour
  * comprendre comment ce dernier fonctionne.
  */
-// Ajouter: joueur trompe plus le droit de go
-// Plus quand jeu finis plus propre
-//
+// Ajouter: Sauvegarde des données rentrées
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -116,7 +114,7 @@ int joueurCourant; /*!< Indice du joueur ayant la main */
 void error(const char *msg)
 {
   perror(msg);
-  exit(1);
+  exit(1);who has the hand C
 }
 
 void melangerDeck()
@@ -354,6 +352,9 @@ int main(int argc, char *argv[]){
         {
           switch (buffer[0])
           {
+            case 'Q': sscanf(buffer,"Q %d",&idDemande);
+            // On recrée la liste en enlevant le joueur.
+            // On remet l'odre de la liste
             case 'C':
             sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
             printf("COM=%c ipAddress=%s port=%d name=%s\n",com, clientIpAddress, clientPort, clientName);
@@ -412,6 +413,11 @@ int main(int argc, char *argv[]){
               {
                 switch (buffer[0])
                 {
+                  case 'Q':
+                  sscanf(buffer,"Q %d",&idDemande);
+                  //nbClients--;
+                  // L'enlever de la liste fonction enlever
+                  fsmServer=0;break;
                   case 'G':
                   sscanf(buffer,"G %d %d",&idDemande,&guiltSel);
                   if (guiltSel == deck[12] ) {
