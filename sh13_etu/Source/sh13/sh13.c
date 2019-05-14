@@ -42,6 +42,7 @@ int tableCartes[4][8];
 int b[3];
 int goEnabled;
 int connectEnabled;
+int chatEnable = -1;
 
 char *nbobjets[]={"5","5","5","5","4","3","3","3"};
 char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
@@ -294,6 +295,7 @@ int main(int argc, char ** argv)
           }
         }else if ((mx <= 800) && (my <= 500) && (mx >= 700) && (my >= 350) ) {
           // Exécution du chat
+          chatEnable *= -1;
           char chat[256];
           printf("%s\n", "Ecrivez votre message");
           scanf("%s[^\n]", chat);
@@ -387,6 +389,13 @@ int main(int argc, char ** argv)
     SDL_SetRenderDrawColor(renderer, 255, 230, 230, 230);
     SDL_Rect rect = {0, 0, 1024, 768};
     SDL_RenderFillRect(renderer, &rect);
+
+    if (chatEnable)
+    {
+      SDL_SetRenderDrawColor(renderer, 0,0, 0, 0);
+      SDL_Rect rect1 = {1000, 500, 400 , 200};
+      SDL_RenderFillRect(renderer, &rect1);
+    }
 
     if (joueurSel!=-1)
     {

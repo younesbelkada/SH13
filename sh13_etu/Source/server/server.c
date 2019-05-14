@@ -50,6 +50,8 @@ char *nomcartes[]=
 
 int joueurCourant; /*!< Indice du joueur ayant la main */
 char chatserver[256]; /*!< Texte contenant le chat */
+char tab_texte[8][256]; /*!< Tableau contenant les messages */
+int i = 0;
 /**
  * \fn void   error (const char *msg)
  * \brief Fonction de gestion d'erreur
@@ -357,6 +359,11 @@ int main(int argc, char *argv[]){
             case 'Z':
               //printf("COCOU\n");
               sscanf(buffer,"%c %s %d", &com, chatserver, &idDemande);
+              sprintf(tab_texte[i],"%s",chatserver);
+              i++;
+              if (i > 7) {
+                i = 0;
+              }
               break;
             case 'C':
             sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
@@ -411,6 +418,7 @@ int main(int argc, char *argv[]){
                   break;
                 }
               }
+            }
               else if (fsmServer==1)
               {
                 switch (buffer[0])
