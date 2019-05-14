@@ -48,7 +48,7 @@ char *nomcartes[]=
 "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
 "Mrs. Hudson", "Mary Morstan", "James Moriarty"}; /*!< Liste des cartes avec leur nom, on associe à chaque entier de deck, sa carte correspondate dans cette liste */
 
-int joueurCourant; /*!< Indice du joueur ayant la main */ 
+int joueurCourant; /*!< Indice du joueur ayant la main */
 
 /**
  * \fn void   error (const char *msg)
@@ -93,7 +93,7 @@ int joueurCourant; /*!< Indice du joueur ayant la main */
 /**
  * \fn void   sendMessageToClient(char *clientip,int clientport,char *mess)
  * \brief Fonction d'affichage du deck'
- * \warning En cas d'erreur (faute sur le nom par exemple), le message ne sera pas envoyé 
+ * \warning En cas d'erreur (faute sur le nom par exemple), le message ne sera pas envoyé
  * \param char* name est le nom du client qu'on souhaite chercher
  * \return Cette fonction ne retourne rien, elle envoie le message directement au client.
  */
@@ -385,7 +385,8 @@ int main(int argc, char *argv[]){
               broadcastMessage(reply);
 
               // Si le nombre de joueurs atteint 4, alors on peut lancer le jeu
-
+            case 'Z':
+              printf("HI\n");
               if (nbClients==4)
               {
                 // On envoie ses cartes au joueur 0, ainsi que la ligne qui lui correspond dans tableCartes
@@ -437,9 +438,7 @@ int main(int argc, char *argv[]){
                     sscanf(buffer,"S %d %d %d",&idDemande,&joueurSel,&objetSel);
                     printf("%d %d %d",idDemande,joueurSel,objetSel );
                     sprintf(reply,"S %d %d %d",joueurSel, objetSel,tableCartes[joueurSel][objetSel]);
-                    sendMessageToClient(tcpClients[idDemande].ipAddress,
-                      tcpClients[idDemande].port,
-                      reply);
+                    broadcastMessage(reply);
                     break;
                   default:
                     break;

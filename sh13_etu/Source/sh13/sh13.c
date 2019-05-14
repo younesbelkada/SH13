@@ -273,14 +273,13 @@ int main(int argc, char ** argv)
           int ind=(my-350)/30;
           guiltGuess[ind]=1-guiltGuess[ind];
         }
-        else if ((mx>=500) && (mx<700) && (my>=350) && (my<450) && (goEnabled==1))
+        else if ((mx>=500) && (mx<600) && (my>=350) && (my<500) && (goEnabled==1))
         {
           printf("go! joueur=%d objet=%d guilt=%d\n",joueurSel, objetSel, guiltSel);
           if (guiltSel!=-1)
           {
             sprintf(sendBuffer,"G %d %d",gId, guiltSel);
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-
           }
           else if ((objetSel!=-1) && (joueurSel==-1))
           {
@@ -294,7 +293,19 @@ int main(int argc, char ** argv)
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
 
           }
+        }else if ((mx <= 800) && (my <= 500) && (mx >= 700) && (my >= 350) ) {
+          // Exécution du chat
+          char chat[256];
+          printf("%s\n", "Ecrivez votre message");
+          scanf("%s[^\n]", chat);
+          sprintf(sendBuffer,"Z %s %d",chat, gId);
+          sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
+        }else if ((mx < 700) && (my <= 500) && (mx >= 600) && (my >= 350) ){
+          sprintf(sendBuffer,"Q %d",gId);
+          sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
+          exit(0);
         }
+
         else
         {
           joueurSel=-1;
@@ -677,9 +688,9 @@ int main(int argc, char ** argv)
     }
 
     // Le bouton go
-    if (goEnabled==1)
+    if (1)
     {
-      SDL_Rect dstrect = { 500, 350, 200, 150 };
+      SDL_Rect dstrect = { 400, 350, 200, 150 };
       SDL_RenderCopy(renderer, texture_gobutton, NULL, &dstrect);
     }
     // Le bouton connect
