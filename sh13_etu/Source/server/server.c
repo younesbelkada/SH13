@@ -49,7 +49,7 @@ char *nomcartes[]=
 "Mrs. Hudson", "Mary Morstan", "James Moriarty"}; /*!< Liste des cartes avec leur nom, on associe à chaque entier de deck, sa carte correspondate dans cette liste */
 
 int joueurCourant; /*!< Indice du joueur ayant la main */
-
+char chatserver[256]; /*!< Texte contenant le chat */
 /**
  * \fn void   error (const char *msg)
  * \brief Fonction de gestion d'erreur
@@ -114,7 +114,7 @@ int joueurCourant; /*!< Indice du joueur ayant la main */
 void error(const char *msg)
 {
   perror(msg);
-  exit(1);who has the hand C
+  exit(1);
 }
 
 void melangerDeck()
@@ -352,9 +352,13 @@ int main(int argc, char *argv[]){
         {
           switch (buffer[0])
           {
-            case 'Q': sscanf(buffer,"Q %d",&idDemande);
+            case 'Q': sscanf(buffer,"Q %d",&idDemande);break;
             // On recrée la liste en enlevant le joueur.
             // On remet l'odre de la liste
+            case 'Z':
+              //printf("COCOU\n");
+              sscanf(buffer,"%c %s %d", &com, chatserver, &idDemande);
+              break;
             case 'C':
             sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
             printf("COM=%c ipAddress=%s port=%d name=%s\n",com, clientIpAddress, clientPort, clientName);
@@ -386,8 +390,6 @@ int main(int argc, char *argv[]){
               broadcastMessage(reply);
 
               // Si le nombre de joueurs atteint 4, alors on peut lancer le jeu
-            case 'Z':
-              printf("HI\n");
               if (nbClients==4)
               {
                 // On envoie ses cartes au joueur 0, ainsi que la ligne qui lui correspond dans tableCartes
@@ -467,7 +469,6 @@ int main(int argc, char *argv[]){
                   }
                   sprintf(reply,"M %d", joueurCourant);
                   broadcastMessage(reply);
-
                 }
                 close(newsockfd);
               }
