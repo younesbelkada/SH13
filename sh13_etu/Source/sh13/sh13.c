@@ -22,35 +22,34 @@
 #include <netdb.h>
 
 
-pthread_t thread_serveur_tcp_id;
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-char gbuffer[256];
-//! Enum pointer.
-/*! Details. */
-char gServerIpAddress[256];
-int gServerPort;
-char gClientIpAddress[256];
-int gClientPort;
-char gName[256];
-char gNames[4][256]; /*!< Detailed description after the member */
-int gId;
-int joueurSel;
-int objetSel;
-int guiltSel;
-int guiltGuess[13];
-int tableCartes[4][8];
-int b[3];
-int goEnabled;
-int connectEnabled;
-int chatEnable = -1;
+pthread_t thread_serveur_tcp_id; /*!< Stock l'id du thread  correspondant au thread du serveur*/
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER; /*!< Le mutex permet de proteger l'accès au serveur */
+char gbuffer[256]; /*!< Le buffer permet de stocker le message à transmettre au serveur */
+char gServerIpAddress[256];/*!< L'adresse IP du srveur entrée lorsque l'on lance sh13 est stockée sous la forme de charctère afin de faciliter le transfert */
+int gServerPort;/*!< Le port à utiliser pour le serveur est donné en entrée */
+char gClientIpAddress[256]; /*!< L'IP du client envoyant un message doit être transmise au serveur afin de pouvoir ensuite recevoir des messages' */
+int gClientPort;/*!< De même le serveur utilise le port du client pour lui transmettre le message à travers le protocole TCP */
+char gName[256];/*!< Username ou  surnom entrée lors de l'inscription sur le serveur */
+char gNames[4][256]; /*!<Tableaux stockant les nomx des autres joueurs ayant aussi rejoint la partie */
+int gId;/*!< ID du client donnée par le serveur selon l'ordre d'arrivée*/
+int joueurSel;/*!< Joueur séléctionné pour une demande */
+int objetSel;/*!< Onjet séléctionné pour une demande */
+int guiltSel;/*!< Coupable séléctionné pour une demande */
+int guiltGuess[13];/*!< Stock le nom des coupable pour permettre un affichage où l'on peut completer les donnée en éléminant ceux qu'on pense innocents */
+int tableCartes[4][8];/*!< Stock les données obtenue par les demande ainsi que les objets présents sur les cartes distribuées par le serveur */
+int b[3];/*!< Stock les 3 cartes ou nom des cartes distribuées par le mélange du serveur */
+int goEnabled; /*!< Un booléen indiquant si le client possède la main, si c'est à lui de jouer le bouton GO s'affichera et il pourra effectuer une demande */
+int connectEnabled;/*!< Si le joueur est connecté, il n'a plus besoin du bouton connect qui doit donc disparaitre */
+int chatEnable = -1;/*!< Prototype permettant de gérer le chat */
 
-char *nbobjets[]={"5","5","5","5","4","3","3","3"};
+char *nbobjets[]={"5","5","5","5","4","3","3","3"};/*!< Liste le nombre total de chaque objet par indices par exemple objet[0] = 5 */
 char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "inspector Gregson", "inspector Baynes", "inspector Bradstreet",
 "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
-"Mrs. Hudson", "Mary Morstan", "James Moriarty"};
+"Mrs. Hudson", "Mary Morstan", "James Moriarty"};/*!< Les noms des personnages du jeu sont stockés afin de les afficher, cela agis un peu comme un dictionnaire permttant de faire correspondre des indice entier à ce tableau */
 
-volatile int synchro; // Passage par dessus le cache, direction la memoire pour les problemes de plusieurs cache chacun une copie de syncro
+volatile int synchro; /*!< La syncro permet d'avoir des thread syncronisé, cependant il faut passer au dela du cache */
+// Passage par dessus le cache, direction la memoire pour les problemes de plusieurs cache chacun une copie de syncro
 /**
  * \fn void   *fn_serveur_tcp (void *arg)
  * \brief Fonction passée en argument aux thread qui l'executera
@@ -58,33 +57,33 @@ volatile int synchro; // Passage par dessus le cache, direction la memoire pour 
  */
 void *fn_serveur_tcp(void *arg)
 {
-  int sockfd, newsockfd, portno;
-  socklen_t clilen;
-  struct sockaddr_in serv_addr, cli_addr;
+  int sockfd, newsockfd, portno; /*Déclaration des socket et ports utilisés plus tard*/
+  socklen_t clilen; /*Nombre maximum de clients acceptés sur le serveur */
+  struct sockaddr_in serv_addr, cli_addr; /* Adresse IP pour la copie des sockets */
   int n;
 
-  sockfd = socket(AF_INET, SOCK_STREAM, 0);
-  if (sockfd<0)
+  sockfd = socket(AF_INET, SOCK_STREAM, 0); /*On récupère le socket qui est une copie, une traduction de la connexion sous la forme de fichier  */
+  if (sockfd<0) /*\if permet de gérer les erreurs rare de récupération de socket */
   {
     printf("sockfd error\n");
     exit(1);
   }
 
-  bzero((char *) &serv_addr, sizeof(serv_addr));
+  bzero((char *) &serv_addr, sizeof(serv_addr)); /* Efface le contenu présent à l'adresse de serv_adresse */
   portno = gClientPort;
-  serv_addr.sin_family = AF_INET;
-  serv_addr.sin_addr.s_addr = INADDR_ANY;
-  serv_addr.sin_port = htons(portno);
-  if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
+  serv_addr.sin_family = AF_INET;         /* On initialise le type de protocole utilisé par notre socket, ici les adresse IPV4 */
+  serv_addr.sin_addr.s_addr = INADDR_ANY; /* Permet d'autoriser nimporte quelle adresse à être lié au socket lors du BIND (more details to come)  */
+  serv_addr.sin_port = htons(portno);     /*Le port utilisé par le socket pour communiquer */
+  if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) /*!< \if permettant de gérer les erreurs de bind, qui permet d'allouer le port à la socket */
   {
     printf("bind error\n");
     exit(1);
   }
-  listen(sockfd,5);
-  clilen = sizeof(cli_addr);
-  while (1)
+  listen(sockfd,5); /* la socket est prête à recevoir des connection, et 5 indique le nombre maximum de personnes autorisé en attente pour se connecter  */
+  clilen = sizeof(cli_addr); /* Taille de l'adresse du client*/
+  while (1) /*\while LA boucle permettant au serveur de tourner sans jamais s'arreter et accepter des connections */
   {
-    newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
+    newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen); /*On accepte une socket donc une connexion  */
     if (newsockfd < 0)
     {
       printf("accept error\n");
@@ -109,11 +108,15 @@ void *fn_serveur_tcp(void *arg)
   }
 }
 
+/**
+* \fn void   sendMessageToServer(char *ipAddress, int portno, char *mess)
+* \param char *ipAddress est l'adresse iP du serveur auquel envoyer le messages
+* \param int portno est le port à utiliser pour le socket que l'on va créer
+* \param char *mess est le message à envoyer
+*/
+
 void sendMessageToServer(char *ipAddress, int portno, char *mess)
 {
-  /**
-  * SEnvoie un message au serveur \brief Normal
-  */
   int sockfd, n;
   struct sockaddr_in serv_addr;
   struct hostent *server;
@@ -143,6 +146,13 @@ void sendMessageToServer(char *ipAddress, int portno, char *mess)
 
   close(sockfd);
 }
+
+/**
+ * \fn int   main(int argc, char *argv[])
+ * \brief Fonction principale
+ *
+ *
+ */
 
 int main(int argc, char ** argv)
 {
