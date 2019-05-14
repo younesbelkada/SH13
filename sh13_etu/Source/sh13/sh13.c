@@ -169,7 +169,6 @@ int main(int argc, char ** argv)
 
   SDL_Init(SDL_INIT_VIDEO);
   TTF_Init();
-
   SDL_Window * window = SDL_CreateWindow("SDL2 SH13",
   SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 768, 0);
 
@@ -375,6 +374,7 @@ int main(int argc, char ** argv)
         tableCartes[joueurSel][objetSel] = ob;
         break;
         case 'W': exit(1);
+        case 'Y': exit(1);
       }
       synchro=0;
       pthread_mutex_unlock( &mutex );

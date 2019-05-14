@@ -8,7 +8,7 @@
  * Ce serveur propose un autre protocole que HTTP, pour
  * comprendre comment ce dernier fonctionne.
  */
-
+// Ajouter: Sauvegarde des données rentrées
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,7 +41,7 @@ int joueurSel; /*!< Permet de stocker le joueur dont le client souhaite connaitr
 int objetSel; /*!< Permet de stocker le objet qui interèsse le joueur effectuant une demande */
 int deck[13]={0,1,2,3,4,5,6,7,8,9,10,11,12};  /*!< La variable deck correspond à l'ensemble des indices utilisés afin de parcourir les cartes initialisés dans la variable nom_cartes */
 int tableCartes[4][8]; /*!< Permet de faire correspondre le deck aux noms */
-
+int banned[4] = {0,0,0,0};
 char *nomcartes[]=
 {"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "inspector Gregson", "inspector Baynes", "inspector Bradstreet",
@@ -114,7 +114,7 @@ int joueurCourant; /*!< Indice du joueur ayant la main */
 void error(const char *msg)
 {
   perror(msg);
-  exit(1);
+  exit(1);who has the hand C
 }
 
 void melangerDeck()
@@ -328,8 +328,7 @@ int main(int argc, char *argv[]){
     printDeck();
     joueurCourant=0;
 
-    for (i=0;i<4;i++)
-    {
+    for (i=0;i<4;i++){
       strcpy(tcpClients[i].ipAddress,"localhost");
       tcpClients[i].port=-1;
       strcpy(tcpClients[i].name,"-");
@@ -337,10 +336,9 @@ int main(int argc, char *argv[]){
 
     while (1)
     {
-      newsockfd = accept(sockfd,
-        (struct sockaddr *) &cli_addr,&clilen);
-        if (newsockfd < 0)
-        error("ERROR on accept");
+      newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr,&clilen);
+      if (newsockfd < 0)
+      error("ERROR on accept");
 
         bzero(buffer,256);
         n = read(newsockfd,buffer,255);
@@ -354,6 +352,9 @@ int main(int argc, char *argv[]){
         {
           switch (buffer[0])
           {
+            case 'Q': sscanf(buffer,"Q %d",&idDemande);
+            // On recrée la liste en enlevant le joueur.
+            // On remet l'odre de la liste
             case 'C':
             sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
             printf("COM=%c ipAddress=%s port=%d name=%s\n",com, clientIpAddress, clientPort, clientName);
@@ -413,6 +414,11 @@ int main(int argc, char *argv[]){
               {
                 switch (buffer[0])
                 {
+                  case 'Q':
+                  sscanf(buffer,"Q %d",&idDemande);
+                  //nbClients--;
+                  // L'enlever de la liste fonction enlever
+                  fsmServer=0;break;
                   case 'G':
                   sscanf(buffer,"G %d %d",&idDemande,&guiltSel);
                   if (guiltSel == deck[12] ) {
@@ -420,6 +426,11 @@ int main(int argc, char *argv[]){
                     broadcastMessage(reply);
                     exit(1); // Reset le serveur
 
+                  }
+                  else{
+                    sprintf(reply,"Fail! He is not guilty %d you can not play anymore", idDemande);
+                    broadcastMessage(reply);
+                    banned[idDemande] = 1;
                   }
                   break;
                   char c1[5];
@@ -443,9 +454,20 @@ int main(int argc, char *argv[]){
                   default:
                     break;
                   }
-                  joueurCourant = (++joueurCourant)%4; // Pour valoir zero en 4
+                  joueurCourant = (++joueurCourant)%4;
+                  int z = 0;
+                  while(banned[joueurCourant] == 1 ) {
+                    z++;
+                    joueurCourant = (++joueurCourant)%4;
+                    if (z==3) {
+                      sprintf(reply,"You all lost!");
+                      broadcastMessage(reply);
+                      exit(1); // Reset le serveur
+                    }
+                  }
                   sprintf(reply,"M %d", joueurCourant);
                   broadcastMessage(reply);
+
                 }
                 close(newsockfd);
               }
