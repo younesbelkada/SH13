@@ -114,7 +114,7 @@ int joueurCourant; /*!< Indice du joueur ayant la main */
 void error(const char *msg)
 {
   perror(msg);
-  exit(1);who has the hand C
+  exit(1);
 }
 
 void melangerDeck()
@@ -339,25 +339,24 @@ int main(int argc, char *argv[]){
       newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr,&clilen);
       if (newsockfd < 0)
       error("ERROR on accept");
-
-        bzero(buffer,256);
-        n = read(newsockfd,buffer,255);
-        if (n < 0)
-        error("ERROR reading from socket");
-
-        printf("Received packet from %s:%d\nData: [%s]\n\n",
-        inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port), buffer);
-
-        if (fsmServer==0)
+      bzero(buffer,256);
+      n = read(newsockfd,buffer,255);
+      if (n < 0)
+      error("ERROR reading from socket");
+      printf("Received packet from %s:%d\nData: [%s]\n\n",
+      inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port), buffer);
+      if (fsmServer==0)
+      {
+        switch (buffer[0])
         {
-          switch (buffer[0])
-          {
-            case 'Q': sscanf(buffer,"Q %d",&idDemande);
-            // On recrée la liste en enlevant le joueur.
-            // On remet l'odre de la liste
-            case 'C':
-            sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
-            printf("COM=%c ipAddress=%s port=%d name=%s\n",com, clientIpAddress, clientPort, clientName);
+          case 'Z':
+            printf("HI\n");break;
+          case 'Q': sscanf(buffer,"Q %d",&idDemande);break;
+          // On recrée la liste en enlevant le joueur.
+          // On remet l'odre de la liste
+          case 'C':
+          sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
+          printf("COM=%c ipAddress=%s port=%d name=%s\n",com, clientIpAddress, clientPort, clientName);
 
             // fsmServer==0 alors j'attends les connexions de tous les joueurs
             strcpy(tcpClients[nbClients].ipAddress,clientIpAddress);
@@ -386,8 +385,7 @@ int main(int argc, char *argv[]){
               broadcastMessage(reply);
 
               // Si le nombre de joueurs atteint 4, alors on peut lancer le jeu
-            case 'Z':
-              printf("HI\n");
+
               if (nbClients==4)
               {
                 // On envoie ses cartes au joueur 0, ainsi que la ligne qui lui correspond dans tableCartes
@@ -467,7 +465,6 @@ int main(int argc, char *argv[]){
                   }
                   sprintf(reply,"M %d", joueurCourant);
                   broadcastMessage(reply);
-
                 }
                 close(newsockfd);
               }
