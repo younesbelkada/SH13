@@ -8,7 +8,9 @@
  * Ce serveur propose un autre protocole que HTTP, pour
  * comprendre comment ce dernier fonctionne.
  */
-
+// Ajouter: joueur trompe plus le droit de go
+// Plus quand jeu finis plus propre
+//
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,14 +43,14 @@ int joueurSel; /*!< Permet de stocker le joueur dont le client souhaite connaitr
 int objetSel; /*!< Permet de stocker le objet qui interèsse le joueur effectuant une demande */
 int deck[13]={0,1,2,3,4,5,6,7,8,9,10,11,12};  /*!< La variable deck correspond à l'ensemble des indices utilisés afin de parcourir les cartes initialisés dans la variable nom_cartes */
 int tableCartes[4][8]; /*!< Permet de faire correspondre le deck aux noms */
-
+int banned[4] = {0,0,0,0};
 char *nomcartes[]=
 {"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "inspector Gregson", "inspector Baynes", "inspector Bradstreet",
 "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
 "Mrs. Hudson", "Mary Morstan", "James Moriarty"}; /*!< Liste des cartes avec leur nom, on associe à chaque entier de deck, sa carte correspondate dans cette liste */
 
-int joueurCourant; /*!< Indice du joueur ayant la main */ 
+int joueurCourant; /*!< Indice du joueur ayant la main */
 
 /**
  * \fn void   error (const char *msg)
@@ -93,7 +95,7 @@ int joueurCourant; /*!< Indice du joueur ayant la main */
 /**
  * \fn void   sendMessageToClient(char *clientip,int clientport,char *mess)
  * \brief Fonction d'affichage du deck'
- * \warning En cas d'erreur (faute sur le nom par exemple), le message ne sera pas envoyé 
+ * \warning En cas d'erreur (faute sur le nom par exemple), le message ne sera pas envoyé
  * \param char* name est le nom du client qu'on souhaite chercher
  * \return Cette fonction ne retourne rien, elle envoie le message directement au client.
  */
@@ -328,8 +330,7 @@ int main(int argc, char *argv[]){
     printDeck();
     joueurCourant=0;
 
-    for (i=0;i<4;i++)
-    {
+    for (i=0;i<4;i++){
       strcpy(tcpClients[i].ipAddress,"localhost");
       tcpClients[i].port=-1;
       strcpy(tcpClients[i].name,"-");
@@ -337,10 +338,9 @@ int main(int argc, char *argv[]){
 
     while (1)
     {
-      newsockfd = accept(sockfd,
-        (struct sockaddr *) &cli_addr,&clilen);
-        if (newsockfd < 0)
-        error("ERROR on accept");
+      newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr,&clilen);
+      if (newsockfd < 0)
+      error("ERROR on accept");
 
         bzero(buffer,256);
         n = read(newsockfd,buffer,255);
@@ -420,6 +420,11 @@ int main(int argc, char *argv[]){
                     exit(1); // Reset le serveur
 
                   }
+                  else{
+                    sprintf(reply,"Fail! He is not guilty %d you can not play anymore", idDemande);
+                    broadcastMessage(reply);
+                    banned[idDemande] = 1;
+                  }
                   break;
                   char c1[5];
                   case 'O':
@@ -437,16 +442,25 @@ int main(int argc, char *argv[]){
                     sscanf(buffer,"S %d %d %d",&idDemande,&joueurSel,&objetSel);
                     printf("%d %d %d",idDemande,joueurSel,objetSel );
                     sprintf(reply,"S %d %d %d",joueurSel, objetSel,tableCartes[joueurSel][objetSel]);
-                    sendMessageToClient(tcpClients[idDemande].ipAddress,
-                      tcpClients[idDemande].port,
-                      reply);
+                    broadcastMessage(reply);
                     break;
                   default:
                     break;
                   }
-                  joueurCourant = (++joueurCourant)%4; // Pour valoir zero en 4
+                  joueurCourant = (++joueurCourant)%4;
+                  int z = 0;
+                  while(banned[joueurCourant] == 1 ) {
+                    z++;
+                    joueurCourant = (++joueurCourant)%4;
+                    if (z==3) {
+                      sprintf(reply,"You all lost!");
+                      broadcastMessage(reply);
+                      exit(1); // Reset le serveur
+                    }
+                  }
                   sprintf(reply,"M %d", joueurCourant);
                   broadcastMessage(reply);
+
                 }
                 close(newsockfd);
               }
