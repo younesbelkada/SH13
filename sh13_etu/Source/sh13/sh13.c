@@ -174,7 +174,7 @@ int main(int argc, char ** argv)
 
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 
-  SDL_Surface *deck[13],*objet[8],*gobutton,*connectbutton;
+  SDL_Surface *deck[13],*objet[8],*gobutton,*connectbutton, *chatbutton,*quitbutton;
   char path[256] ;
 
   for (int i = 0; i < 13; i++) {
@@ -190,7 +190,9 @@ int main(int argc, char ** argv)
   objet[5] = IMG_Load("./Image/SH13_collier_120x120.png");
   objet[6] = IMG_Load("./Image/SH13_oeil_120x120.png");
   objet[7] = IMG_Load("./Image/SH13_crane_120x120.png");
-  gobutton = IMG_Load("./Image/GoStartChat.png");
+  gobutton = IMG_Load("./Image/Go.png");
+  quitbutton = IMG_Load("./Image/Quit.png");
+  chatbutton = IMG_Load("./Image/chat.png");
   connectbutton = IMG_Load("./Image/ConnectButton.jpg");
   for (int i = 0; i < 4; i++) {
     strcpy(gNames[i],"-");
@@ -214,7 +216,7 @@ int main(int argc, char ** argv)
   goEnabled=0;
   connectEnabled=1;
 
-  SDL_Texture *texture_deck[13],*texture_gobutton,*texture_connectbutton,*texture_objet[8];
+  SDL_Texture *texture_deck[13],*texture_gobutton,*texture_connectbutton,*texture_objet[8],*texture_chatbutton,*texture_quitbutton;
 
   for (i=0;i<13;i++)
   texture_deck[i] = SDL_CreateTextureFromSurface(renderer, deck[i]);
@@ -223,7 +225,8 @@ int main(int argc, char ** argv)
 
   texture_gobutton = SDL_CreateTextureFromSurface(renderer, gobutton);
   texture_connectbutton = SDL_CreateTextureFromSurface(renderer, connectbutton);
-
+  texture_chatbutton = SDL_CreateTextureFromSurface(renderer, chatbutton);
+  texture_quitbutton = SDL_CreateTextureFromSurface(renderer, quitbutton);
   TTF_Font* Sans = TTF_OpenFont("./sans.ttf", 15);
   printf("Sans=%p\n",Sans);
 
@@ -646,23 +649,10 @@ int main(int argc, char ** argv)
     for (int i = 1; i < 6; i++) {
       SDL_RenderDrawLine(renderer, 0,30+i*60,680,30+i*60);
     }
-    /*SDL_RenderDrawLine(renderer, 0,30+60,680,30+60);
-    SDL_RenderDrawLine(renderer, 0,30+120,680,30+120);
-    SDL_RenderDrawLine(renderer, 0,30+180,680,30+180);
-    SDL_RenderDrawLine(renderer, 0,30+240,680,30+240);
-    SDL_RenderDrawLine(renderer, 0,30+300,680,30+300);*/
+
     for (int i = 0; i < 9; i++) {
       SDL_RenderDrawLine(renderer, 200+i*60,0,200+i*60,330);
     }
-    /*SDL_RenderDrawLine(renderer, 200,0,200,330);
-    SDL_RenderDrawLine(renderer, 260,0,260,330);
-    SDL_RenderDrawLine(renderer, 320,0,320,330);
-    SDL_RenderDrawLine(renderer, 380,0,380,330);
-    SDL_RenderDrawLine(renderer, 440,0,440,330);
-    SDL_RenderDrawLine(renderer, 500,0,500,330);
-    SDL_RenderDrawLine(renderer, 560,0,560,330);
-    SDL_RenderDrawLine(renderer, 620,0,620,330);
-    SDL_RenderDrawLine(renderer, 680,0,680,330);*/
 
     for (i=0;i<14;i++)
     SDL_RenderDrawLine(renderer, 0,350+i*30,300,350+i*30);
@@ -690,7 +680,7 @@ int main(int argc, char ** argv)
     // Le bouton go
     if (1)
     {
-      SDL_Rect dstrect = { 400, 350, 200, 150 };
+      SDL_Rect dstrect = { 500, 400, 50, 50 };
       SDL_RenderCopy(renderer, texture_gobutton, NULL, &dstrect);
     }
     // Le bouton connect
@@ -702,6 +692,13 @@ int main(int argc, char ** argv)
 
     //SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
     //SDL_RenderDrawLine(renderer, 0, 0, 200, 200);
+
+
+    SDL_Rect dstrect = { 500, 500, 50, 50 };
+    SDL_RenderCopy(renderer, texture_quitbutton, NULL, &dstrect);
+    SDL_Rect dstrect1 = { 500, 600, 50, 50 };
+    SDL_RenderCopy(renderer, texture_chatbutton, NULL, &dstrect1);
+
 
     SDL_Color col = {0, 0, 0};
     for (i=0;i<4;i++)

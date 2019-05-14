@@ -411,6 +411,7 @@ int main(int argc, char *argv[]){
                   break;
                 }
               }
+            }
               else if (fsmServer==1)
               {
                 switch (buffer[0])
