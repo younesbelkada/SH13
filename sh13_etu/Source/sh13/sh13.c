@@ -193,12 +193,9 @@ int main(int argc, char ** argv)
   SDL_Rect src = { 0, 0, 200, 200 };
   char text[256] = "";
 
-  char *composition;
-  Sint32 cursor;
-  Sint32 selection_len;
 
 
-  strcat(text,".");
+  strcat(text,"");
   printf("%s\n",text );
   SDL_SetTextInputRect(&src);
 
@@ -270,21 +267,33 @@ int main(int argc, char ** argv)
       //printf("un event\n");
       switch (event.type)
       {
-        case SDL_KEYDOWN:
-          if (event.key.keysym.sym  == SDLK_RIGHT) {
-            printf("Envoie du message, remise à 0\n" );
-          }
 
-        case SDL_TEXTEDITING:
-          /*
-          Update the composition text.
-          Update the cursor position.
-          Update the selection length (if any).
-          */
-          composition = event.edit.text;
-          cursor = event.edit.start;
-          selection_len = event.edit.length;
+
+        case SDL_KEYDOWN:
+        if (chatEnable == 1) {
+          if (event.key.keysym.sym  == SDLK_RETURN) {
+            printf("Envoie du message, remise à 0\n" );
+            sprintf(sendBuffer,"c %d %s %s ",gId,gName,text);
+            strcpy(text,"");
+            sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
+            break;
+          }
+          else if (event.key.keysym.sym  == SDLK_BACKSPACE) {
+            printf("Remove last char, remise à 0\n" );
+            text[strlen(text)-2] = '\0';
+            printf("%s\n",text );
+            break;
+
+          }
+        }
+        if (event.key.keysym.sym  == SDLK_ESCAPE) {
+          sprintf(sendBuffer,"Q %d",gId);
+          sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
+          exit(0);
+          quit =1;
           break;
+        }
+
 
         case SDL_TEXTINPUT:
                     /* Add new text onto the end of our text */
@@ -349,14 +358,16 @@ int main(int argc, char ** argv)
           // Exécution du chat
           chatEnable *= -1;
           char chat[256];
-          printf("%s\n", "Ecrivez votre message");
-          scanf("%s[^\n]", chat);
-          sprintf(sendBuffer,"Z %s %d",chat, gId);
-          sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
+
+          printf("On démarre le texte input");
+
+          // peut être qu'il faut le faire dans le rendererSDL_StartTextInput();
+          // Il faut que l'input se fasse sur le rectangle du chat où sera render les messages
+          // Le ser
         }else if ((mx < 550) && (my <= 550) && (mx >= 500) && (my > 500) ){
           sprintf(sendBuffer,"Q %d",gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-          exit(0);
+          quit=1;
         }
 
         else
