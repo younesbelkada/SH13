@@ -8,7 +8,7 @@
  * Le client sh13 permet de se connecter au serveur proposant un autre protocol que HTTP, pour
  * comprendre comment ce dernier fonctionne.
  */
-
+#include <SDL2/SDL.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -41,6 +41,10 @@ int b[3];/*!< Stock les 3 cartes ou nom des cartes distribuées par le mélange 
 int goEnabled; /*!< Un booléen indiquant si le client possède la main, si c'est à lui de jouer le bouton GO s'affichera et il pourra effectuer une demande */
 int connectEnabled;/*!< Si le joueur est connecté, il n'a plus besoin du bouton connect qui doit donc disparaitre */
 int chatEnable = -1;/*!< Prototype permettant de gérer le chat */
+char tab_texte[8][256];
+char texte_courant[256];
+SDL_Color couleurNoire = {0, 0, 0};
+
 
 char *nbobjets[]={"5","5","5","5","4","3","3","3"};/*!< Liste le nombre total de chaque objet par indices par exemple objet[0] = 5 */
 char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
@@ -179,11 +183,24 @@ int main(int argc, char ** argv)
   strcpy(gName,argv[5]);
 
   SDL_Init(SDL_INIT_VIDEO);
+  SDL_StartTextInput(); /*!< Pas d'erreur ici chez moi */
   TTF_Init();
   SDL_Window * window = SDL_CreateWindow("SDL2 SH13",
   SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 768, 0);
 
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
+
+  SDL_Rect src = { 0, 0, 200, 200 };
+  char text[256] = "";
+
+  char *composition;
+  Sint32 cursor;
+  Sint32 selection_len;
+
+
+  strcat(text,".");
+  printf("%s\n",text );
+  SDL_SetTextInputRect(&src);
 
   SDL_Surface *deck[13],*objet[8],*gobutton,*connectbutton, *chatbutton,*quitbutton;
   char path[256] ;
@@ -253,6 +270,28 @@ int main(int argc, char ** argv)
       //printf("un event\n");
       switch (event.type)
       {
+        case SDL_KEYDOWN:
+          if (event.key.keysym.sym  == SDLK_RIGHT) {
+            printf("Envoie du message, remise à 0\n" );
+          }
+
+        case SDL_TEXTEDITING:
+          /*
+          Update the composition text.
+          Update the cursor position.
+          Update the selection length (if any).
+          */
+          composition = event.edit.text;
+          cursor = event.edit.start;
+          selection_len = event.edit.length;
+          break;
+
+        case SDL_TEXTINPUT:
+                    /* Add new text onto the end of our text */
+                    strcat(text, event.text.text);
+                    printf("%s\n",text );
+                    break;
+
         case SDL_QUIT:
         quit = 1;
         break;
@@ -286,7 +325,7 @@ int main(int argc, char ** argv)
           int ind=(my-350)/30;
           guiltGuess[ind]=1-guiltGuess[ind];
         }
-        else if ((mx>=500) && (mx<600) && (my>=350) && (my<500) && (goEnabled==1))
+        else if ((mx>=500) && (mx<550) && (my>=400) && (my<450) && (goEnabled==1))
         {
           printf("go! joueur=%d objet=%d guilt=%d\n",joueurSel, objetSel, guiltSel);
           if (guiltSel!=-1)
@@ -306,7 +345,7 @@ int main(int argc, char ** argv)
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
 
           }
-        }else if ((mx <= 800) && (my <= 500) && (mx >= 700) && (my >= 350) ) {
+        }else if ((mx <= 550) && (my <= 650) && (mx >= 500) && (my >= 600) ) {
           // Exécution du chat
           chatEnable *= -1;
           char chat[256];
@@ -314,7 +353,7 @@ int main(int argc, char ** argv)
           scanf("%s[^\n]", chat);
           sprintf(sendBuffer,"Z %s %d",chat, gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-        }else if ((mx < 700) && (my <= 500) && (mx >= 600) && (my >= 350) ){
+        }else if ((mx < 550) && (my <= 550) && (mx >= 500) && (my > 500) ){
           sprintf(sendBuffer,"Q %d",gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
           exit(0);
@@ -390,6 +429,16 @@ int main(int argc, char ** argv)
         break;
         case 'W': exit(1);
         case 'Y': exit(1);
+        /*case 'Z':
+        TTF_Init();
+        sscanf(gbuffer,"Z %s", texte_courant);
+        if (chatEnable == 1) {
+          texte = TTF_RenderText_Blended(Sans, texte_courant, couleurNoire);
+          SDL_BlitSurface(texte, NULL, renderer, &src);
+          SDL_Flip(renderer);
+        }
+        TTF_Quit();
+        break;*/
       }
       synchro=0;
       pthread_mutex_unlock( &mutex );
@@ -697,6 +746,10 @@ int main(int argc, char ** argv)
     }
 
     // Le bouton go
+    if (1) {
+
+      SDL_RenderFillRect(renderer,&src);
+    }
     if (1)
     {
       SDL_Rect dstrect = { 500, 400, 50, 50 };
