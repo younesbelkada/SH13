@@ -50,7 +50,12 @@ char *nbobjets[]={"5","5","5","5","4","3","3","3"};/*!< Liste le nombre total de
 char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "inspector Gregson", "inspector Baynes", "inspector Bradstreet",
 "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
-"Mrs. Hudson", "Mary Morstan", "James Moriarty"};/*!< Les noms des personnages du jeu sont stockés afin de les afficher, cela agis un peu comme un dictionnaire permttant de faire correspondre des indice entier à ce tableau */
+"Mrs. Hudson", "Mary Morstan", "James Moriarty"};
+char tab_texte[8][256];
+char texte_courant[256];
+int i = 0;
+TTF_Font* police = TTF_OpenFont("../../sans.ttf", 15);
+SDL_Color couleurNoire = {0, 0, 0};
 
 volatile int synchro; /*!< La syncro permet d'avoir des thread syncronisé, cependant il faut passer au dela du cache */
 // Passage par dessus le cache, direction la memoire pour les problemes de plusieurs cache chacun une copie de syncro
@@ -190,14 +195,14 @@ int main(int argc, char ** argv)
 
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 
-  SDL_Rect src = { 0, 0, 200, 200 };
+  SDL_Rect src = { 200, 500, 200, 200 };
   char text[256] = "";
 
 
 
   strcat(text,"");
   printf("%s\n",text );
-  SDL_SetTextInputRect(&src);
+  //SDL_SetTextInputRect(&src);
 
   SDL_Surface *deck[13],*objet[8],*gobutton,*connectbutton, *chatbutton,*quitbutton;
   char path[256] ;
@@ -463,10 +468,10 @@ int main(int argc, char ** argv)
     SDL_Rect rect = {0, 0, 1024, 768};
     SDL_RenderFillRect(renderer, &rect);
 
-    if (chatEnable)
+    if (chatEnable == 1)
     {
-      SDL_SetRenderDrawColor(renderer, 0,0, 0, 0);
-      SDL_Rect rect1 = {1000, 500, 400 , 200};
+      SDL_SetRenderDrawColor(renderer, 120,100, 0, 255);
+      SDL_Rect rect1 = {612, 480, 400, 300};
       SDL_RenderFillRect(renderer, &rect1);
     }
 
@@ -510,7 +515,17 @@ int main(int argc, char ** argv)
       SDL_RenderCopy(renderer, texture_objet[7], NULL, &dstrect_crane);
     }
 
-    SDL_Color col1 = {0, 0, 0};
+
+
+    {
+      SDL_Color col1 = {255, 255, 255 };
+      SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans,text, col1);
+      SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
+      SDL_RenderCopy(renderer, Message1, NULL, &src);
+      SDL_DestroyTexture(Message1);
+      SDL_FreeSurface(surfaceMessage1);
+    }
+    SDL_Color col1 = {0, 0, 0 };
     for (i=0;i<8;i++)
     {
       SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, nbobjets[i], col1);
