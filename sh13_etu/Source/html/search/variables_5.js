@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['nbclients',['nbClients',['../server_8c.html#a2d4c98e5c74f88a941b51fb44756ac1e',1,'server.c']]],
-  ['nomcartes',['nomcartes',['../server_8c.html#a024375796156f9da42ef17ecd803b484',1,'server.c']]]
+  ['iddemande',['idDemande',['../server_8c.html#aa4c3e1e6e5357e73d2bc03c664e96617',1,'server.c']]]
 ];

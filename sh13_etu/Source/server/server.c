@@ -8,6 +8,7 @@
  * Ce serveur propose un autre protocole que HTTP, pour
  * comprendre comment ce dernier fonctionne.
  */
+
 // Ajouter: Sauvegarde des données rentrées
 #include <stdio.h>
 #include <stdlib.h>
@@ -427,6 +428,19 @@ int main(int argc, char *argv[]){
               {
                 switch (buffer[0])
                 {
+                  case 'Z':
+                    //printf("COCOU\n");
+                    sscanf(buffer,"%c %s %d", &com, chatserver, &idDemande);
+                    sprintf(tab_texte[i],"%s",chatserver);
+                    i++;
+                    if (i > 7) {
+                      i = 0;
+                    }
+                    for (size_t j = 0; j < i; j++) {
+                      sprintf(reply, "Z %s", tab_texte[j]);
+                      broadcastMessage(reply);
+                    }
+                    break;
                   case 'Q':
                   sscanf(buffer,"Q %d",&idDemande);
                   //nbClients--;

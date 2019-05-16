@@ -145,10 +145,20 @@ Variables</h2></td></tr>
 <tr class="separator:ae2efdbabfeef978d67002518e95f00ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5136e762f5d03123aca3b44ee5428ae9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a5136e762f5d03123aca3b44ee5428ae9">tableCartes</a> [4][8]</td></tr>
 <tr class="separator:a5136e762f5d03123aca3b44ee5428ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdf0a9f0c8fc54881205998df176a8b9"><td class="memItemLeft" align="right" valign="top"><a id="afdf0a9f0c8fc54881205998df176a8b9"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>banned</b> [4] = {0,0,0,0}</td></tr>
+<tr class="separator:afdf0a9f0c8fc54881205998df176a8b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a024375796156f9da42ef17ecd803b484"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a024375796156f9da42ef17ecd803b484">nomcartes</a> []</td></tr>
 <tr class="separator:a024375796156f9da42ef17ecd803b484"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2350ff80e84ae74a929a397c3b1e152f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a2350ff80e84ae74a929a397c3b1e152f">joueurCourant</a></td></tr>
 <tr class="separator:a2350ff80e84ae74a929a397c3b1e152f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8852d6f855f3aec45ae55a54171dc3e"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#ab8852d6f855f3aec45ae55a54171dc3e">chatserver</a> [256]</td></tr>
+<tr class="separator:ab8852d6f855f3aec45ae55a54171dc3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accb45b8fef99aa610213286524699571"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#accb45b8fef99aa610213286524699571">tab_texte</a> [8][256]</td></tr>
+<tr class="separator:accb45b8fef99aa610213286524699571"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb559820d9ca11295b4500f179ef6392"><td class="memItemLeft" align="right" valign="top"><a id="acb559820d9ca11295b4500f179ef6392"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>i</b> = 0</td></tr>
+<tr class="separator:acb559820d9ca11295b4500f179ef6392"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>server soutenant le jeu Sherlock Holmes. On exécute le server une fois et 4 clients afin de commencer un jeu. Ce jeu nous permet d'aborder les notions fondamentales de la programmation réseau. </p>
@@ -365,6 +375,21 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="ab8852d6f855f3aec45ae55a54171dc3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8852d6f855f3aec45ae55a54171dc3e">&#9670;&nbsp;</a></span>chatserver</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char chatserver[256]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Texte contenant le chat </p>
+
+</div>
+</div>
 <a id="ae2efdbabfeef978d67002518e95f00ca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae2efdbabfeef978d67002518e95f00ca">&#9670;&nbsp;</a></span>deck</h2>
 
@@ -497,6 +522,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Permet de stocker le objet qui interèsse le joueur effectuant une demande </p>
+
+</div>
+</div>
+<a id="accb45b8fef99aa610213286524699571"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#accb45b8fef99aa610213286524699571">&#9670;&nbsp;</a></span>tab_texte</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char tab_texte[8][256]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Tableau contenant les messages </p>
 
 </div>
 </div>

@@ -2,7 +2,7 @@
 \label{server_8c}\index{server/server.c@{server/server.c}}
 
 
-server soutenant le jeu Sherlock Holmes  
+server soutenant le jeu Sherlock Holmes. On exécute le server une fois et 4 clients afin de commencer un jeu. Ce jeu nous permet d\textquotesingle{}aborder les notions fondamentales de la programmation réseau.  
 
 
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
@@ -24,69 +24,62 @@ struct \mbox{\hyperlink{struct__client}{\+\_\+client}}
 \item 
 void \mbox{\hyperlink{server_8c_a4866b2d37ffc80c5ba705d3fcd1e0ecf}{error}} (const char $\ast$msg)
 \begin{DoxyCompactList}\small\item\em Fonction de gestion d\textquotesingle{}erreur. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{server_8c_a0cb95e508c0ffc0101b4108ff250c870}\label{server_8c_a0cb95e508c0ffc0101b4108ff250c870}} 
 void \mbox{\hyperlink{server_8c_a0cb95e508c0ffc0101b4108ff250c870}{melanger\+Deck}} ()
 \begin{DoxyCompactList}\small\item\em Fonction de mélange du deck de cartes afin de les distribuer. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{server_8c_a349b93f883bcada89b4cf66d7a92bb21}\label{server_8c_a349b93f883bcada89b4cf66d7a92bb21}} 
-void {\bfseries create\+Table} ()
-\item 
-\mbox{\Hypertarget{server_8c_a30dedb21b81bcab75c0b351087b64fa1}\label{server_8c_a30dedb21b81bcab75c0b351087b64fa1}} 
-void {\bfseries print\+Deck} ()
-\item 
-\mbox{\Hypertarget{server_8c_a3be7017ee4476744e47456935c39c509}\label{server_8c_a3be7017ee4476744e47456935c39c509}} 
-void {\bfseries print\+Clients} ()
-\item 
-\mbox{\Hypertarget{server_8c_a07f7f1553a2d1708276200adf61e7d02}\label{server_8c_a07f7f1553a2d1708276200adf61e7d02}} 
-int {\bfseries find\+Client\+By\+Name} (char $\ast$name)
-\item 
-\mbox{\Hypertarget{server_8c_af9aa1e493ee18081ffa952fc677c8ba1}\label{server_8c_af9aa1e493ee18081ffa952fc677c8ba1}} 
-void {\bfseries send\+Message\+To\+Client} (char $\ast$clientip, int clientport, char $\ast$mess)
-\item 
-\mbox{\Hypertarget{server_8c_a9cf4c7aa19d28eb76c9635b2267df762}\label{server_8c_a9cf4c7aa19d28eb76c9635b2267df762}} 
-void {\bfseries broadcast\+Message} (char $\ast$mess)
-\item 
+void \mbox{\hyperlink{server_8c_a349b93f883bcada89b4cf66d7a92bb21}{create\+Table}} ()
+\begin{DoxyCompactList}\small\item\em Fonction de création de la table de carte qui est une variable globale. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{server_8c_a30dedb21b81bcab75c0b351087b64fa1}{print\+Deck}} ()
+\begin{DoxyCompactList}\small\item\em Fonction d\textquotesingle{}affichage du deck\textquotesingle{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{server_8c_a3be7017ee4476744e47456935c39c509}{print\+Clients}} ()
+\begin{DoxyCompactList}\small\item\em affiche le numéro, adresse IP et numéro de port de chaque client \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{server_8c_a07f7f1553a2d1708276200adf61e7d02}{find\+Client\+By\+Name}} (char $\ast$name)
+\begin{DoxyCompactList}\small\item\em Fonction d\textquotesingle{}affichage du deck\textquotesingle{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{server_8c_af9aa1e493ee18081ffa952fc677c8ba1}{send\+Message\+To\+Client}} (char $\ast$clientip, int clientport, char $\ast$mess)
+\begin{DoxyCompactList}\small\item\em Fonction d\textquotesingle{}affichage du deck\textquotesingle{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{server_8c_a9cf4c7aa19d28eb76c9635b2267df762}{broadcast\+Message}} (char $\ast$mess)
+\begin{DoxyCompactList}\small\item\em Permet d\textquotesingle{}envoyer un message à l\textquotesingle{}ensemble des clients connectés sur le server. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{server_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{server_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
-int {\bfseries main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
-\end{DoxyCompactItemize}
+int \mbox{\hyperlink{server_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Fonction principale. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{server_8c_aaa2664f0bc76752d46e18fc781bb44b7}\label{server_8c_aaa2664f0bc76752d46e18fc781bb44b7}} 
-struct \mbox{\hyperlink{struct__client}{\+\_\+client}} {\bfseries tcp\+Clients} \mbox{[}4\mbox{]}
+struct \mbox{\hyperlink{struct__client}{\+\_\+client}} \mbox{\hyperlink{server_8c_aaa2664f0bc76752d46e18fc781bb44b7}{tcp\+Clients}} \mbox{[}4\mbox{]}
 \item 
-\mbox{\Hypertarget{server_8c_a2d4c98e5c74f88a941b51fb44756ac1e}\label{server_8c_a2d4c98e5c74f88a941b51fb44756ac1e}} 
 int \mbox{\hyperlink{server_8c_a2d4c98e5c74f88a941b51fb44756ac1e}{nb\+Clients}}
-\begin{DoxyCompactList}\small\item\em Stock le nombre total de clients. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{server_8c_a73a162241fb3895e5df5b930dddd1f8f}\label{server_8c_a73a162241fb3895e5df5b930dddd1f8f}} 
-int {\bfseries fsm\+Server}
 \item 
-\mbox{\Hypertarget{server_8c_aa4c3e1e6e5357e73d2bc03c664e96617}\label{server_8c_aa4c3e1e6e5357e73d2bc03c664e96617}} 
+int \mbox{\hyperlink{server_8c_a73a162241fb3895e5df5b930dddd1f8f}{fsm\+Server}}
+\item 
 int \mbox{\hyperlink{server_8c_aa4c3e1e6e5357e73d2bc03c664e96617}{id\+Demande}}
-\begin{DoxyCompactList}\small\item\em Permet de stocker l\textquotesingle{}adresse IP du client effectuant une demande. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{server_8c_a45d3ea8306836d64c4faa2084d98f8c7}\label{server_8c_a45d3ea8306836d64c4faa2084d98f8c7}} 
+\item 
 int \mbox{\hyperlink{server_8c_a45d3ea8306836d64c4faa2084d98f8c7}{guilt\+Sel}}
-\begin{DoxyCompactList}\small\item\em Permet de stocker le coupable qu\textquotesingle{}accuse le client. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{server_8c_acc38e9aa67011ce24b4c8a882d068c1d}\label{server_8c_acc38e9aa67011ce24b4c8a882d068c1d}} 
+\item 
 int \mbox{\hyperlink{server_8c_acc38e9aa67011ce24b4c8a882d068c1d}{joueur\+Sel}}
-\begin{DoxyCompactList}\small\item\em Permet de stocker le joueur dont le client souhaite connaitre le nombre d\textquotesingle{}objet. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{server_8c_a86a6b495ecef125da850e79bcd62aba7}\label{server_8c_a86a6b495ecef125da850e79bcd62aba7}} 
+\item 
 int \mbox{\hyperlink{server_8c_a86a6b495ecef125da850e79bcd62aba7}{objet\+Sel}}
-\begin{DoxyCompactList}\small\item\em Permet de stocker le objet qui interèsse le joueur effectuant une demande. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{server_8c_ae2efdbabfeef978d67002518e95f00ca}\label{server_8c_ae2efdbabfeef978d67002518e95f00ca}} 
+\item 
 int \mbox{\hyperlink{server_8c_ae2efdbabfeef978d67002518e95f00ca}{deck}} \mbox{[}13\mbox{]} =\{0,1,2,3,4,5,6,7,8,9,10,11,12\}
-\begin{DoxyCompactList}\small\item\em Stock le deck de cartes du jeu. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{server_8c_a5136e762f5d03123aca3b44ee5428ae9}\label{server_8c_a5136e762f5d03123aca3b44ee5428ae9}} 
+\item 
 int \mbox{\hyperlink{server_8c_a5136e762f5d03123aca3b44ee5428ae9}{table\+Cartes}} \mbox{[}4\mbox{]}\mbox{[}8\mbox{]}
-\begin{DoxyCompactList}\small\item\em Stock la quantité d\textquotesingle{}objet que possède chacun des joueurs. \end{DoxyCompactList}\item 
+\item 
+\mbox{\Hypertarget{server_8c_afdf0a9f0c8fc54881205998df176a8b9}\label{server_8c_afdf0a9f0c8fc54881205998df176a8b9}} 
+int {\bfseries banned} \mbox{[}4\mbox{]} = \{0,0,0,0\}
+\item 
 char $\ast$ \mbox{\hyperlink{server_8c_a024375796156f9da42ef17ecd803b484}{nomcartes}} \mbox{[}$\,$\mbox{]}
-\begin{DoxyCompactList}\small\item\em Permet de faire correspondre le deck aux noms. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{server_8c_a2350ff80e84ae74a929a397c3b1e152f}\label{server_8c_a2350ff80e84ae74a929a397c3b1e152f}} 
+\item 
 int \mbox{\hyperlink{server_8c_a2350ff80e84ae74a929a397c3b1e152f}{joueur\+Courant}}
-\begin{DoxyCompactList}\small\item\em Indice du joueur ayant la main. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{server_8c_ab8852d6f855f3aec45ae55a54171dc3e}{chatserver}} \mbox{[}256\mbox{]}
+\item 
+char \mbox{\hyperlink{server_8c_accb45b8fef99aa610213286524699571}{tab\+\_\+texte}} \mbox{[}8\mbox{]}\mbox{[}256\mbox{]}
+\item 
+\mbox{\Hypertarget{server_8c_acb559820d9ca11295b4500f179ef6392}\label{server_8c_acb559820d9ca11295b4500f179ef6392}} 
+int {\bfseries i} = 0
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-server soutenant le jeu Sherlock Holmes 
+server soutenant le jeu Sherlock Holmes. On exécute le server une fois et 4 clients afin de commencer un jeu. Ce jeu nous permet d\textquotesingle{}aborder les notions fondamentales de la programmation réseau. 
 
 \begin{DoxyAuthor}{Author}
 Arthur \& Younes 
@@ -95,11 +88,42 @@ Arthur \& Younes
 1.\+1 
 \end{DoxyVersion}
 \begin{DoxyDate}{Date}
-10 mai 2019
+13 mai 2019
 \end{DoxyDate}
-Ce serveur propose un autre protocol que H\+T\+TP, pour comprendre comment ce dernier fonctionne. 
+Ce serveur propose un autre protocole que H\+T\+TP, pour comprendre comment ce dernier fonctionne. 
 
 \subsection{Function Documentation}
+\mbox{\Hypertarget{server_8c_a9cf4c7aa19d28eb76c9635b2267df762}\label{server_8c_a9cf4c7aa19d28eb76c9635b2267df762}} 
+\index{server.c@{server.c}!broadcastMessage@{broadcastMessage}}
+\index{broadcastMessage@{broadcastMessage}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{broadcastMessage()}{broadcastMessage()}}
+{\footnotesize\ttfamily void broadcast\+Message (\begin{DoxyParamCaption}\item[{char $\ast$}]{mess }\end{DoxyParamCaption})}
+
+
+
+Permet d\textquotesingle{}envoyer un message à l\textquotesingle{}ensemble des clients connectés sur le server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em char$\ast$} & mess est le message à envoyer \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Cette fonction ne retourne rien. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{server_8c_a349b93f883bcada89b4cf66d7a92bb21}\label{server_8c_a349b93f883bcada89b4cf66d7a92bb21}} 
+\index{server.c@{server.c}!createTable@{createTable}}
+\index{createTable@{createTable}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{createTable()}{createTable()}}
+{\footnotesize\ttfamily void create\+Table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction de création de la table de carte qui est une variable globale. 
+
+\begin{DoxyReturn}{Returns}
+Cette fonction ne retourne rien. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{server_8c_a4866b2d37ffc80c5ba705d3fcd1e0ecf}\label{server_8c_a4866b2d37ffc80c5ba705d3fcd1e0ecf}} 
 \index{server.c@{server.c}!error@{error}}
 \index{error@{error}!server.c@{server.c}}
@@ -115,10 +139,145 @@ Fonction de gestion d\textquotesingle{}erreur.
 {\em const} & char $\ast$msg est le message à renvoyer \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Cette fonction ne retourne rien. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{server_8c_a07f7f1553a2d1708276200adf61e7d02}\label{server_8c_a07f7f1553a2d1708276200adf61e7d02}} 
+\index{server.c@{server.c}!findClientByName@{findClientByName}}
+\index{findClientByName@{findClientByName}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{findClientByName()}{findClientByName()}}
+{\footnotesize\ttfamily int find\+Client\+By\+Name (\begin{DoxyParamCaption}\item[{char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+
+Fonction d\textquotesingle{}affichage du deck\textquotesingle{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em char$\ast$} & name est le nom du client qu\textquotesingle{}on souhaite chercher \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Faire attention à bien écrire le nom (ne pas se tromper sur les majuscules etc.) 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+Retourne le id du client, renvoie -\/1 sinon. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{server_8c_a0cb95e508c0ffc0101b4108ff250c870}\label{server_8c_a0cb95e508c0ffc0101b4108ff250c870}} 
+\index{server.c@{server.c}!melangerDeck@{melangerDeck}}
+\index{melangerDeck@{melangerDeck}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{melangerDeck()}{melangerDeck()}}
+{\footnotesize\ttfamily void melanger\+Deck (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction de mélange du deck de cartes afin de les distribuer. 
+
+\begin{DoxyWarning}{Warning}
+à ne pas confondre deck et nom\+\_\+cartes, comme on ne peut pas mélanger une liste de chaines de caractères, on mélange leurs indices! 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+Cette fonction ne retourne rien, elle exerce sa modification directement sur la variable globale. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{server_8c_a3be7017ee4476744e47456935c39c509}\label{server_8c_a3be7017ee4476744e47456935c39c509}} 
+\index{server.c@{server.c}!printClients@{printClients}}
+\index{printClients@{printClients}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{printClients()}{printClients()}}
+{\footnotesize\ttfamily void print\+Clients (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+affiche le numéro, adresse IP et numéro de port de chaque client 
+
+\begin{DoxyReturn}{Returns}
+Cette fonction ne retourne rien. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{server_8c_a30dedb21b81bcab75c0b351087b64fa1}\label{server_8c_a30dedb21b81bcab75c0b351087b64fa1}} 
+\index{server.c@{server.c}!printDeck@{printDeck}}
+\index{printDeck@{printDeck}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{printDeck()}{printDeck()}}
+{\footnotesize\ttfamily void print\+Deck (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction d\textquotesingle{}affichage du deck\textquotesingle{}. 
+
+\begin{DoxyReturn}{Returns}
+Cette fonction ne retourne rien. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{server_8c_af9aa1e493ee18081ffa952fc677c8ba1}\label{server_8c_af9aa1e493ee18081ffa952fc677c8ba1}} 
+\index{server.c@{server.c}!sendMessageToClient@{sendMessageToClient}}
+\index{sendMessageToClient@{sendMessageToClient}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{sendMessageToClient()}{sendMessageToClient()}}
+{\footnotesize\ttfamily void send\+Message\+To\+Client (\begin{DoxyParamCaption}\item[{char $\ast$}]{clientip,  }\item[{int}]{clientport,  }\item[{char $\ast$}]{mess }\end{DoxyParamCaption})}
+
+
+
+Fonction d\textquotesingle{}affichage du deck\textquotesingle{}. 
+
+\begin{DoxyWarning}{Warning}
+En cas d\textquotesingle{}erreur (faute sur le nom par exemple), le message ne sera pas envoyé 
+\end{DoxyWarning}
+
+\begin{DoxyParams}{Parameters}
+{\em char$\ast$} & name est le nom du client qu\textquotesingle{}on souhaite chercher \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Cette fonction ne retourne rien, elle envoie le message directement au client. 
+\end{DoxyReturn}
 
 
 \subsection{Variable Documentation}
-\mbox{\Hypertarget{server_8c_a024375796156f9da42ef17ecd803b484}\label{server_8c_a024375796156f9da42ef17ecd803b484}} 
+\mbox{\Hypertarget{server_8c_ab8852d6f855f3aec45ae55a54171dc3e}\label{server_8c_ab8852d6f855f3aec45ae55a54171dc3e}} 
+\index{server.c@{server.c}!chatserver@{chatserver}}
+\index{chatserver@{chatserver}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{chatserver}{chatserver}}
+{\footnotesize\ttfamily char chatserver\mbox{[}256\mbox{]}}
+
+Texte contenant le chat \mbox{\Hypertarget{server_8c_ae2efdbabfeef978d67002518e95f00ca}\label{server_8c_ae2efdbabfeef978d67002518e95f00ca}} 
+\index{server.c@{server.c}!deck@{deck}}
+\index{deck@{deck}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{deck}{deck}}
+{\footnotesize\ttfamily int deck\mbox{[}13\mbox{]} =\{0,1,2,3,4,5,6,7,8,9,10,11,12\}}
+
+La variable deck correspond à l\textquotesingle{}ensemble des indices utilisés afin de parcourir les cartes initialisés dans la variable nom\+\_\+cartes \mbox{\Hypertarget{server_8c_a73a162241fb3895e5df5b930dddd1f8f}\label{server_8c_a73a162241fb3895e5df5b930dddd1f8f}} 
+\index{server.c@{server.c}!fsmServer@{fsmServer}}
+\index{fsmServer@{fsmServer}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{fsmServer}{fsmServer}}
+{\footnotesize\ttfamily int fsm\+Server}
+
+Tant que tout les clients ne sont pas connectés fsm\+Server = 0 \mbox{\Hypertarget{server_8c_a45d3ea8306836d64c4faa2084d98f8c7}\label{server_8c_a45d3ea8306836d64c4faa2084d98f8c7}} 
+\index{server.c@{server.c}!guiltSel@{guiltSel}}
+\index{guiltSel@{guiltSel}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{guiltSel}{guiltSel}}
+{\footnotesize\ttfamily int guilt\+Sel}
+
+Permet de stocker le coupable qu\textquotesingle{}accuse le client \mbox{\Hypertarget{server_8c_aa4c3e1e6e5357e73d2bc03c664e96617}\label{server_8c_aa4c3e1e6e5357e73d2bc03c664e96617}} 
+\index{server.c@{server.c}!idDemande@{idDemande}}
+\index{idDemande@{idDemande}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{idDemande}{idDemande}}
+{\footnotesize\ttfamily int id\+Demande}
+
+Il s\textquotesingle{}agit de l\textquotesingle{}id du client qui réalise sa demande \mbox{\Hypertarget{server_8c_a2350ff80e84ae74a929a397c3b1e152f}\label{server_8c_a2350ff80e84ae74a929a397c3b1e152f}} 
+\index{server.c@{server.c}!joueurCourant@{joueurCourant}}
+\index{joueurCourant@{joueurCourant}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{joueurCourant}{joueurCourant}}
+{\footnotesize\ttfamily int joueur\+Courant}
+
+Indice du joueur ayant la main \mbox{\Hypertarget{server_8c_acc38e9aa67011ce24b4c8a882d068c1d}\label{server_8c_acc38e9aa67011ce24b4c8a882d068c1d}} 
+\index{server.c@{server.c}!joueurSel@{joueurSel}}
+\index{joueurSel@{joueurSel}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{joueurSel}{joueurSel}}
+{\footnotesize\ttfamily int joueur\+Sel}
+
+Permet de stocker le joueur dont le client souhaite connaitre le nombre d\textquotesingle{}objet \mbox{\Hypertarget{server_8c_a2d4c98e5c74f88a941b51fb44756ac1e}\label{server_8c_a2d4c98e5c74f88a941b51fb44756ac1e}} 
+\index{server.c@{server.c}!nbClients@{nbClients}}
+\index{nbClients@{nbClients}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{nbClients}{nbClients}}
+{\footnotesize\ttfamily int nb\+Clients}
+
+Le nombre de Clients, comme son nom l\textquotesingle{}indique \mbox{\Hypertarget{server_8c_a024375796156f9da42ef17ecd803b484}\label{server_8c_a024375796156f9da42ef17ecd803b484}} 
 \index{server.c@{server.c}!nomcartes@{nomcartes}}
 \index{nomcartes@{nomcartes}!server.c@{server.c}}
 \subsubsection{\texorpdfstring{nomcartes}{nomcartes}}
@@ -133,7 +292,28 @@ Fonction de gestion d\textquotesingle{}erreur.
 \DoxyCodeLine{\textcolor{stringliteral}{"Mrs. Hudson"}, \textcolor{stringliteral}{"Mary Morstan"}, \textcolor{stringliteral}{"James Moriarty"}\}}
 
 \end{DoxyCode}
+Liste des cartes avec leur nom, on associe à chaque entier de deck, sa carte correspondate dans cette liste \mbox{\Hypertarget{server_8c_a86a6b495ecef125da850e79bcd62aba7}\label{server_8c_a86a6b495ecef125da850e79bcd62aba7}} 
+\index{server.c@{server.c}!objetSel@{objetSel}}
+\index{objetSel@{objetSel}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{objetSel}{objetSel}}
+{\footnotesize\ttfamily int objet\+Sel}
 
+Permet de stocker le objet qui interèsse le joueur effectuant une demande \mbox{\Hypertarget{server_8c_accb45b8fef99aa610213286524699571}\label{server_8c_accb45b8fef99aa610213286524699571}} 
+\index{server.c@{server.c}!tab\_texte@{tab\_texte}}
+\index{tab\_texte@{tab\_texte}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{tab\_texte}{tab\_texte}}
+{\footnotesize\ttfamily char tab\+\_\+texte\mbox{[}8\mbox{]}\mbox{[}256\mbox{]}}
 
-Permet de faire correspondre le deck aux noms. 
+Tableau contenant les messages \mbox{\Hypertarget{server_8c_a5136e762f5d03123aca3b44ee5428ae9}\label{server_8c_a5136e762f5d03123aca3b44ee5428ae9}} 
+\index{server.c@{server.c}!tableCartes@{tableCartes}}
+\index{tableCartes@{tableCartes}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{tableCartes}{tableCartes}}
+{\footnotesize\ttfamily int table\+Cartes\mbox{[}4\mbox{]}\mbox{[}8\mbox{]}}
 
+Permet de faire correspondre le deck aux noms \mbox{\Hypertarget{server_8c_aaa2664f0bc76752d46e18fc781bb44b7}\label{server_8c_aaa2664f0bc76752d46e18fc781bb44b7}} 
+\index{server.c@{server.c}!tcpClients@{tcpClients}}
+\index{tcpClients@{tcpClients}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{tcpClients}{tcpClients}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct__client}{\+\_\+client}}  tcp\+Clients\mbox{[}4\mbox{]}}
+
+On a un tableau de 4 clients avec leur adrese IP, numéro de port ainsi que leur nom 
