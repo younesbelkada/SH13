@@ -49,6 +49,11 @@ char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "inspector Gregson", "inspector Baynes", "inspector Bradstreet",
 "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
 "Mrs. Hudson", "Mary Morstan", "James Moriarty"};
+char tab_texte[8][256];
+char texte_courant[256];
+int i = 0;
+TTF_Font* police = TTF_OpenFont("../../sans.ttf", 15);
+SDL_Color couleurNoire = {0, 0, 0};
 
 volatile int synchro; // Passage par dessus le cache, direction la memoire pour les problemes de plusieurs cache chacun une copie de syncro
 /**
@@ -276,7 +281,7 @@ int main(int argc, char ** argv)
           int ind=(my-350)/30;
           guiltGuess[ind]=1-guiltGuess[ind];
         }
-        else if ((mx>=500) && (mx<600) && (my>=350) && (my<500) && (goEnabled==1))
+        else if ((mx>=500) && (mx<550) && (my>=400) && (my<450) && (goEnabled==1))
         {
           printf("go! joueur=%d objet=%d guilt=%d\n",joueurSel, objetSel, guiltSel);
           if (guiltSel!=-1)
@@ -296,7 +301,7 @@ int main(int argc, char ** argv)
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
 
           }
-        }else if ((mx <= 800) && (my <= 500) && (mx >= 700) && (my >= 350) ) {
+        }else if ((mx <= 550) && (my <= 650) && (mx >= 500) && (my >= 600) ) {
           // Exécution du chat
           chatEnable *= -1;
           char chat[256];
@@ -304,7 +309,7 @@ int main(int argc, char ** argv)
           scanf("%s[^\n]", chat);
           sprintf(sendBuffer,"Z %s %d",chat, gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-        }else if ((mx < 700) && (my <= 500) && (mx >= 600) && (my >= 350) ){
+        }else if ((mx < 550) && (my <= 550) && (mx >= 500) && (my > 500) ){
           sprintf(sendBuffer,"Q %d",gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
           exit(0);
@@ -380,6 +385,16 @@ int main(int argc, char ** argv)
         break;
         case 'W': exit(1);
         case 'Y': exit(1);
+        case 'Z':
+        TTF_Init();
+        sscanf(gbuffer,"Z %s", texte_courant);
+        if (chatEnable == 1) {
+          texte = TTF_RenderText_Blended(police, texte_courant, couleurNoire);
+          SDL_BlitSurface(texte, NULL, ecran, &position);
+          SDL_Flip(ecran);
+        }
+        TTF_Quit();
+        break;
       }
       synchro=0;
       pthread_mutex_unlock( &mutex );
@@ -393,10 +408,10 @@ int main(int argc, char ** argv)
     SDL_Rect rect = {0, 0, 1024, 768};
     SDL_RenderFillRect(renderer, &rect);
 
-    if (chatEnable)
+    if (chatEnable == 1)
     {
-      SDL_SetRenderDrawColor(renderer, 0,0, 0, 0);
-      SDL_Rect rect1 = {1000, 500, 400 , 200};
+      SDL_SetRenderDrawColor(renderer, 120,100, 0, 255);
+      SDL_Rect rect1 = {612, 480, 400, 300};
       SDL_RenderFillRect(renderer, &rect1);
     }
 
