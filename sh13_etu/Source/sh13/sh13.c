@@ -20,8 +20,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
-
-
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 pthread_t thread_serveur_tcp_id; /*!< Stock l'id du thread  correspondant au thread du serveur*/
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER; /*!< Le mutex permet de proteger l'accès au serveur */
 char gbuffer[256]; /*!< Le buffer permet de stocker le message à transmettre au serveur */
@@ -54,8 +53,6 @@ char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
 char tab_texte[8][256];
 char texte_courant[256];
 int i = 0;
-TTF_Font* police = TTF_OpenFont("../../sans.ttf", 15);
-SDL_Color couleurNoire = {0, 0, 0};
 
 volatile int synchro; /*!< La syncro permet d'avoir des thread syncronisé, cependant il faut passer au dela du cache */
 // Passage par dessus le cache, direction la memoire pour les problemes de plusieurs cache chacun une copie de syncro
@@ -167,7 +164,8 @@ int main(int argc, char ** argv)
 {
   int ret;
   int i,j;
-
+  int M = 10000;
+  int iiii = 1;
   int quit = 0;
   SDL_Event event;
   int mx,my;
@@ -194,15 +192,14 @@ int main(int argc, char ** argv)
   SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 768, 0);
 
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
-
-  SDL_Rect src = { 200, 500, 200, 200 };
+  SDL_Rect rect5 = {612, 480, 400, 300};
   char text[256] = "";
 
 
 
   strcat(text,"");
   printf("%s\n",text );
-  //SDL_SetTextInputRect(&src);
+
 
   SDL_Surface *deck[13],*objet[8],*gobutton,*connectbutton, *chatbutton,*quitbutton;
   char path[256] ;
@@ -258,6 +255,7 @@ int main(int argc, char ** argv)
   texture_chatbutton = SDL_CreateTextureFromSurface(renderer, chatbutton);
   texture_quitbutton = SDL_CreateTextureFromSurface(renderer, quitbutton);
   TTF_Font* Sans = TTF_OpenFont("./sans.ttf", 15);
+  TTF_Font* Sans2 = TTF_OpenFont("./sans.ttf", 15);
   printf("Sans=%p\n",Sans);
 
   /* Creation du thread serveur tcp. */
@@ -276,29 +274,31 @@ int main(int argc, char ** argv)
 
         case SDL_KEYDOWN:
         if (chatEnable == 1) {
+           /*!< Pas d'erreur ici chez moi */
+
           if (event.key.keysym.sym  == SDLK_RETURN) {
             printf("Envoie du message, remise à 0\n" );
             sprintf(sendBuffer,"c %d %s %s ",gId,gName,text);
             strcpy(text,"");
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-            break;
+
           }
           else if (event.key.keysym.sym  == SDLK_BACKSPACE) {
             printf("Remove last char, remise à 0\n" );
-            text[strlen(text)-2] = '\0';
+            text[strlen(text)-1] = '\0';
             printf("%s\n",text );
-            break;
 
           }
+
         }
         if (event.key.keysym.sym  == SDLK_ESCAPE) {
           sprintf(sendBuffer,"Q %d",gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
           exit(0);
           quit =1;
-          break;
         }
 
+        break;
 
         case SDL_TEXTINPUT:
                     /* Add new text onto the end of our text */
@@ -362,10 +362,13 @@ int main(int argc, char ** argv)
         }else if ((mx <= 550) && (my <= 650) && (mx >= 500) && (my >= 600) ) {
           // Exécution du chat
           chatEnable *= -1;
-          char chat[256];
-
-          printf("On démarre le texte input");
-
+          if (chatEnable == 1) {
+              SDL_StartTextInput();
+              SDL_SetTextInputRect(&rect5);
+          }
+          else{
+            SDL_StopTextInput();
+          }
           // peut être qu'il faut le faire dans le rendererSDL_StartTextInput();
           // Il faut que l'input se fasse sur le rectangle du chat où sera render les messages
           // Le ser
@@ -468,11 +471,29 @@ int main(int argc, char ** argv)
     SDL_Rect rect = {0, 0, 1024, 768};
     SDL_RenderFillRect(renderer, &rect);
 
-    if (chatEnable == 1)
+
+
+    if (chatEnable ==1)
     {
       SDL_SetRenderDrawColor(renderer, 120,100, 0, 255);
-      SDL_Rect rect1 = {612, 480, 400, 300};
-      SDL_RenderFillRect(renderer, &rect1);
+      SDL_RenderFillRect(renderer, &rect5);
+      SDL_Color col5 = {255, 0, 255 };
+      int a = strlen(text);
+      if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
+        iiii++;
+        if (iiii == 1) {
+
+          M = a*10;
+        }
+      }
+      SDL_Rect rect6 = {612, 480, MIN(a*10,M), 50*iiii};
+      //SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans2,text, col5);
+      SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, text, col5, 200);
+      SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
+      SDL_RenderCopy(renderer, Message1, NULL, &rect6);
+      SDL_DestroyTexture(Message1);
+      SDL_FreeSurface(surfaceMessage1);
+
     }
 
     if (joueurSel!=-1)
@@ -517,14 +538,7 @@ int main(int argc, char ** argv)
 
 
 
-    {
-      SDL_Color col1 = {255, 255, 255 };
-      SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans,text, col1);
-      SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
-      SDL_RenderCopy(renderer, Message1, NULL, &src);
-      SDL_DestroyTexture(Message1);
-      SDL_FreeSurface(surfaceMessage1);
-    }
+
     SDL_Color col1 = {0, 0, 0 };
     for (i=0;i<8;i++)
     {
@@ -771,11 +785,6 @@ int main(int argc, char ** argv)
       SDL_RenderCopy(renderer, texture_deck[b[2]], NULL, &dstrect);
     }
 
-    // Le bouton go
-    if (1) {
-
-      SDL_RenderFillRect(renderer,&src);
-    }
     if (1)
     {
       SDL_Rect dstrect = { 500, 400, 50, 50 };
