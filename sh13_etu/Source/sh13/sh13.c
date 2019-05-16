@@ -190,17 +190,12 @@ int main(int argc, char ** argv)
 
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 
-  SDL_Rect src = { 0, 0, 200, 200 };
+  SDL_Rect src = { 200, 500, 200, 200 };
   char text[256] = "";
-
-  char *composition;
-  Sint32 cursor;
-  Sint32 selection_len;
-
 
   strcat(text,".");
   printf("%s\n",text );
-  SDL_SetTextInputRect(&src);
+  //SDL_SetTextInputRect(&src);
 
   SDL_Surface *deck[13],*objet[8],*gobutton,*connectbutton, *chatbutton,*quitbutton;
   char path[256] ;
@@ -274,17 +269,6 @@ int main(int argc, char ** argv)
           if (event.key.keysym.sym  == SDLK_RIGHT) {
             printf("Envoie du message, remise à 0\n" );
           }
-
-        case SDL_TEXTEDITING:
-          /*
-          Update the composition text.
-          Update the cursor position.
-          Update the selection length (if any).
-          */
-          composition = event.edit.text;
-          cursor = event.edit.start;
-          selection_len = event.edit.length;
-          break;
 
         case SDL_TEXTINPUT:
                     /* Add new text onto the end of our text */
@@ -452,12 +436,6 @@ int main(int argc, char ** argv)
     SDL_Rect rect = {0, 0, 1024, 768};
     SDL_RenderFillRect(renderer, &rect);
 
-    if (chatEnable)
-    {
-      SDL_SetRenderDrawColor(renderer, 0,0, 0, 0);
-      SDL_Rect rect1 = {1000, 500, 400 , 200};
-      SDL_RenderFillRect(renderer, &rect1);
-    }
 
     if (joueurSel!=-1)
     {
@@ -499,7 +477,17 @@ int main(int argc, char ** argv)
       SDL_RenderCopy(renderer, texture_objet[7], NULL, &dstrect_crane);
     }
 
-    SDL_Color col1 = {0, 0, 0};
+
+
+    {
+      SDL_Color col1 = {255, 255, 255 };
+      SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans,text, col1);
+      SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
+      SDL_RenderCopy(renderer, Message1, NULL, &src);
+      SDL_DestroyTexture(Message1);
+      SDL_FreeSurface(surfaceMessage1);
+    }
+    SDL_Color col1 = {0, 0, 0 };
     for (i=0;i<8;i++)
     {
       SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, nbobjets[i], col1);
