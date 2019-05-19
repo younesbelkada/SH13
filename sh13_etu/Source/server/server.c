@@ -357,7 +357,7 @@ int main(int argc, char *argv[]){
             // On remet l'odre de la liste
             case 'Z':
               //printf("COCOU\n");
-              sscanf(buffer,"Z %d %s",&idDemande, chatserver);
+              sscanf(buffer,"Z %d %[^\n]s",&idDemande, chatserver);
 	      printf("%s\n", chatserver);
 	      sprintf(tab_texte[i], "%s : %s", tcpClients[idDemande].name, chatserver);
 	      printf("%s\n", tab_texte[i]);
@@ -392,19 +392,16 @@ int main(int argc, char *argv[]){
             // lui envoyer un message personnel pour lui communiquer son id
 
             sprintf(reply,"I %d",id);
-            sendMessageToClient(tcpClients[id].ipAddress,
-              tcpClients[id].port,
-              reply);
+            sendMessageToClient(tcpClients[id].ipAddress,tcpClients[id].port,reply);
 
               // Envoyer un message broadcast pour communiquer a tout le monde la liste des joueurs actuellement
               // connectes
 
-              sprintf(reply,"L %s %s %s %s", tcpClients[0].name, tcpClients[1].name, tcpClients[2].name, tcpClients[3].name);
-              broadcastMessage(reply);
+            sprintf(reply,"L %s %s %s %s", tcpClients[0].name, tcpClients[1].name, tcpClients[2].name, tcpClients[3].name);
+            broadcastMessage(reply);
 
               // Si le nombre de joueurs atteint 4, alors on peut lancer le jeu
-              if (nbClients==4)
-              {
+            if (nbClients==4){
                 // On envoie ses cartes au joueur 0, ainsi que la ligne qui lui correspond dans tableCartes
                 int k = 0;
                 for ( i = 0; i < 4; i++) {
@@ -425,17 +422,16 @@ int main(int argc, char *argv[]){
                   break;
                 }
             }
-              else if (fsmServer==1)
-              {
+      else if (fsmServer==1){
                 switch (buffer[0])
                 {
                   case 'Z':
                     //printf("COCOU\n");
                     sscanf(buffer,"Z %d %s %s", &idDemande, chatserver);
                     sprintf(chatserver, "%s : %s", tcpClients[idDemande].name, chatserver);
-		    sprintf(tab_texte[i],"%s",chatserver);
+		                sprintf(tab_texte[i],"%s",chatserver);
                     printf("%s\n", tab_texte[i]);
-		    i++;
+		                  i++;
                     if (i > 7) {
                       i = 0;
                     }
