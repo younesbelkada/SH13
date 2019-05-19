@@ -186,7 +186,7 @@ int main(int argc, char ** argv)
   strcpy(gName,argv[5]);
 
   SDL_Init(SDL_INIT_VIDEO);
-  SDL_StartTextInput(); /*!< Pas d'erreur ici chez moi */
+  //SDL_StartTextInput(); /*!< Pas d'erreur ici chez moi */
   TTF_Init();
   SDL_Window * window = SDL_CreateWindow("SDL2 SH13",
   SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 768, 0);
@@ -277,38 +277,33 @@ int main(int argc, char ** argv)
            /*!< Pas d'erreur ici chez moi */
 
           if (event.key.keysym.sym  == SDLK_RETURN) {
-            printf("Envoie du message, remise à 0\n" );
-            sprintf(sendBuffer,"c %d %s %s ",gId,gName,text);
+            sprintf(sendBuffer,"Z %d %s ",gId,text);
+            printf("%s\n",text );
             strcpy(text,"");
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-
           }
           else if (event.key.keysym.sym  == SDLK_BACKSPACE) {
-            printf("Remove last char, remise à 0\n" );
             text[strlen(text)-1] = '\0';
-            printf("%s\n",text );
-
           }
 
         }
         if (event.key.keysym.sym  == SDLK_ESCAPE) {
           sprintf(sendBuffer,"Q %d",gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
-          exit(0);
           quit =1;
         }
 
         break;
-
         case SDL_TEXTINPUT:
                     /* Add new text onto the end of our text */
                     strcat(text, event.text.text);
-                    printf("%s\n",text );
                     break;
 
         case SDL_QUIT:
-        quit = 1;
-        break;
+          sprintf(sendBuffer,"Q %d",gId);
+          sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
+          quit = 1;
+          break;
         case  SDL_MOUSEBUTTONDOWN:
         SDL_GetMouseState( &mx, &my );
         //printf("mx=%d my=%d\n",mx,my);
@@ -473,16 +468,15 @@ int main(int argc, char ** argv)
 
 
 
-    if (chatEnable ==1)
+    if (chatEnable ==1 )
     {
-      SDL_SetRenderDrawColor(renderer, 120,100, 0, 255);
+      SDL_SetRenderDrawColor(renderer , 120,100, 0, 255);
       SDL_RenderFillRect(renderer, &rect5);
       SDL_Color col5 = {255, 0, 255 };
       int a = strlen(text);
       if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
         iiii++;
         if (iiii == 1) {
-
           M = a*10;
         }
       }
@@ -493,7 +487,6 @@ int main(int argc, char ** argv)
       SDL_RenderCopy(renderer, Message1, NULL, &rect6);
       SDL_DestroyTexture(Message1);
       SDL_FreeSurface(surfaceMessage1);
-
     }
 
     if (joueurSel!=-1)

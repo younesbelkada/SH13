@@ -357,19 +357,8 @@ int main(int argc, char *argv[]){
             case 'Q': sscanf(buffer,"Q %d",&idDemande);break;
             // On recrée la liste en enlevant le joueur.
             // On remet l'odre de la liste
-            case 'Z':
-              //printf("COCOU\n");
-              sscanf(buffer,"Z %s %d", &com, chatserver, &idDemande);
-              sprintf(tab_texte[i],"%s",chatserver);
-              i++;
-              if (i > 7) {
-                i = 0;
-              }
-              for (size_t j = 0; j < i; j++) {
-                sprintf(reply, "Z %s", tab_texte[j]);
-                broadcastMessage(reply);
-              }
-              break;
+
+            
             case 'C':
             sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
             printf("COM=%c ipAddress=%s port=%d name=%s\n",com, clientIpAddress, clientPort, clientName);
