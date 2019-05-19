@@ -164,7 +164,7 @@ int main(int argc, char ** argv)
 {
   int ret;
   int i,j;
-  int M = 10000;
+  int Max_text_size = 10000;
   int iiii = 1;
   int quit = 0;
   SDL_Event event;
@@ -280,6 +280,7 @@ int main(int argc, char ** argv)
             sprintf(sendBuffer,"Z %d %s ",gId,text);
             printf("%s\n",text );
             strcpy(text,"");
+            iiii = 1;
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
           }
           else if (event.key.keysym.sym  == SDLK_BACKSPACE) {
@@ -362,6 +363,7 @@ int main(int argc, char ** argv)
               SDL_SetTextInputRect(&rect5);
           }
           else{
+            iiii = 1;
             SDL_StopTextInput();
           }
           // peut être qu'il faut le faire dans le rendererSDL_StartTextInput();
@@ -475,14 +477,16 @@ int main(int argc, char ** argv)
       SDL_Color col5 = {255, 0, 255 };
       int a = strlen(text);
       if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
-        iiii++;
         if (iiii == 1) {
-          M = a*10;
+          Max_text_size =400;
         }
+        iiii++;
+
       }
-      SDL_Rect rect6 = {612, 480, MIN(a*10,M), 50*iiii};
+      //MIN(a*10,M)
+      SDL_Rect rect6 = {612, 480, MIN(Max_text_size,a*10), 20*iiii*i};
       //SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans2,text, col5);
-      SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, text, col5, 200);
+      SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, text, col5, 50*i);
       SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
       SDL_RenderCopy(renderer, Message1, NULL, &rect6);
       SDL_DestroyTexture(Message1);
