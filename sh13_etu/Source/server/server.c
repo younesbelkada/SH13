@@ -350,9 +350,40 @@ int main(int argc, char *argv[]){
       inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port), buffer);
       if (fsmServer==0)
       {
+        struct _client temp[4];
         switch (buffer[0])
         {
-            case 'Q': sscanf(buffer,"Q %d",&idDemande);break;
+            case 'Q': 
+                sscanf(buffer,"Q %d",&idDemande);
+                char temp2[256];
+                sprintf(temp2, "Le joueur %d a quitté, la partie recommence", idDemande);
+                broadcastMessage(temp2);
+                //free(temp2);
+                nbClients = nbClients-1;
+                //tcpClients[idDemande] = NULL;
+                if (nbClients == 0)
+                {
+                  tcpClients[0].name = "";
+                  break;
+                }else{
+                  for (int i = 0; i < nbClients+1; ++i)
+                  {
+                    int z = 0;
+                    if (i != idDemande)
+                    {
+                      temp[z] = tcpClients[i];
+                      z++;
+                    }
+                  }
+                  //free(tcpClients);
+                  //struct _client tcpClients[4];
+                  //tcpClients = NULL;
+                  for (int i = 0; i < nbClients; ++i)
+                  {
+                    tcpClients[i] = temp[i];
+                  }
+                }
+                break;
             // On recrée la liste en enlevant le joueur.
             // On remet l'odre de la liste
             case 'Z':
@@ -424,6 +455,7 @@ int main(int argc, char *argv[]){
                   }
                   break;
                 }
+
             }
               else if (fsmServer==1)
               {
