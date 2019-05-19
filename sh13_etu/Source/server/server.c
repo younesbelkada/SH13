@@ -292,6 +292,15 @@ void broadcastMessage(char *mess){
     mess);
 }
 
+void initialiser(struct _client Clients[4]){
+	for (int i = 0; i < 4; ++i)
+	{
+		strcpy(tcpClients[i].ipAddress, "\0");
+        strcpy(tcpClients[i].name, "-");
+		Clients[i].port = 0;
+	}
+}
+
 int main(int argc, char *argv[]){
     int sockfd, newsockfd, portno;
     socklen_t clilen;
@@ -350,37 +359,50 @@ int main(int argc, char *argv[]){
       inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port), buffer);
       if (fsmServer==0)
       {
-        struct _client temp[4];
+      	struct _client temp[4];
         switch (buffer[0])
         {
             case 'Q':
                 sscanf(buffer,"Q %d",&idDemande);
-                char temp2[256];
-                sprintf(temp2, "Le joueur %d a quitté, la partie recommence", idDemande);
-                broadcastMessage(temp2);
-                //free(temp2);
                 nbClients = nbClients-1;
                 //tcpClients[idDemande] = NULL;
                 if (nbClients == 0)
                 {
+                  strcpy(tcpClients[0].ipAddress, "\0");
+                  strcpy(tcpClients[0].name, "-");
                   break;
                 }else{
+                  int z = 0;
                   for (int i = 0; i < nbClients+1; ++i)
                   {
-                    int z = 0;
                     if (i != idDemande)
                     {
-                      temp[z] = tcpClients[i];
+                      //printf("AJJJ\n");
+                      strcpy(temp[z].ipAddress, tcpClients[i].ipAddress);
+                  	  strcpy(temp[z].name, tcpClients[i].name);
+                  	  temp[z].port = tcpClients[i].port;
                       z++;
                     }
+                    //printf("%s\n", temp[z-1].name);
                   }
-                  //free(tcpClients);
-                  //struct _client tcpClients[4];
-                  //tcpClients = NULL;
-                  for (int i = 0; i < nbClients; ++i)
+                  initialiser(tcpClients);
+                  printClients();
+                  for (int i = 0; i < z; ++i)
                   {
-                    tcpClients[i] = temp[i];
+                  	//printf("AHAHAHAH\n");
+                  	printf("%s\n", temp[i].ipAddress);
+                  	printf("%s\n", temp[i].name);
+                  	strcpy(tcpClients[i].ipAddress, temp[i].ipAddress);
+                  	strcpy(tcpClients[i].name, temp[i].name);
+                  	tcpClients[i].port = temp[i].port;
                   }
+                  //printf("%s\n", temp[z-1].name);
+                  //initialiser(temp);
+                  printClients();
+            	  sprintf(reply,"L %s %s %s %s", tcpClients[0].name, tcpClients[1].name, tcpClients[2].name, tcpClients[3].name);
+            	  printf("reply : %s\n", reply);
+            	  broadcastMessage(reply);
+            	  ///printf("%s\n", );
                 }
                 break;
             // On recrée la liste en enlevant le joueur.
@@ -454,6 +476,7 @@ int main(int argc, char *argv[]){
 
             }
       else if (fsmServer==1){
+      	 		struct _client temp[4];
                 switch (buffer[0])
                 {
                   case 'Z':
@@ -473,9 +496,43 @@ int main(int argc, char *argv[]){
                     break;
                   case 'Q':
                   sscanf(buffer,"Q %d",&idDemande);
-                  //nbClients--;
-                  // L'enlever de la liste fonction enlever
-                  fsmServer=0;break;
+                nbClients = nbClients-1;
+                //tcpClients[idDemande] = NULL;
+                {
+                  int z = 0;
+                  for (int i = 0; i < nbClients+1; ++i)
+                  {
+                    if (i != idDemande)
+                    {
+                      //printf("AJJJ\n");
+                      strcpy(temp[z].ipAddress, tcpClients[i].ipAddress);
+                  	  strcpy(temp[z].name, tcpClients[i].name);
+                  	  temp[z].port = tcpClients[i].port;
+                      z++;
+                    }
+                    //printf("%s\n", temp[z-1].name);
+                  }
+                  initialiser(tcpClients);
+                  printClients();
+                  for (int i = 0; i < z; ++i)
+                  {
+                  	//printf("AHAHAHAH\n");
+                  	printf("%s\n", temp[i].ipAddress);
+                  	printf("%s\n", temp[i].name);
+                  	strcpy(tcpClients[i].ipAddress, temp[i].ipAddress);
+                  	strcpy(tcpClients[i].name, temp[i].name);
+                  	tcpClients[i].port = temp[i].port;
+                  }
+                  //printf("%s\n", temp[z-1].name);
+                  initialiser(temp);
+                  //printClients();
+            	  sprintf(reply,"L %s %s %s %s", tcpClients[0].name, tcpClients[1].name, tcpClients[2].name, tcpClients[3].name);
+            	  printf("reply : %s\n", reply);
+            	  broadcastMessage(reply);
+            	  ///printf("%s\n", );
+                  }
+                  fsmServer=0;
+                  break;
                   case 'G':
                   sscanf(buffer,"G %d %d",&idDemande,&guiltSel);
                   if (guiltSel == deck[12] ) {
