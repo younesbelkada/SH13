@@ -39,8 +39,6 @@ int b[3];/*!< Stock les 3 cartes ou nom des cartes distribuées par le mélange 
 int goEnabled; /*!< Un booléen indiquant si le client possède la main, si c'est à lui de jouer le bouton GO s'affichera et il pourra effectuer une demande */
 int connectEnabled;/*!< Si le joueur est connecté, il n'a plus besoin du bouton connect qui doit donc disparaitre */
 int chatEnable = -1;/*!< Prototype permettant de gérer le chat */
-char tab_texte[8][256];
-char texte_courant[256];
 SDL_Color couleurNoire = {0, 0, 0};
 
 
@@ -269,13 +267,9 @@ int main(int argc, char ** argv)
       //printf("un event\n");
       switch (event.type)
       {
-
-
         case SDL_KEYDOWN:
         if (chatEnable == 1) {
-           /*!< Pas d'erreur ici chez moi */
-
-          if (event.key.keysym.sym  == SDLK_RETURN) 
+          if (event.key.keysym.sym  == SDLK_RETURN){
             sprintf(sendBuffer,"Z %d %s ",gId,text);
             printf("%s\n",text );
             strcpy(text,"");
@@ -285,8 +279,8 @@ int main(int argc, char ** argv)
           else if (event.key.keysym.sym  == SDLK_BACKSPACE) {
             text[strlen(text)-1] = '\0';
           }
-
         }
+
         if (event.key.keysym.sym  == SDLK_ESCAPE) {
           sprintf(sendBuffer,"Q %d",gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
@@ -450,7 +444,7 @@ int main(int argc, char ** argv)
 		      for(int l=0; l<nbrmessages; l++){
 			         sprintf(tab_text[l],"%s",texte_courant);
 			         sscanf(gbuffer, "Z %s %d", texte_courant, &nbrmessages);
-		      }	
+		      }
 	       }
         break;
       }
@@ -470,27 +464,29 @@ int main(int argc, char ** argv)
 
     if (chatEnable ==1 )
     {
-      SDL_SetRenderDrawColor(renderer, 130,130,130, 255); // couleur du rectangle
-      SDL_RenderFillRect(renderer, &rect5);
-      SDL_Color col5 = {255, 0, 255 };
-      int a = strlen(text);
-      if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
-        if (iiii == 1) {
-          Max_text_size =400;
-        }
-        iiii++;
+      for (int i = 0; i < 8; i++) {
+        SDL_SetRenderDrawColor(renderer, 130,130,130, 255); // couleur du rectangle
+        SDL_RenderFillRect(renderer, &rect5);
+        SDL_Color col5 = {255, 0, 255 };
+        int a = strlen(text);
+        if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
+          if (iiii == 1) {
+            Max_text_size =400;
+          }
+          iiii++;
 
+        }
+        //MIN(a*10,M)
+        SDL_Rect rect6 = {612, 480, MIN(Max_text_size,a*10), 20*iiii*i};
+        //SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans2,text, col5);
+        SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, text, col5, 50*i);
+        SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
+        SDL_RenderCopy(renderer, Message1, NULL, &rect6);
+        SDL_DestroyTexture(Message1);
+        SDL_FreeSurface(surfaceMessage1);
+        }
       }
-      //MIN(a*10,M)
-      SDL_Rect rect6 = {612, 480, MIN(Max_text_size,a*10), 20*iiii*i};
-      //SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans2,text, col5);
-      SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, text, col5, 50*i);
-      SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
-      SDL_RenderCopy(renderer, Message1, NULL, &rect6);
-      SDL_DestroyTexture(Message1);
-      SDL_FreeSurface(surfaceMessage1);
-      }
-    }
+
 
     if (joueurSel!=-1)
     {

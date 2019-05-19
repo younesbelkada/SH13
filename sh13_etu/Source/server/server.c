@@ -353,7 +353,7 @@ int main(int argc, char *argv[]){
         struct _client temp[4];
         switch (buffer[0])
         {
-            case 'Q': 
+            case 'Q':
                 sscanf(buffer,"Q %d",&idDemande);
                 char temp2[256];
                 sprintf(temp2, "Le joueur %d a quitté, la partie recommence", idDemande);
@@ -363,7 +363,6 @@ int main(int argc, char *argv[]){
                 //tcpClients[idDemande] = NULL;
                 if (nbClients == 0)
                 {
-                  tcpClients[0].name = "";
                   break;
                 }else{
                   for (int i = 0; i < nbClients+1; ++i)
