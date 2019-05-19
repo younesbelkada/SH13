@@ -9,9 +9,8 @@
  * comprendre comment ce dernier fonctionne.
  */
 #include <SDL2/SDL.h>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <pthread.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -194,7 +193,7 @@ int main(int argc, char ** argv)
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
   SDL_Rect rect5 = {612, 480, 400, 300};
   char text[256] = "";
-
+  char tab_text[8][256];
 
 
   strcat(text,"");
@@ -262,7 +261,7 @@ int main(int argc, char ** argv)
   printf ("Creation du thread serveur tcp !\n");
   synchro=0;
   ret = pthread_create ( & thread_serveur_tcp_id, NULL, fn_serveur_tcp, NULL);
-
+  int nbrmessages = 0;
   while (!quit)
   {
     if (SDL_PollEvent(&event))
@@ -278,7 +277,7 @@ int main(int argc, char ** argv)
 
           if (event.key.keysym.sym  == SDLK_RETURN) {
             printf("Envoie du message, remise à 0\n" );
-            sprintf(sendBuffer,"c %d %s %s ",gId,gName,text);
+            sprintf(sendBuffer,"Z %d %s ",gId,text);
             strcpy(text,"");
             sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
 
@@ -448,16 +447,15 @@ int main(int argc, char ** argv)
         break;
         case 'W': exit(1);
         case 'Y': exit(1);
-        /*case 'Z':
-        TTF_Init();
-        sscanf(gbuffer,"Z %s", texte_courant);
-        if (chatEnable == 1) {
-          texte = TTF_RenderText_Blended(Sans, texte_courant, couleurNoire);
-          SDL_BlitSurface(texte, NULL, renderer, &src);
-          SDL_Flip(renderer);
-        }
-        TTF_Quit();
-        break;*/
+        case 'Z':
+        sscanf(gbuffer,"Z %s %d", texte_courant, &nbrmessages);
+	     if(chatEnable == 1){
+		      for(int l=0; l<nbrmessages; l++){
+			         sprintf(tab_text[l],"%s",texte_courant);
+			         sscanf(gbuffer, "Z %s %d", texte_courant, &nbrmessages);
+		      }	
+	       }
+        break;
       }
       synchro=0;
       pthread_mutex_unlock( &mutex );
@@ -475,25 +473,30 @@ int main(int argc, char ** argv)
 
     if (chatEnable ==1)
     {
-      SDL_SetRenderDrawColor(renderer, 120,100, 0, 255);
+      SDL_SetRenderDrawColor(renderer, 130,130,130, 255); // couleur du rectangle
       SDL_RenderFillRect(renderer, &rect5);
-      SDL_Color col5 = {255, 0, 255 };
-      int a = strlen(text);
-      if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
-        iiii++;
-        if (iiii == 1) {
-
-          M = a*10;
-        }
+      SDL_Color col5 = {255, 255, 255}; // Couleur du texte 
+      SDL_Texture* Message1;
+      SDL_Surface* surfaceMessage1;
+      for(int l=0;l < nbrmessages; l++){
+	      int a = strlen(tab_text[l]);
+	      if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
+		          iiii++; // Pas compris 
+		          if (iiii == 1) {
+		          M = a*10;
+		          }
+	      }
+	      SDL_Rect rect6 = {612, 480, MIN(a*10,M), 50*iiii};
+	      //SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans2,text, col5);
+	      //printf("%s\n", tab_text[0]);
+	      SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, tab_text[l], col5, 200);
+	      //printf("%s\n", "JE SUIS LA");
+	      SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
+	      //printf("%s\n", "JE SUIS LA2");
+	      SDL_RenderCopy(renderer, Message1, NULL, &rect6);  
       }
-      SDL_Rect rect6 = {612, 480, MIN(a*10,M), 50*iiii};
-      //SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans2,text, col5);
-      SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, text, col5, 200);
-      SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
-      SDL_RenderCopy(renderer, Message1, NULL, &rect6);
       SDL_DestroyTexture(Message1);
       SDL_FreeSurface(surfaceMessage1);
-
     }
 
     if (joueurSel!=-1)
