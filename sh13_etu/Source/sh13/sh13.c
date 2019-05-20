@@ -328,6 +328,7 @@ int main(int argc, char ** argv)
           joueurSel=-1;
           objetSel=-1;
           guiltSel=(my-350)/30;
+
         }
         else if ((mx>=250) && (mx<300) && (my>=350) && (my<740))
         {
@@ -395,6 +396,17 @@ int main(int argc, char ** argv)
       char c1[5];
       switch (gbuffer[0])
       {
+        case 'Q':
+        sscanf(gbuffer,"Q %d",&joueurSel);
+        // reinitialiser b[], reinitialiser  table carte, actualiser table nom avec L, changement d'id
+        for (int i = 0; i < 3; i++) {
+          b[i] = -1; //Ou 0?
+        }
+        for (int i = 0; i < 8; i++) {
+          for (int j = 0; j < 4; j++) {
+            tableCartes[j][i] = -1; //ou 0?
+          }
+        }
         // Message 'I' : le joueur recoit son Id
         case 'I':
         sscanf(gbuffer,"I %d",&gId);
@@ -809,7 +821,7 @@ int main(int argc, char ** argv)
       SDL_RenderCopy(renderer, texture_deck[b[2]], NULL, &dstrect);
     }
 
-    if (1)
+    if (goEnabled)
     {
       SDL_Rect dstrect = { 500, 400, 50, 50 };
       SDL_RenderCopy(renderer, texture_gobutton, NULL, &dstrect);
