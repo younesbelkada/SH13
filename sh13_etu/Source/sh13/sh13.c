@@ -47,8 +47,11 @@ char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "inspector Gregson", "inspector Baynes", "inspector Bradstreet",
 "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
 "Mrs. Hudson", "Mary Morstan", "James Moriarty"};
-char tab_texte[8][256];
+
+
 char texte_courant[256];
+
+
 int i = 0;
 
 volatile int synchro; /*!< La syncro permet d'avoir des thread syncronisé, cependant il faut passer au dela du cache */
@@ -161,6 +164,7 @@ int main(int argc, char ** argv)
 {
   int ret;
   int i,j;
+  int messnb = 0;
   int Max_text_size = 10000;
   int iiii = 1;
   int quit = 0;
@@ -191,7 +195,7 @@ int main(int argc, char ** argv)
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
   SDL_Rect rect5 = {612, 480, 400, 300};
   char text[256] = "";
-  char tab_text[8][256];
+  char tab_text[8][256] = {"\0","\0","\0","\0","\0","\0","\0","\0"};
 
 
   strcat(text,"");
@@ -285,6 +289,8 @@ int main(int argc, char ** argv)
           sprintf(sendBuffer,"Q %d",gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
           quit =1;
+          // reinitialiser lesmessages?
+
         }
 
         break;
@@ -426,9 +432,6 @@ int main(int argc, char ** argv)
                 tableCartes[i][ob] = 0;
               }
               else{tableCartes[i][ob] = 100;}
-
-
-
           }
         }
         break;
@@ -439,13 +442,20 @@ int main(int argc, char ** argv)
         case 'W': exit(1);
         case 'Y': exit(1);
         case 'Z':
-        sscanf(gbuffer,"Z %s %d", texte_courant, &nbrmessages);
-	     if(chatEnable == 1){
-		      for(int l=0; l<nbrmessages; l++){
-			         sprintf(tab_text[l],"%s",texte_courant);
-			         sscanf(gbuffer, "Z %s %d", texte_courant, &nbrmessages);
-		      }
-	       }
+        sscanf(gbuffer,"Z %[^\n]s %d", texte_courant, &nbrmessages);
+	       if(chatEnable == 1){
+         if (messnb <8) {
+           sprintf(tab_text[messnb],"%s",texte_courant);
+           sscanf(gbuffer, "Z %s %d", texte_courant, &nbrmessages);
+           messnb++;
+         }
+         if (messnb == 8) {
+           messnb= 0;
+         }
+         else{
+           printf("Tous les messages on ete recupere\n" );
+         }
+	      }
         break;
       }
       synchro=0;
@@ -464,14 +474,37 @@ int main(int argc, char ** argv)
 
     if (chatEnable ==1 )
     {
-      for (int i = 0; i < 8; i++) {
-        SDL_SetRenderDrawColor(renderer, 130,130,130, 255); // couleur du rectangle
-        SDL_RenderFillRect(renderer, &rect5);
-        SDL_Color col5 = {255, 0, 255 };
+      int total_ligne = 1;
+      SDL_SetRenderDrawColor(renderer, 130,130,130, 255); // couleur du rectangle
+      SDL_RenderFillRect(renderer, &rect5);
+      SDL_Color col5 = {255, 0, 255 };
+
+      for (int j = 0; j < 8; j++) {
+        if (tab_text[j] != NULL) {
+          printf("Message %d :%s \n",j, tab_text[j]);
+        }
+        printf("\n" );
+      }
+
+
+      for (int j = 0; j < 8; j++) {
+        if (tab_text[j] != NULL) {
+          int b = strlen(tab_text[j]);
+            SDL_Rect rect6 = {612, 480+20*j, b*10, 50};
+            SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, tab_text[j], col5, 50);
+            SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
+            SDL_RenderCopy(renderer, Message1, NULL, &rect6);
+            SDL_DestroyTexture(Message1);
+            SDL_FreeSurface(surfaceMessage1);
+            total_ligne++;
+        }
+      }
+
+
         int a = strlen(text);
         if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
           if (iiii == 1) {
-            Max_text_size =400;
+            Max_text_size = 400;
           }
           iiii++;
 
@@ -484,7 +517,6 @@ int main(int argc, char ** argv)
         SDL_RenderCopy(renderer, Message1, NULL, &rect6);
         SDL_DestroyTexture(Message1);
         SDL_FreeSurface(surfaceMessage1);
-        }
       }
 
 

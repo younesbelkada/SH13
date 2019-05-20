@@ -290,7 +290,7 @@ void broadcastMessage(char *mess){
   sendMessageToClient(tcpClients[i].ipAddress,
     tcpClients[i].port,
     mess);
-}
+  }
 
 int main(int argc, char *argv[]){
     int sockfd, newsockfd, portno;
