@@ -793,12 +793,12 @@ int main(int argc, char ** argv)
     }
     if (b[1]!=-1)
     {
-      SDL_Rect dstrect = { 750, 200, 1000/4, 660/4 };
+      SDL_Rect dstrect = { 750, 660/4, 1000/4, 660/4 };
       SDL_RenderCopy(renderer, texture_deck[b[1]], NULL, &dstrect);
     }
     if (b[2]!=-1)
     {
-      SDL_Rect dstrect = { 750, 400, 1000/4, 660/4 };
+      SDL_Rect dstrect = { 750, 660/2, 1000/4, 660/4 };
       SDL_RenderCopy(renderer, texture_deck[b[2]], NULL, &dstrect);
     }
 
