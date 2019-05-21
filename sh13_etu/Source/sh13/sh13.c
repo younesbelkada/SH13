@@ -40,7 +40,7 @@ int goEnabled; /*!< Un booléen indiquant si le client possède la main, si c'es
 int connectEnabled;/*!< Si le joueur est connecté, il n'a plus besoin du bouton connect qui doit donc disparaitre */
 int chatEnable = -1;/*!< Prototype permettant de gérer le chat */
 SDL_Color couleurNoire = {0, 0, 0};
-int compteur = 0;
+//int compteur = 0;
 
 char *nbobjets[]={"5","5","5","5","4","3","3","3"};/*!< Liste le nombre total de chaque objet par indices par exemple objet[0] = 5 */
 char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
@@ -453,17 +453,17 @@ int main(int argc, char ** argv)
         case 'Z':
         sscanf(gbuffer,"Z %[^Z]s", texte_courant);
         char texte_temporaire[100];
-        compteur = 0;
-        for(int r = 0; r < 8; r++){
+        int compteur = 0;
+        for(int r = 0; r<8; r++){
 	        while(texte_courant[compteur] != '@'){
 	        	compteur++;
 	        	if (compteur > strlen(texte_courant))
 	        	{
 	        		break;
-	        	}else if (texte_courant[compteur] == '@')
+	        	}/*else if (texte_courant[compteur] == '@')
 	        	{
 	        		break;
-	        	}
+	        	}*/
 	        }
 	        if (texte_courant[compteur] == '@')
 	        {
