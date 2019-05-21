@@ -437,7 +437,8 @@ int main(int argc, char ** argv)
               if (c1[i] == '0') {
                 tableCartes[i][ob] = 0;
               }
-              else{tableCartes[i][ob] = 100;}
+              else if (tableCartes[i][ob] == -1)
+              {tableCartes[i][ob] = 100;}
 
 
 
