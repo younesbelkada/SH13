@@ -270,7 +270,7 @@ int main(int argc, char ** argv)
         case SDL_KEYDOWN:
         if (chatEnable == 1) {
           if (event.key.keysym.sym  == SDLK_RETURN){
-            sprintf(sendBuffer,"Z %d %s ",gId,text);
+            sprintf(sendBuffer,"Z %d %s",gId,text);
             printf("%s\n",text );
             strcpy(text,"");
             iiii = 1;
@@ -450,15 +450,7 @@ int main(int argc, char ** argv)
         break;
         case 'W': exit(1);
         case 'Y': exit(1);
-        case 'Z':
-        sscanf(gbuffer,"Z %s %d", texte_courant, &nbrmessages);
-	     if(chatEnable == 1){
-		      for(int l=0; l<nbrmessages; l++){
-			         sprintf(tab_text[l],"%s",texte_courant);
-			         sscanf(gbuffer, "Z %s %d", texte_courant, &nbrmessages);
-		      }
-	       }
-        break;
+        case 'Z':sscanf(gbuffer,"Z %[^Z]s", texte_courant);printf("texte courant recu  %s\n",texte_courant );break;
       }
       synchro=0;
       pthread_mutex_unlock( &mutex );
@@ -476,27 +468,48 @@ int main(int argc, char ** argv)
 
     if (chatEnable ==1 )
     {
-      for (int i = 0; i < 8; i++) {
-        SDL_SetRenderDrawColor(renderer, 130,130,130, 255); // couleur du rectangle
-        SDL_RenderFillRect(renderer, &rect5);
-        SDL_Color col5 = {255, 0, 255 };
-        int a = strlen(text);
-        if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
-          if (iiii == 1) {
-            Max_text_size =400;
-          }
-          iiii++;
-
+      int nb_b = 1;
+      int o =0;
+      while(texte_courant[o]!= '\0'){
+        if (texte_courant[o]=='\n') {
+          nb_b++;
         }
+        o++;
+      }
+
+      SDL_SetRenderDrawColor(renderer, 0,0,0, 255); // couleur du rectangle
+      SDL_RenderFillRect(renderer, &rect5);
+
+      SDL_SetRenderDrawColor(renderer, 255,255,255, 255);
+      SDL_RenderDrawLine(renderer, 612,715,1050,715);
+      SDL_Color col5 = {255, 255, 255 };
+      //MIN(Max_text_size,strlen(texte_courant)*10) y = 50*nb_b
+      SDL_Rect rect7 = {612, 480,400,250};
+      SDL_Surface* surfaceMessage2 = TTF_RenderText_Blended_Wrapped(Sans, texte_courant, col5, 390);
+      SDL_Texture* Message2 = SDL_CreateTextureFromSurface(renderer, surfaceMessage2);
+      SDL_RenderCopy(renderer, Message2, NULL, &rect7);
+      SDL_DestroyTexture(Message2);
+      SDL_FreeSurface(surfaceMessage2);
+
+      int a = strlen(text);
+      if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
+        if (iiii == 1) {
+          Max_text_size =400;
+        }
+        iiii++;
+
+      }
+      SDL_Color col9 = {255, 165, 0 };
         //MIN(a*10,M)
-        SDL_Rect rect6 = {612, 480, MIN(Max_text_size,a*10), 20*iiii*i};
+        SDL_Rect rect6 = {612, 700, MIN(Max_text_size,a*10), 20*iiii*i};
+
         //SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans2,text, col5);
-        SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, text, col5, 50*i);
+        SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, text, col9, 50*i);
         SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
         SDL_RenderCopy(renderer, Message1, NULL, &rect6);
         SDL_DestroyTexture(Message1);
         SDL_FreeSurface(surfaceMessage1);
-        }
+
       }
 
 

@@ -51,7 +51,7 @@ char *nomcartes[]=
 
 int joueurCourant; /*!< Indice du joueur ayant la main */
 char chatserver[256]; /*!< Texte contenant le chat */
-char tab_texte[8][256]; /*!< Tableau contenant les messages */
+char tab_texte[8][256] = {"","","","","","","",""}; /*!< Tableau contenant les messages */
 int i = 0;
 /**
  * \fn void   error (const char *msg)
@@ -345,7 +345,7 @@ int main(int argc, char *argv[]){
       tcpClients[i].port=-1;
       strcpy(tcpClients[i].name,"-");
     }
-
+    int nombre_messages = 0;
     while (1)
     {
       newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr,&clilen);
@@ -409,20 +409,22 @@ int main(int argc, char *argv[]){
             // On remet l'odre de la liste
             case 'Z':
               //printf("COCOU\n");
-              sscanf(buffer,"Z %d %[^\n]s",&idDemande, chatserver);
-	      printf("%s\n", chatserver);
-	      sprintf(tab_texte[i], "%s : %s", tcpClients[idDemande].name, chatserver);
-	      printf("%s\n", tab_texte[i]);
-              //sprintf(tab_texte[i],"%s",chatserver);
-              i++;
-              if (i > 7) {
-                i = 0;
+              sscanf(buffer,"Z %d %[^\n]s", &idDemande, chatserver);
+              printf("chatserver1 : %s\n", chatserver);
+              sprintf(tab_texte[nombre_messages], "%s : %s", tcpClients[idDemande].name, chatserver);
+              printf("tabtexte de i : %s\n", tab_texte[nombre_messages]);
+              nombre_messages++;
+              if (nombre_messages > 7) {
+                nombre_messages = 0;
               }
-              for (size_t j = 0; j < i; j++) {
-                sprintf(reply, "Z %s %d", tab_texte[j], i);
-		printf("%s\n", tab_texte[j]);
-                broadcastMessage(reply);
+              char tempreply[1000] = {"Z"};
+              printf("temprepmly = %s\n", tempreply);
+              for (int j = 0; j < 8; j++) {
+                sprintf(reply, " %s\n", tab_texte[j]);
+                strcat(tempreply,reply);
               }
+              strcat(tempreply,"Z");
+              broadcastMessage(tempreply);
               break;
             case 'C':
             sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
@@ -479,21 +481,22 @@ int main(int argc, char *argv[]){
       	 		struct _client temp[4];
                 switch (buffer[0])
                 {
-                  case 'Z':
-                    //printf("COCOU\n");
-                    sscanf(buffer,"Z %d %s %s", &idDemande, chatserver);
-                    sprintf(chatserver, "%s : %s", tcpClients[idDemande].name, chatserver);
-		                sprintf(tab_texte[i],"%s",chatserver);
-                    printf("%s\n", tab_texte[i]);
-		                  i++;
-                    if (i > 7) {
-                      i = 0;
-                    }
-                    for (size_t j = 0; j < i; j++) {
-                      sprintf(reply, "Z %s %d", tab_texte[j], i);
-                      broadcastMessage(reply);
-                    }
-                    break;
+                  sscanf(buffer,"Z %d %[^\n]s", &idDemande, chatserver);
+                  printf("chatserver1 : %s\n", chatserver);
+                  sprintf(tab_texte[i], "%s : %s", tcpClients[idDemande].name, chatserver);
+                  printf("tabtexte de i : %s\n", tab_texte[i]);
+                  i++;
+                  if (i > 7) {
+                    i = 0;
+                  }
+                  char tempreply[1000] = {"Z"};
+                  for (int j = 0; j < 8; j++) {
+                    sprintf(reply, " %s\n", tab_texte[j]);
+                    strcat(tempreply,reply);
+                  }
+                  strcat(tempreply,"Z");
+                  broadcastMessage(tempreply);
+                  break;
                   case 'Q':
                     sscanf(buffer,"Q %d",&idDemande);
                     nbClients = nbClients-1;
