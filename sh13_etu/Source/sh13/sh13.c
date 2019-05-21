@@ -40,7 +40,7 @@ int goEnabled; /*!< Un booléen indiquant si le client possède la main, si c'es
 int connectEnabled;/*!< Si le joueur est connecté, il n'a plus besoin du bouton connect qui doit donc disparaitre */
 int chatEnable = -1;/*!< Prototype permettant de gérer le chat */
 SDL_Color couleurNoire = {0, 0, 0};
-
+int compteur = 0;
 
 char *nbobjets[]={"5","5","5","5","4","3","3","3"};/*!< Liste le nombre total de chaque objet par indices par exemple objet[0] = 5 */
 char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
@@ -450,7 +450,45 @@ int main(int argc, char ** argv)
         break;
         case 'W': exit(1);
         case 'Y': exit(1);
-        case 'Z':sscanf(gbuffer,"Z %[^Z]s", texte_courant);printf("texte courant recu  %s\n",texte_courant );break;
+        case 'Z':
+        sscanf(gbuffer,"Z %[^Z]s", texte_courant);
+        char texte_temporaire[100];
+        compteur = 0;
+        for(int r = 0; r < 8; r++){
+	        while(texte_courant[compteur] != '@'){
+	        	compteur++;
+	        	if (compteur > strlen(texte_courant))
+	        	{
+	        		break;
+	        	}else if (texte_courant[compteur] == '@')
+	        	{
+	        		break;
+	        	}
+	        }
+	        if (texte_courant[compteur] == '@')
+	        {
+	        	char nom_temporaire[40];
+	        	int p = compteur+1;
+	        	int q = 0;
+	        	strcpy(texte_temporaire, texte_courant);
+	        	while(texte_temporaire[p] != ' '){
+	        		nom_temporaire[q] = texte_temporaire[p];
+	        		q++;
+	        		p++;
+	        	}
+	        	if (strcmp(gName, nom_temporaire) != 0)
+	        	{
+	        		while(texte_courant[p] != '\n'){
+	        			texte_courant[p] = 42;
+	        			p++;
+	        		}
+	        	}
+	        	compteur = p;
+	        }
+	    }
+	    compteur = 0;
+        printf("texte courant recu  %s\n",texte_courant);
+        break;
       }
       synchro=0;
       pthread_mutex_unlock( &mutex );
