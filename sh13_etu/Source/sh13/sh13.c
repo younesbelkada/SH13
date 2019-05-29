@@ -40,7 +40,7 @@ int goEnabled; /*!< Un booléen indiquant si le client possède la main, si c'es
 int connectEnabled;/*!< Si le joueur est connecté, il n'a plus besoin du bouton connect qui doit donc disparaitre */
 int chatEnable = -1;/*!< Prototype permettant de gérer le chat */
 SDL_Color couleurNoire = {0, 0, 0};
-
+//int compteur = 0;
 
 char *nbobjets[]={"5","5","5","5","4","3","3","3"};/*!< Liste le nombre total de chaque objet par indices par exemple objet[0] = 5 */
 char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
@@ -274,7 +274,7 @@ int main(int argc, char ** argv)
         case SDL_KEYDOWN:
         if (chatEnable == 1) {
           if (event.key.keysym.sym  == SDLK_RETURN){
-            sprintf(sendBuffer,"Z %d %s ",gId,text);
+            sprintf(sendBuffer,"Z %d %s",gId,text);
             printf("%s\n",text );
             strcpy(text,"");
             iiii = 1;
@@ -443,7 +443,11 @@ int main(int argc, char ** argv)
               if (c1[i] == '0') {
                 tableCartes[i][ob] = 0;
               }
-              else{tableCartes[i][ob] = 100;}
+              else if (tableCartes[i][ob] == -1)
+              {tableCartes[i][ob] = 100;}
+
+
+
           }
         }
         break;
@@ -454,20 +458,43 @@ int main(int argc, char ** argv)
         case 'W': exit(1);
         case 'Y': exit(1);
         case 'Z':
-        sscanf(gbuffer,"Z %[^\n]s %d", texte_courant, &nbrmessages);
-	       if(chatEnable == 1){
-         if (messnb <8) {
-           sprintf(tab_text[messnb],"%s",texte_courant);
-           sscanf(gbuffer, "Z %s %d", texte_courant, &nbrmessages);
-           messnb++;
-         }
-         if (messnb == 8) {
-           messnb= 0;
-         }
-         else{
-           printf("Tous les messages on ete recupere\n" );
-         }
-	      }
+        sscanf(gbuffer,"Z %[^Z]s", texte_courant);
+        char texte_temporaire[100];
+        int compteur = 0;
+        for(int r = 0; r<8; r++){
+	        while(texte_courant[compteur] != '@'){
+	        	compteur++;
+	        	if (compteur > strlen(texte_courant))
+	        	{
+	        		break;
+	        	}/*else if (texte_courant[compteur] == '@')
+	        	{
+	        		break;
+	        	}*/
+	        }
+	        if (texte_courant[compteur] == '@')
+	        {
+	        	char nom_temporaire[40];
+	        	int p = compteur+1;
+	        	int q = 0;
+	        	strcpy(texte_temporaire, texte_courant);
+	        	while(texte_temporaire[p] != ' '){
+	        		nom_temporaire[q] = texte_temporaire[p];
+	        		q++;
+	        		p++;
+	        	}
+	        	if (strcmp(gName, nom_temporaire) != 0)
+	        	{
+	        		while(texte_courant[p] != '\n'){
+	        			texte_courant[p] = 42;
+	        			p++;
+	        		}
+	        	}
+	        	compteur = p;
+	        }
+	    }
+	    compteur = 0;
+        printf("texte courant recu  %s\n",texte_courant);
         break;
       }
       synchro=0;
@@ -486,48 +513,48 @@ int main(int argc, char ** argv)
 
     if (chatEnable ==1 )
     {
-      SDL_SetRenderDrawColor(renderer, 130,130,130, 255); // couleur du rectangle
+      int nb_b = 1;
+      int o =0;
+      while(texte_courant[o]!= '\0'){
+        if (texte_courant[o]=='\n') {
+          nb_b++;
+        }
+        o++;
+      }
+
+      SDL_SetRenderDrawColor(renderer, 0,0,0, 255); // couleur du rectangle
       SDL_RenderFillRect(renderer, &rect5);
-      SDL_Color col5 = {255, 0, 255 };
 
-      for (int j = 0; j < 8; j++) {
-        if (tab_text[j] != NULL) {
-          printf("Message %d :%s \n",j, tab_text[j]);
+      SDL_SetRenderDrawColor(renderer, 255,255,255, 255);
+      SDL_RenderDrawLine(renderer, 612,715,1050,715);
+      SDL_Color col5 = {255, 255, 255 };
+      //MIN(Max_text_size,strlen(texte_courant)*10) y = 50*nb_b
+      SDL_Rect rect7 = {612, 480,400,250};
+      SDL_Surface* surfaceMessage2 = TTF_RenderText_Blended_Wrapped(Sans, texte_courant, col5, 390);
+      SDL_Texture* Message2 = SDL_CreateTextureFromSurface(renderer, surfaceMessage2);
+      SDL_RenderCopy(renderer, Message2, NULL, &rect7);
+      SDL_DestroyTexture(Message2);
+      SDL_FreeSurface(surfaceMessage2);
+
+      int a = strlen(text);
+      if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
+        if (iiii == 1) {
+          Max_text_size =400;
         }
-        printf("\n" );
+        iiii++;
+
       }
-
-
-      for (int j = 0; j < 8; j++) {
-        if (tab_text[j] != NULL) {
-          int b = strlen(tab_text[j]);
-            SDL_Rect rect6 = {612, 480+50*j, b*10, 50};
-            tab_text[j][40] = '\0';
-            SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans, tab_text[j], col5);
-            SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
-            SDL_RenderCopy(renderer, Message1, NULL, &rect6);
-            SDL_DestroyTexture(Message1);
-            SDL_FreeSurface(surfaceMessage1);
-        }
-      }
-
-
-        int a = strlen(text);
-        if (a*10 > 400*iiii) {   // Ici faire une tableauuuuuu des messsage à afficher si la taille dépasse
-          if (iiii == 1) {
-            Max_text_size = 400;
-          }
-          iiii++;
-
-        }
+      SDL_Color col9 = {255, 165, 0 };
         //MIN(a*10,M)
-        SDL_Rect rect6 = {612, 480, MIN(Max_text_size,a*10), 20*iiii*i};
+        SDL_Rect rect6 = {612, 700, MIN(Max_text_size,a*10), 20*iiii*i};
+
         //SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans2,text, col5);
-        SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, text, col5, 50*i);
+        SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, text, col9, 50*i);
         SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
         SDL_RenderCopy(renderer, Message1, NULL, &rect6);
         SDL_DestroyTexture(Message1);
         SDL_FreeSurface(surfaceMessage1);
+
       }
 
 
@@ -811,12 +838,12 @@ int main(int argc, char ** argv)
     }
     if (b[1]!=-1)
     {
-      SDL_Rect dstrect = { 750, 200, 1000/4, 660/4 };
+      SDL_Rect dstrect = { 750, 660/4, 1000/4, 660/4 };
       SDL_RenderCopy(renderer, texture_deck[b[1]], NULL, &dstrect);
     }
     if (b[2]!=-1)
     {
-      SDL_Rect dstrect = { 750, 400, 1000/4, 660/4 };
+      SDL_Rect dstrect = { 750, 660/2, 1000/4, 660/4 };
       SDL_RenderCopy(renderer, texture_deck[b[2]], NULL, &dstrect);
     }
 

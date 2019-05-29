@@ -51,7 +51,7 @@ char *nomcartes[]=
 
 int joueurCourant; /*!< Indice du joueur ayant la main */
 char chatserver[256]; /*!< Texte contenant le chat */
-char tab_texte[8][256]; /*!< Tableau contenant les messages */
+char tab_texte[8][256] = {"","","","","","","",""}; /*!< Tableau contenant les messages */
 int i = 0;
 /**
  * \fn void   error (const char *msg)
@@ -260,7 +260,7 @@ void sendMessageToClient(char *clientip,int clientport,char *mess)
   int sockfd, portno, n;
   struct sockaddr_in serv_addr;
   struct hostent *server;
-  char buffer[256];
+  char buffer[10000];
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   server = gethostbyname(clientip);
   if (server == NULL) {
@@ -345,7 +345,7 @@ int main(int argc, char *argv[]){
       tcpClients[i].port=-1;
       strcpy(tcpClients[i].name,"-");
     }
-
+    int nombre_messages = 0;
     while (1)
     {
       newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr,&clilen);
@@ -370,7 +370,10 @@ int main(int argc, char *argv[]){
                 {
                   strcpy(tcpClients[0].ipAddress, "\0");
                   strcpy(tcpClients[0].name, "-");
-                  break;
+
+
+
+              break;
                 }else{
                   int z = 0;
                   for (int i = 0; i < nbClients+1; ++i)
@@ -409,91 +412,137 @@ int main(int argc, char *argv[]){
             // On remet l'odre de la liste
             case 'Z':
               //printf("COCOU\n");
-              sscanf(buffer,"Z %d %[^\n]s",&idDemande, chatserver);
-	      printf("%s\n", chatserver);
-	      sprintf(tab_texte[i], "%s : %s", tcpClients[idDemande].name, chatserver);
-	      printf("%s\n", tab_texte[i]);
-              //sprintf(tab_texte[i],"%s",chatserver);
-              i++;
-              if (i > 7) {
-                i = 0;
+              sscanf(buffer,"Z %d %[^\n]s", &idDemande, chatserver);
+              printf("chatserver1 : %s\n", chatserver);
+              sprintf(tab_texte[nombre_messages], "%s : %s", tcpClients[idDemande].name, chatserver);
+              printf("tabtexte de i : %s\n", tab_texte[nombre_messages]);
+              nombre_messages++;
+              if (nombre_messages > 7) {
+                nombre_messages = 0;
               }
-              for (size_t j = 0; j < i; j++) {
-                sprintf(reply, "Z %s %d", tab_texte[j], i);
-		printf("%s\n", tab_texte[j]);
-                broadcastMessage(reply);
+              char tempreply[1000000] = {"Z"};
+              printf("temprepmly = %s\n", tempreply);
+              for (int j = 0; j < 8; j++) {
+                sprintf(reply, " %s\n", tab_texte[j]);
+                strcat(tempreply,reply);
               }
+              strcat(tempreply,"Z");
+              broadcastMessage(tempreply);
               break;
             case 'C':
-            sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
-            printf("COM=%c ipAddress=%s port=%d name=%s\n",com, clientIpAddress, clientPort, clientName);
+                sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
+                printf("COM=%c ipAddress=%s port=%d name=%s\n",com, clientIpAddress, clientPort, clientName);
 
-            // fsmServer==0 alors j'attends les connexions de tous les joueurs
-            strcpy(tcpClients[nbClients].ipAddress,clientIpAddress);
-            tcpClients[nbClients].port=clientPort;
-            strcpy(tcpClients[nbClients].name,clientName);
-            nbClients++;
-
-            printClients();
-
-            // rechercher l'id du joueur qui vient de se connecter
-
-            id=findClientByName(clientName);
-            printf("id=%d\n",id);
-
-            // lui envoyer un message personnel pour lui communiquer son id
-
-            sprintf(reply,"I %d",id);
-            sendMessageToClient(tcpClients[id].ipAddress,tcpClients[id].port,reply);
-
-              // Envoyer un message broadcast pour communiquer a tout le monde la liste des joueurs actuellement
-              // connectes
-
-            sprintf(reply,"L %s %s %s %s", tcpClients[0].name, tcpClients[1].name, tcpClients[2].name, tcpClients[3].name);
-            broadcastMessage(reply);
-
-              // Si le nombre de joueurs atteint 4, alors on peut lancer le jeu
-            if (nbClients==4){
-                // On envoie ses cartes au joueur 0, ainsi que la ligne qui lui correspond dans tableCartes
-                int k = 0;
-                for ( i = 0; i < 4; i++) {
-                  sprintf(reply,"D %d %d %d",deck[i+k],deck[i+k+1],deck[i+k+2]);
-                  k+=2;
-                  sendMessageToClient(tcpClients[i].ipAddress,
-                    tcpClients[i].port,
-                    reply);
-                    sprintf(reply,"V %d %d %d %d %d %d %d %d ", tableCartes[i][0] ,tableCartes[i][1],tableCartes[i][2],tableCartes[i][3],tableCartes[i][4],tableCartes[i][5],tableCartes[i][6],tableCartes[i][7]);
-                    sendMessageToClient(tcpClients[i].ipAddress,
-                      tcpClients[i].port,
-                      reply);
-                    }
-                    sprintf(reply,"M %d", joueurCourant);
-                    broadcastMessage(reply);
-                    fsmServer=1;
-                  }
-                  break;
+                // Afficher message "il reste tant de clients avant que la partie commence"
+                sprintf(tab_texte[nombre_messages], "!Server!:|%s| joined the game",clientName);
+                nombre_messages++;
+                if (nombre_messages > 7) {
+                  nombre_messages = 0;
                 }
+                sprintf(tab_texte[nombre_messages], "!Server!:|%d| missing players before the beggining",3-nbClients);
+                nombre_messages++;
+                if (nombre_messages > 7) {
+                  nombre_messages = 0;
+                }
+                char reply2[100000];
+                char tempreply4[100000] = {"Z"};
+                printf("temprepmly = %s\n", tempreply4);
+                for (int j = 0; j < 8; j++) {
+                  sprintf(reply2, " %s\n", tab_texte[j]);
+                  strcat(tempreply4,reply2);
+                }
+                strcat(tempreply4,"Z");
 
-            }
+                printf("broadcastMessage pas bien\n");
+                broadcastMessage(tempreply4);
+
+                printf("Erreur pas ou je syncronisé\n");
+                // fsmServer==0 alors j'attends les connexions de tous les joueurs
+                strcpy(tcpClients[nbClients].ipAddress,clientIpAddress);
+                tcpClients[nbClients].port=clientPort;
+                strcpy(tcpClients[nbClients].name,clientName);
+                nbClients++;
+
+                printClients();
+
+                // rechercher l'id du joueur qui vient de se connecter
+
+                id=findClientByName(clientName);
+                printf("id=%d\n",id);
+
+                // lui envoyer un message personnel pour lui communiquer son id
+
+                sprintf(reply,"I %d",id);
+                sendMessageToClient(tcpClients[id].ipAddress,tcpClients[id].port,reply);
+
+                  // Envoyer un message broadcast pour communiquer a tout le monde la liste des joueurs actuellement
+                  // connectes
+
+                sprintf(reply,"L %s %s %s %s", tcpClients[0].name, tcpClients[1].name, tcpClients[2].name, tcpClients[3].name);
+                broadcastMessage(reply);
+
+                  // Si le nombre de joueurs atteint 4, alors on peut lancer le jeu
+                if (nbClients==4){
+                    // On envoie ses cartes au joueur 0, ainsi que la ligne qui lui correspond dans tableCartes
+                    int k = 0;
+                    sprintf(tab_texte[nombre_messages], "!! Serveur !! : Le salon est complet la partie peut commencer!");
+                    nombre_messages++;
+                    if (nombre_messages > 7) {
+                      nombre_messages = 0;
+                    }
+                    char reply1[100000];
+                    char tempreply3[100000] = {"Z"};
+                    printf("temprepmly = %s\n", tempreply3);
+                    for (int j = 0; j < 8; j++) {
+                      sprintf(reply1, " %s\n", tab_texte[j]);
+                      strcat(tempreply3,reply1);
+                    }
+                    strcat(tempreply3,"Z");
+                    broadcastMessage(tempreply3);
+                    // Dire que la partie va commencer
+
+
+                    for ( i = 0; i < 4; i++) {
+                      sprintf(reply,"D %d %d %d",deck[i+k],deck[i+k+1],deck[i+k+2]);
+                      k+=2;
+                      sendMessageToClient(tcpClients[i].ipAddress,
+                        tcpClients[i].port,
+                        reply);
+                        sprintf(reply,"V %d %d %d %d %d %d %d %d ", tableCartes[i][0] ,tableCartes[i][1],tableCartes[i][2],tableCartes[i][3],tableCartes[i][4],tableCartes[i][5],tableCartes[i][6],tableCartes[i][7]);
+                        sendMessageToClient(tcpClients[i].ipAddress,
+                          tcpClients[i].port,
+                          reply);
+                        }
+                        sprintf(reply,"M %d", joueurCourant);
+                        broadcastMessage(reply);
+                        fsmServer=1;
+                      }
+                      break;
+                    }
+
+                }
       else if (fsmServer==1){
       	 		struct _client temp[4];
                 switch (buffer[0])
                 {
                   case 'Z':
-                    //printf("COCOU\n");
-                    sscanf(buffer,"Z %d %s %s", &idDemande, chatserver);
-                    sprintf(chatserver, "%s : %s", tcpClients[idDemande].name, chatserver);
-		                sprintf(tab_texte[i],"%s",chatserver);
-                    printf("%s\n", tab_texte[i]);
-		                  i++;
-                    if (i > 7) {
-                      i = 0;
-                    }
-                    for (size_t j = 0; j < i; j++) {
-                      sprintf(reply, "Z %s %d", tab_texte[j], i);
-                      broadcastMessage(reply);
-                    }
-                    break;
+                  sscanf(buffer,"Z %d %[^\n]s", &idDemande, chatserver);
+                  printf("chatserver1 : %s\n", chatserver);
+                  sprintf(tab_texte[nombre_messages], "%s : %s", tcpClients[idDemande].name, chatserver);
+                  printf("tabtexte de i : %s\n", tab_texte[nombre_messages]);
+                  nombre_messages++;
+                  if (nombre_messages > 7) {
+                    nombre_messages = 0;
+                  }
+                  char tempreply[1000] = {"Z"};
+                  printf("temprepmly = %s\n", tempreply);
+                  for (int j = 0; j < 8; j++) {
+                    sprintf(reply, " %s\n", tab_texte[j]);
+                    strcat(tempreply,reply);
+                  }
+                  strcat(tempreply,"Z");
+                  broadcastMessage(tempreply);
+                  break;
                   case 'Q':
                     sscanf(buffer,"Q %d",&idDemande);
                     nbClients = nbClients-1;
