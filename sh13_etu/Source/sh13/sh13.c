@@ -486,7 +486,6 @@ int main(int argc, char ** argv)
 
     if (chatEnable ==1 )
     {
-      int total_ligne = 1;
       SDL_SetRenderDrawColor(renderer, 130,130,130, 255); // couleur du rectangle
       SDL_RenderFillRect(renderer, &rect5);
       SDL_Color col5 = {255, 0, 255 };
@@ -502,13 +501,13 @@ int main(int argc, char ** argv)
       for (int j = 0; j < 8; j++) {
         if (tab_text[j] != NULL) {
           int b = strlen(tab_text[j]);
-            SDL_Rect rect6 = {612, 480+20*j, b*10, 50};
-            SDL_Surface* surfaceMessage1 = TTF_RenderText_Blended_Wrapped(Sans, tab_text[j], col5, 50);
+            SDL_Rect rect6 = {612, 480+50*j, b*10, 50};
+            tab_text[j][40] = '\0';
+            SDL_Surface* surfaceMessage1 = TTF_RenderText_Solid(Sans, tab_text[j], col5);
             SDL_Texture* Message1 = SDL_CreateTextureFromSurface(renderer, surfaceMessage1);
             SDL_RenderCopy(renderer, Message1, NULL, &rect6);
             SDL_DestroyTexture(Message1);
             SDL_FreeSurface(surfaceMessage1);
-            total_ligne++;
         }
       }
 
