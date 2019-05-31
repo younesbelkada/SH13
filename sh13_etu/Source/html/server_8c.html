@@ -120,9 +120,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a9cf4c7aa19d28eb76c9635b2267df762"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a9cf4c7aa19d28eb76c9635b2267df762">broadcastMessage</a> (char *mess)</td></tr>
 <tr class="memdesc:a9cf4c7aa19d28eb76c9635b2267df762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet d'envoyer un message à l'ensemble des clients connectés sur le server.  <a href="#a9cf4c7aa19d28eb76c9635b2267df762">More...</a><br /></td></tr>
 <tr class="separator:a9cf4c7aa19d28eb76c9635b2267df762"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top"><a id="a0ddf1224851353fc92bfbff6f499fa97"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
-<tr class="memdesc:a0ddf1224851353fc92bfbff6f499fa97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction principale. <br /></td></tr>
+<tr class="memitem:a23c27a462c8b0177889dd7aa4ffec14c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a23c27a462c8b0177889dd7aa4ffec14c">initialiser</a> (struct <a class="el" href="struct__client.html">_client</a> Clients[4])</td></tr>
+<tr class="memdesc:a23c27a462c8b0177889dd7aa4ffec14c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Permet de reinitialiser un tableau de client.  <a href="#a23c27a462c8b0177889dd7aa4ffec14c">More...</a><br /></td></tr>
+<tr class="separator:a23c27a462c8b0177889dd7aa4ffec14c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="memdesc:a0ddf1224851353fc92bfbff6f499fa97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction principale.  <a href="#a0ddf1224851353fc92bfbff6f499fa97">More...</a><br /></td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
@@ -154,7 +156,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>banned</b> [4] = {0,0,
 <tr class="separator:a2350ff80e84ae74a929a397c3b1e152f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8852d6f855f3aec45ae55a54171dc3e"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#ab8852d6f855f3aec45ae55a54171dc3e">chatserver</a> [256]</td></tr>
 <tr class="separator:ab8852d6f855f3aec45ae55a54171dc3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accb45b8fef99aa610213286524699571"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#accb45b8fef99aa610213286524699571">tab_texte</a> [8][256]</td></tr>
+<tr class="memitem:accb45b8fef99aa610213286524699571"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8c.html#accb45b8fef99aa610213286524699571">tab_texte</a> [8][256] = {&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}</td></tr>
 <tr class="separator:accb45b8fef99aa610213286524699571"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb559820d9ca11295b4500f179ef6392"><td class="memItemLeft" align="right" valign="top"><a id="acb559820d9ca11295b4500f179ef6392"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>i</b> = 0</td></tr>
@@ -164,8 +166,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>i</b> = 0</td></tr>
 <div class="textblock"><p>server soutenant le jeu Sherlock Holmes. On exécute le server une fois et 4 clients afin de commencer un jeu. Ce jeu nous permet d'aborder les notions fondamentales de la programmation réseau. </p>
 <dl class="section author"><dt>Author</dt><dd>Arthur &amp; Younes </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.1 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>13 mai 2019</dd></dl>
-<p>Ce serveur propose un autre protocole que HTTP, pour comprendre comment ce dernier fonctionne. </p>
+<dl class="section date"><dt>Date</dt><dd>22 mai 2019</dd></dl>
+<p>Ce serveur propose un autre protocole que HTTP: le "Y&amp;A" pour comprendre comment ce dernier fonctionne. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a9cf4c7aa19d28eb76c9635b2267df762"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9cf4c7aa19d28eb76c9635b2267df762">&#9670;&nbsp;</a></span>broadcastMessage()</h2>
@@ -191,6 +193,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>i</b> = 0</td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Cette fonction ne retourne rien. </dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>lorsque le message à envoyer est trop long! </dd></dl>
 
 </div>
 </div>
@@ -266,6 +269,81 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>i</b> = 0</td></tr>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>Faire attention à bien écrire le nom (ne pas se tromper sur les majuscules etc.) </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Retourne le id du client, renvoie -1 sinon. </dd></dl>
+
+</div>
+</div>
+<a id="a23c27a462c8b0177889dd7aa4ffec14c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23c27a462c8b0177889dd7aa4ffec14c">&#9670;&nbsp;</a></span>initialiser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void initialiser </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="struct__client.html">_client</a>&#160;</td>
+          <td class="paramname"><em>Clients</em>[4]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Permet de reinitialiser un tableau de client. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">struct</td><td><a class="el" href="struct__client.html" title="Objet client se connectant au serveur.">_client</a> Clients[4] que l'on souhaite réinitialiser </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Cette fonction ne retourne rien. </dd></dl>
+
+</div>
+</div>
+<a id="a0ddf1224851353fc92bfbff6f499fa97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&nbsp;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction principale. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">&lt;N°de</td><td>port à utiliser&gt; </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Il est nécessaire d'éxectuer le main de la façon suivante : ./server &lt;N °deport&gt;=""&gt; </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Dans le cas on la sytaxe n'est pas respectée, le serveur renvoie une erreur </dd></dl>
+<dl class="section user"><dt>(Fonctionnement du serveur)</dt><dd>Celui-ci est expliqué dans le rapport fourni avec cette documentation</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">char</td><td>*argv[] prend le port du serveur, l'adresse IP du serveur, le port client à utiliser, l'adresse IP du client </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Executer comme suis: ./sh13 &lt;ip serveur&gt;=""&gt; &lt;n °port="" serveur&gt;=""&gt; &lt;ip client&gt;=""&gt; &lt;n °port="" client&gt;=""&gt; &lt;Nom du="" client&gt;=""&gt; </dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000002">Bug:</a></b></dt><dd>Quand les clients quittent le jeu en pleine partie, les noms dans les chats sont écrasés </dd></dl>
+<p>Cas G normal </p>
 
 </div>
 </div>
@@ -532,7 +610,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>i</b> = 0</td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char tab_texte[8][256]</td>
+          <td class="memname">char tab_texte[8][256] = {&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;}</td>
         </tr>
       </table>
 </div><div class="memdoc">

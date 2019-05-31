@@ -3,13 +3,11 @@
  * \brief server soutenant le jeu Sherlock Holmes. On exécute le server une fois et 4 clients afin de commencer un jeu. Ce jeu nous permet d'aborder les notions fondamentales de la programmation réseau.
  * \author Arthur & Younes
  * \version 1.1
- * \date 13 mai 2019
+ * \date 22 mai 2019
  *
- * Ce serveur propose un autre protocole que HTTP, pour
+ * Ce serveur propose un autre protocole que HTTP: le "Y&A" pour
  * comprendre comment ce dernier fonctionne.
  */
-
-// Ajouter: Sauvegarde des données rentrées
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,7 +24,7 @@
  * \brief Objet client se connectant au serveur
  *
  *_client permet de stocker l'adresse iP, le port et le nom du client se connectant au serveur
- */
+**/
 
 struct _client
 {
@@ -34,6 +32,7 @@ struct _client
   int port;
   char name[40];
 } tcpClients[4]; /*!< On a un tableau de 4 clients avec leur adrese IP, numéro de port ainsi que leur nom */
+
 int nbClients; /*!< Le nombre de Clients, comme son nom l'indique */
 int fsmServer; /*!< Tant que tout les clients ne sont pas connectés fsmServer = 0 */
 int idDemande; /*!< Il s'agit de l'id du client qui réalise sa demande */
@@ -106,13 +105,10 @@ int i = 0;
  * \brief Permet d'envoyer un message à l'ensemble des clients connectés sur le server
  * \param char* mess est le message à envoyer
  * \return Cette fonction ne retourne rien.
+ * \bug lorsque le message à envoyer est trop long!
  */
 
-/**
- * \fn int   main(int argc, char *argv[])
- * \brief Fonction principale
- *
- */
+
 
 void error(const char *msg)
 {
@@ -292,6 +288,13 @@ void broadcastMessage(char *mess){
     mess);
 }
 
+/**
+ * \fn void initialiser(struct _client Clients[4])
+ * \brief Permet de reinitialiser un tableau de client
+ * \param struct _client Clients[4] que l'on souhaite réinitialiser
+ * \return Cette fonction ne retourne rien.
+ */
+
 void initialiser(struct _client Clients[4]){
 	for (int i = 0; i < 4; ++i)
 	{
@@ -301,6 +304,16 @@ void initialiser(struct _client Clients[4]){
 	}
 }
 
+/**
+ * \fn int   main(int argc, char *argv[])
+ * \brief Fonction principale
+ * \param <N°de port à utiliser>
+ * \warning Il est nécessaire d'éxectuer le main de la façon suivante : ./server <N°dePort>
+ * \note Dans le cas on la sytaxe n'est pas respectée, le serveur renvoie une erreur
+ * \par (Fonctionnement du serveur)
+ * Celui-ci est expliqué dans le rapport fourni avec cette documentation
+ */
+
 int main(int argc, char *argv[]){
     int sockfd, newsockfd, portno;
     socklen_t clilen;
@@ -308,21 +321,18 @@ int main(int argc, char *argv[]){
     struct sockaddr_in serv_addr, cli_addr;
     int n;
     int i=0;
-    //int idDemande,guiltSel,joueurSel,objetSel;
     char com;
     char clientIpAddress[256], clientName[256];
     int clientPort;
     int id;
     char reply[256];
-
-
     if (argc < 2) {
       fprintf(stderr,"ERROR, no port provided\n");
       exit(1);
     }
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0)
-    error("ERROR opening socket");
+      error("ERROR opening socket");
     bzero((char *) &serv_addr, sizeof(serv_addr));
     portno = atoi(argv[1]);
     serv_addr.sin_family = AF_INET;
@@ -330,16 +340,14 @@ int main(int argc, char *argv[]){
     serv_addr.sin_port = htons(portno);
     if (bind(sockfd, (struct sockaddr *) &serv_addr,
     sizeof(serv_addr)) < 0)
-    error("ERROR on binding");
+      error("ERROR on binding");
     listen(sockfd,5);
     clilen = sizeof(cli_addr);
-
     printDeck();
     melangerDeck();
     createTable();
     printDeck();
     joueurCourant=0;
-
     for (i=0;i<4;i++){
       strcpy(tcpClients[i].ipAddress,"localhost");
       tcpClients[i].port=-1;
@@ -350,11 +358,11 @@ int main(int argc, char *argv[]){
     {
       newsockfd = accept(sockfd,(struct sockaddr *) &cli_addr,&clilen);
       if (newsockfd < 0)
-      error("ERROR on accept");
+        error("ERROR on accept");
       bzero(buffer,256);
       n = read(newsockfd,buffer,255);
       if (n < 0)
-      error("ERROR reading from socket");
+        error("ERROR reading from socket");
       printf("Received packet from %s:%d\nData: [%s]\n\n",
       inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port), buffer);
       if (fsmServer==0)
@@ -365,53 +373,40 @@ int main(int argc, char *argv[]){
             case 'Q':
                 sscanf(buffer,"Q %d",&idDemande);
                 nbClients = nbClients-1;
-                //tcpClients[idDemande] = NULL;
                 if (nbClients == 0)
                 {
                   strcpy(tcpClients[0].ipAddress, "\0");
                   strcpy(tcpClients[0].name, "-");
-
-
-
-              break;
-                }else{
+                  break;
+                }
+                else{
                   int z = 0;
                   for (int i = 0; i < nbClients+1; ++i)
                   {
                     if (i != idDemande)
                     {
-                      //printf("AJJJ\n");
                       strcpy(temp[z].ipAddress, tcpClients[i].ipAddress);
                   	  strcpy(temp[z].name, tcpClients[i].name);
                   	  temp[z].port = tcpClients[i].port;
                       z++;
                     }
-                    //printf("%s\n", temp[z-1].name);
                   }
                   initialiser(tcpClients);
                   printClients();
                   for (int i = 0; i < z; ++i)
                   {
-                  	//printf("AHAHAHAH\n");
-                  	printf("%s\n", temp[i].ipAddress);
-                  	printf("%s\n", temp[i].name);
                   	strcpy(tcpClients[i].ipAddress, temp[i].ipAddress);
                   	strcpy(tcpClients[i].name, temp[i].name);
                   	tcpClients[i].port = temp[i].port;
                   }
-                  //printf("%s\n", temp[z-1].name);
-                  //initialiser(temp);
                   printClients();
             	  sprintf(reply,"L %s %s %s %s", tcpClients[0].name, tcpClients[1].name, tcpClients[2].name, tcpClients[3].name);
-            	  printf("reply : %s\n", reply);
             	  broadcastMessage(reply);
-            	  ///printf("%s\n", );
                 }
                 break;
             // On recrée la liste en enlevant le joueur.
             // On remet l'odre de la liste
             case 'Z':
-              //printf("COCOU\n");
               sscanf(buffer,"Z %d %[^\n]s", &idDemande, chatserver);
               printf("chatserver1 : %s\n", chatserver);
               sprintf(tab_texte[nombre_messages], "%s : %s", tcpClients[idDemande].name, chatserver);
@@ -432,7 +427,6 @@ int main(int argc, char *argv[]){
             case 'C':
                 sscanf(buffer,"%c %s %d %s", &com, clientIpAddress, &clientPort, clientName);
                 printf("COM=%c ipAddress=%s port=%d name=%s\n",com, clientIpAddress, clientPort, clientName);
-
                 // Afficher message "il reste tant de clients avant que la partie commence"
                 sprintf(tab_texte[nombre_messages], "!Server!:|%s| joined the game",clientName);
                 nombre_messages++;
@@ -446,17 +440,12 @@ int main(int argc, char *argv[]){
                 }
                 char reply2[100000];
                 char tempreply4[100000] = {"Z"};
-                printf("temprepmly = %s\n", tempreply4);
                 for (int j = 0; j < 8; j++) {
                   sprintf(reply2, " %s\n", tab_texte[j]);
                   strcat(tempreply4,reply2);
                 }
                 strcat(tempreply4,"Z");
-
-                printf("broadcastMessage pas bien\n");
                 broadcastMessage(tempreply4);
-
-                printf("Erreur pas ou je syncronisé\n");
                 // fsmServer==0 alors j'attends les connexions de tous les joueurs
                 strcpy(tcpClients[nbClients].ipAddress,clientIpAddress);
                 tcpClients[nbClients].port=clientPort;
@@ -500,8 +489,6 @@ int main(int argc, char *argv[]){
                     strcat(tempreply3,"Z");
                     broadcastMessage(tempreply3);
                     // Dire que la partie va commencer
-
-
                     for ( i = 0; i < 4; i++) {
                       sprintf(reply,"D %d %d %d",deck[i+k],deck[i+k+1],deck[i+k+2]);
                       k+=2;
@@ -526,82 +513,66 @@ int main(int argc, char *argv[]){
                 switch (buffer[0])
                 {
                   case 'Z':
-                  sscanf(buffer,"Z %d %[^\n]s", &idDemande, chatserver);
-                  printf("chatserver1 : %s\n", chatserver);
-                  sprintf(tab_texte[nombre_messages], "%s : %s", tcpClients[idDemande].name, chatserver);
-                  printf("tabtexte de i : %s\n", tab_texte[nombre_messages]);
-                  nombre_messages++;
-                  if (nombre_messages > 7) {
-                    nombre_messages = 0;
-                  }
-                  char tempreply[1000] = {"Z"};
-                  printf("temprepmly = %s\n", tempreply);
-                  for (int j = 0; j < 8; j++) {
-                    sprintf(reply, " %s\n", tab_texte[j]);
-                    strcat(tempreply,reply);
-                  }
-                  strcat(tempreply,"Z");
-                  broadcastMessage(tempreply);
-                  break;
+                    sscanf(buffer,"Z %d %[^\n]s", &idDemande, chatserver);
+                    sprintf(tab_texte[nombre_messages], "%s : %s", tcpClients[idDemande].name, chatserver);
+                    nombre_messages++;
+                    if (nombre_messages > 7) {
+                      nombre_messages = 0;
+                    }
+                    char tempreply[1000] = {"Z"};
+                    for (int j = 0; j < 8; j++) {
+                      sprintf(reply, " %s\n", tab_texte[j]);
+                      strcat(tempreply,reply);
+                    }
+                    strcat(tempreply,"Z");
+                    broadcastMessage(tempreply);
+                    break;
                   case 'Q':
                     sscanf(buffer,"Q %d",&idDemande);
                     nbClients = nbClients-1;
-                    //tcpClients[idDemande] = NULL;
                     {
-                      //initialiser(temp);
                       int z = 0;
                       for (int i = 0; i < nbClients+1; ++i)
                       {
                         if (i != idDemande)
                         {
-                          //printf("AJJJ\n");
                           strcpy(temp[z].ipAddress, tcpClients[i].ipAddress);
                       	  strcpy(temp[z].name, tcpClients[i].name);
                       	  temp[z].port = tcpClients[i].port;
                           z++;
                         }
-                        //printf("%s\n", temp[z-1].name);
                       }
                       printClients();
                       initialiser(tcpClients);
                       printClients();
                       for (int i = 0; i < z; ++i)
                       {
-                      	//printf("AHAHAHAH\n");
-                      	printf("%s\n", temp[i].ipAddress);
-                      	printf("%s\n", temp[i].name);
                       	strcpy(tcpClients[i].ipAddress, temp[i].ipAddress);
                       	strcpy(tcpClients[i].name, temp[i].name);
                       	tcpClients[i].port = temp[i].port;
                       }
-                      //printf("%s\n", temp[z-1].name);
-                      //initialiser(temp);
-                      printf("Apres le quit\n" );
                       printClients();
                   	  sprintf(reply,"L %s %s %s %s", tcpClients[0].name, tcpClients[1].name, tcpClients[2].name, tcpClients[3].name);
-                  	  printf("reply : %s\n", reply);
                   	  broadcastMessage(reply);
                       sprintf(reply,"Q %d",z);
-                  	  printf("reply : %s\n", reply);
                   	  broadcastMessage(reply);
-                  	  ///printf("%s\n", );
-                        }
+                  	  }
                       fsmServer=0;
                     break;
-                  case 'G':
-                  sscanf(buffer,"G %d %d",&idDemande,&guiltSel);
-                  if (guiltSel == deck[12] ) {
-                    sprintf(reply,"Winner : %d", idDemande);
-                    broadcastMessage(reply);
-                    exit(1); // Reset le serveur
+                  case 'G': /// Cas G normal
+                    sscanf(buffer,"G %d %d",&idDemande,&guiltSel);
+                    if (guiltSel == deck[12] ) {
+                      sprintf(reply,"Winner : %d", idDemande);
+                      broadcastMessage(reply);
+                      exit(1); // Quit le serveur
 
-                  }
-                  else{
-                    sprintf(reply,"Fail! He is not guilty %d you can not play anymore", idDemande);
-                    broadcastMessage(reply);
-                    banned[idDemande] = 1;
-                  }
-                  break;
+                    }
+                    else{
+                      sprintf(reply,"Fail! He is not guilty %d you can not play anymore", idDemande);
+                      broadcastMessage(reply);
+                      banned[idDemande] = 1;
+                    }
+                    break;
                   char c1[5];
                   case 'O':
                     sscanf(buffer,"O %d %d",&idDemande,&objetSel);

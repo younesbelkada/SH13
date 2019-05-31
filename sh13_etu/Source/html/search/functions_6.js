@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['sendmessagetoclient',['sendMessageToClient',['../server_8c.html#af9aa1e493ee18081ffa952fc677c8ba1',1,'server.c']]],
-  ['sendmessagetoserver',['sendMessageToServer',['../sh13_8c.html#aa6fd4f7eb54362ed558cdaeb5e5bd927',1,'sh13.c']]]
+  ['printclients',['printClients',['../server_8c.html#a3be7017ee4476744e47456935c39c509',1,'server.c']]],
+  ['printdeck',['printDeck',['../server_8c.html#a30dedb21b81bcab75c0b351087b64fa1',1,'server.c']]]
 ];

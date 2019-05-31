@@ -68,6 +68,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -77,9 +78,9 @@ $(function() {
 
 <p>client permettant de se connecter au serveur  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;SDL.h&gt;</code><br />
-<code>#include &lt;SDL_image.h&gt;</code><br />
-<code>#include &lt;SDL_ttf.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;SDL2/SDL.h&gt;</code><br />
+<code>#include &lt;SDL2/SDL_image.h&gt;</code><br />
+<code>#include &lt;SDL2/SDL_ttf.h&gt;</code><br />
 <code>#include &lt;pthread.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
@@ -89,6 +90,12 @@ $(function() {
 <code>#include &lt;netinet/in.h&gt;</code><br />
 <code>#include &lt;netdb.h&gt;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ad2f3678bf5eae3684fc497130b946eae"><td class="memItemLeft" align="right" valign="top"><a id="ad2f3678bf5eae3684fc497130b946eae"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MIN</b>(X,  Y)&#160;&#160;&#160;(((X) &lt; (Y)) ? (X) : (Y))</td></tr>
+<tr class="separator:ad2f3678bf5eae3684fc497130b946eae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a2e05d0dede42b6aeb364340373554df6"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sh13_8c.html#a2e05d0dede42b6aeb364340373554df6">fn_serveur_tcp</a> (void *arg)</td></tr>
@@ -140,10 +147,19 @@ Variables</h2></td></tr>
 <tr class="separator:a0bf9ab38af165134864e46ce2e56d087"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a423ed9f606e34244ef0d22d0e8411c71"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sh13_8c.html#a423ed9f606e34244ef0d22d0e8411c71">chatEnable</a> = -1</td></tr>
 <tr class="separator:a423ed9f606e34244ef0d22d0e8411c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c8c3102d21fd30e2488af144d5aea63"><td class="memItemLeft" align="right" valign="top"><a id="a1c8c3102d21fd30e2488af144d5aea63"></a>
+SDL_Color&#160;</td><td class="memItemRight" valign="bottom"><b>couleurNoire</b> = {0, 0, 0}</td></tr>
+<tr class="separator:a1c8c3102d21fd30e2488af144d5aea63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa63407817c0cca8a80fb934277a0b8a0"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sh13_8c.html#aa63407817c0cca8a80fb934277a0b8a0">nbobjets</a> [] ={&quot;5&quot;,&quot;5&quot;,&quot;5&quot;,&quot;5&quot;,&quot;4&quot;,&quot;3&quot;,&quot;3&quot;,&quot;3&quot;}</td></tr>
 <tr class="separator:aa63407817c0cca8a80fb934277a0b8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a170deefee6944bfd9474e64879d21284"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sh13_8c.html#a170deefee6944bfd9474e64879d21284">nbnoms</a> []</td></tr>
+<tr class="memitem:a170deefee6944bfd9474e64879d21284"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><b>nbnoms</b> []</td></tr>
 <tr class="separator:a170deefee6944bfd9474e64879d21284"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac805c972dc2f1c2c89ea5e53ec2046e4"><td class="memItemLeft" align="right" valign="top"><a id="ac805c972dc2f1c2c89ea5e53ec2046e4"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>texte_courant</b> [1000]</td></tr>
+<tr class="separator:ac805c972dc2f1c2c89ea5e53ec2046e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb559820d9ca11295b4500f179ef6392"><td class="memItemLeft" align="right" valign="top"><a id="acb559820d9ca11295b4500f179ef6392"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>i</b> = 0</td></tr>
+<tr class="separator:acb559820d9ca11295b4500f179ef6392"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8225f160aecfab1365666fd07d1af31c"><td class="memItemLeft" align="right" valign="top">volatile int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sh13_8c.html#a8225f160aecfab1365666fd07d1af31c">synchro</a></td></tr>
 <tr class="separator:a8225f160aecfab1365666fd07d1af31c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -216,7 +232,7 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">char</td><td>*ipAddress est l'adresse iP du serveur auquel envoyer le messages </td></tr>
     <tr><td class="paramname">int</td><td>portno est le port à utiliser pour le socket que l'on va créer </td></tr>
-    <tr><td class="paramname">char</td><td>*mess est le message à envoyer </td></tr>
+    <tr><td class="paramname">char</td><td>*mess est le message à envoyer La fonction permet d'envoyer un message, en suivant le protocol mis en place </td></tr>
   </table>
   </dd>
 </dl>
@@ -475,8 +491,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">={<span class="stringliteral">&quot;Sebastian Moran&quot;</span>, <span class="stringliteral">&quot;irene Adler&quot;</span>, <span class="stringliteral">&quot;inspector Lestrade&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;inspector Gregson&quot;</span>, <span class="stringliteral">&quot;inspector Baynes&quot;</span>, <span class="stringliteral">&quot;inspector Bradstreet&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;inspector Hopkins&quot;</span>, <span class="stringliteral">&quot;Sherlock Holmes&quot;</span>, <span class="stringliteral">&quot;John Watson&quot;</span>, <span class="stringliteral">&quot;Mycroft Holmes&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;Mrs. Hudson&quot;</span>, <span class="stringliteral">&quot;Mary Morstan&quot;</span>, <span class="stringliteral">&quot;James Moriarty&quot;</span>}</div></div><!-- fragment --><p>Les noms des personnages du jeu sont stockés afin de les afficher, cela agis un peu comme un dictionnaire permttant de faire correspondre des indice entier à ce tableau </p>
-
+<b>Initial value:</b><div class="fragment"><div class="line">={<span class="stringliteral">&quot;Sebastian Moran&quot;</span>, <span class="stringliteral">&quot;irene Adler&quot;</span>, <span class="stringliteral">&quot;inspector Lestrade&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;inspector Gregson&quot;</span>, <span class="stringliteral">&quot;inspector Baynes&quot;</span>, <span class="stringliteral">&quot;inspector Bradstreet&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;inspector Hopkins&quot;</span>, <span class="stringliteral">&quot;Sherlock Holmes&quot;</span>, <span class="stringliteral">&quot;John Watson&quot;</span>, <span class="stringliteral">&quot;Mycroft Holmes&quot;</span>,</div><div class="line"><span class="stringliteral">&quot;Mrs. Hudson&quot;</span>, <span class="stringliteral">&quot;Mary Morstan&quot;</span>, <span class="stringliteral">&quot;James Moriarty&quot;</span>}</div></div><!-- fragment -->
 </div>
 </div>
 <a id="aa63407817c0cca8a80fb934277a0b8a0"></a>

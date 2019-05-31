@@ -38,7 +38,8 @@ void \mbox{\hyperlink{server_8c_af9aa1e493ee18081ffa952fc677c8ba1}{send\+Message
 \begin{DoxyCompactList}\small\item\em Fonction d\textquotesingle{}affichage du deck\textquotesingle{}. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{server_8c_a9cf4c7aa19d28eb76c9635b2267df762}{broadcast\+Message}} (char $\ast$mess)
 \begin{DoxyCompactList}\small\item\em Permet d\textquotesingle{}envoyer un message à l\textquotesingle{}ensemble des clients connectés sur le server. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{server_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{server_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+void \mbox{\hyperlink{server_8c_a23c27a462c8b0177889dd7aa4ffec14c}{initialiser}} (struct \mbox{\hyperlink{struct__client}{\+\_\+client}} Clients\mbox{[}4\mbox{]})
+\begin{DoxyCompactList}\small\item\em Permet de reinitialiser un tableau de client. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{server_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
 \begin{DoxyCompactList}\small\item\em Fonction principale. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
@@ -71,7 +72,7 @@ int \mbox{\hyperlink{server_8c_a2350ff80e84ae74a929a397c3b1e152f}{joueur\+Couran
 \item 
 char \mbox{\hyperlink{server_8c_ab8852d6f855f3aec45ae55a54171dc3e}{chatserver}} \mbox{[}256\mbox{]}
 \item 
-char \mbox{\hyperlink{server_8c_accb45b8fef99aa610213286524699571}{tab\+\_\+texte}} \mbox{[}8\mbox{]}\mbox{[}256\mbox{]}
+char \mbox{\hyperlink{server_8c_accb45b8fef99aa610213286524699571}{tab\+\_\+texte}} \mbox{[}8\mbox{]}\mbox{[}256\mbox{]} = \{\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{}\}
 \item 
 \mbox{\Hypertarget{server_8c_acb559820d9ca11295b4500f179ef6392}\label{server_8c_acb559820d9ca11295b4500f179ef6392}} 
 int {\bfseries i} = 0
@@ -88,9 +89,9 @@ Arthur \& Younes
 1.\+1 
 \end{DoxyVersion}
 \begin{DoxyDate}{Date}
-13 mai 2019
+22 mai 2019
 \end{DoxyDate}
-Ce serveur propose un autre protocole que H\+T\+TP, pour comprendre comment ce dernier fonctionne. 
+Ce serveur propose un autre protocole que H\+T\+TP\+: le \char`\"{}\+Y\&\+A\char`\"{} pour comprendre comment ce dernier fonctionne. 
 
 \subsection{Function Documentation}
 \mbox{\Hypertarget{server_8c_a9cf4c7aa19d28eb76c9635b2267df762}\label{server_8c_a9cf4c7aa19d28eb76c9635b2267df762}} 
@@ -111,6 +112,8 @@ Permet d\textquotesingle{}envoyer un message à l\textquotesingle{}ensemble des 
 \begin{DoxyReturn}{Returns}
 Cette fonction ne retourne rien. 
 \end{DoxyReturn}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000001}{Bug}}]lorsque le message à envoyer est trop long! \end{DoxyRefDesc}
 \mbox{\Hypertarget{server_8c_a349b93f883bcada89b4cf66d7a92bb21}\label{server_8c_a349b93f883bcada89b4cf66d7a92bb21}} 
 \index{server.c@{server.c}!createTable@{createTable}}
 \index{createTable@{createTable}!server.c@{server.c}}
@@ -163,7 +166,59 @@ Faire attention à bien écrire le nom (ne pas se tromper sur les majuscules etc
 \begin{DoxyReturn}{Returns}
 Retourne le id du client, renvoie -\/1 sinon. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{server_8c_a0cb95e508c0ffc0101b4108ff250c870}\label{server_8c_a0cb95e508c0ffc0101b4108ff250c870}} 
+\mbox{\Hypertarget{server_8c_a23c27a462c8b0177889dd7aa4ffec14c}\label{server_8c_a23c27a462c8b0177889dd7aa4ffec14c}} 
+\index{server.c@{server.c}!initialiser@{initialiser}}
+\index{initialiser@{initialiser}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{initialiser()}{initialiser()}}
+{\footnotesize\ttfamily void initialiser (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct__client}{\+\_\+client}}}]{Clients\mbox{[}4\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Permet de reinitialiser un tableau de client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em struct} & \mbox{\hyperlink{struct__client}{\+\_\+client}} Clients\mbox{[}4\mbox{]} que l\textquotesingle{}on souhaite réinitialiser \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Cette fonction ne retourne rien. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{server_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{server_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{server.c@{server.c}!main@{main}}
+\index{main@{main}!server.c@{server.c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Fonction principale. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em $<$\+N°de} & port à utiliser$>$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Il est nécessaire d\textquotesingle{}éxectuer le main de la façon suivante \+: ./server $<$\+N °deport$>$=\char`\"{}\char`\"{}$>$ 
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Dans le cas on la sytaxe n\textquotesingle{}est pas respectée, le serveur renvoie une erreur 
+\end{DoxyNote}
+\begin{DoxyParagraph}{(Fonctionnement du serveur)}
+Celui-\/ci est expliqué dans le rapport fourni avec cette documentation
+\end{DoxyParagraph}
+
+\begin{DoxyParams}{Parameters}
+{\em char} & $\ast$argv\mbox{[}\mbox{]} prend le port du serveur, l\textquotesingle{}adresse IP du serveur, le port client à utiliser, l\textquotesingle{}adresse IP du client \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Executer comme suis\+: ./sh13 $<$ip serveur$>$=\char`\"{}\char`\"{}$>$ $<$n °port=\char`\"{}\char`\"{} serveur$>$=\char`\"{}\char`\"{}$>$ $<$ip client$>$=\char`\"{}\char`\"{}$>$ $<$n °port=\char`\"{}\char`\"{} client$>$=\char`\"{}\char`\"{}$>$ $<$\+Nom du=\char`\"{}\char`\"{} client$>$=\char`\"{}\char`\"{}$>$ 
+\end{DoxyWarning}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000002}{Bug}}]Quand les clients quittent le jeu en pleine partie, les noms dans les chats sont écrasés \end{DoxyRefDesc}
+Cas G normal \mbox{\Hypertarget{server_8c_a0cb95e508c0ffc0101b4108ff250c870}\label{server_8c_a0cb95e508c0ffc0101b4108ff250c870}} 
 \index{server.c@{server.c}!melangerDeck@{melangerDeck}}
 \index{melangerDeck@{melangerDeck}!server.c@{server.c}}
 \subsubsection{\texorpdfstring{melangerDeck()}{melangerDeck()}}
@@ -302,7 +357,7 @@ Permet de stocker le objet qui interèsse le joueur effectuant une demande \mbox
 \index{server.c@{server.c}!tab\_texte@{tab\_texte}}
 \index{tab\_texte@{tab\_texte}!server.c@{server.c}}
 \subsubsection{\texorpdfstring{tab\_texte}{tab\_texte}}
-{\footnotesize\ttfamily char tab\+\_\+texte\mbox{[}8\mbox{]}\mbox{[}256\mbox{]}}
+{\footnotesize\ttfamily char tab\+\_\+texte\mbox{[}8\mbox{]}\mbox{[}256\mbox{]} = \{\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{},\char`\"{}\char`\"{}\}}
 
 Tableau contenant les messages \mbox{\Hypertarget{server_8c_a5136e762f5d03123aca3b44ee5428ae9}\label{server_8c_a5136e762f5d03123aca3b44ee5428ae9}} 
 \index{server.c@{server.c}!tableCartes@{tableCartes}}

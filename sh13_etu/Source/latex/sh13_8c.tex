@@ -5,9 +5,9 @@
 client permettant de se connecter au serveur  
 
 
-{\ttfamily \#include $<$S\+D\+L.\+h$>$}\newline
-{\ttfamily \#include $<$S\+D\+L\+\_\+image.\+h$>$}\newline
-{\ttfamily \#include $<$S\+D\+L\+\_\+ttf.\+h$>$}\newline
+{\ttfamily \#include $<$S\+D\+L2/\+S\+D\+L.\+h$>$}\newline
+{\ttfamily \#include $<$S\+D\+L2/\+S\+D\+L\+\_\+image.\+h$>$}\newline
+{\ttfamily \#include $<$S\+D\+L2/\+S\+D\+L\+\_\+ttf.\+h$>$}\newline
 {\ttfamily \#include $<$pthread.\+h$>$}\newline
 {\ttfamily \#include $<$unistd.\+h$>$}\newline
 {\ttfamily \#include $<$stdlib.\+h$>$}\newline
@@ -16,6 +16,12 @@ client permettant de se connecter au serveur
 {\ttfamily \#include $<$sys/socket.\+h$>$}\newline
 {\ttfamily \#include $<$netinet/in.\+h$>$}\newline
 {\ttfamily \#include $<$netdb.\+h$>$}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sh13_8c_ad2f3678bf5eae3684fc497130b946eae}\label{sh13_8c_ad2f3678bf5eae3684fc497130b946eae}} 
+\#define {\bfseries M\+IN}(X,  Y)~(((X) $<$ (Y)) ? (X) \+: (Y))
+\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -67,9 +73,18 @@ int \mbox{\hyperlink{sh13_8c_a0bf9ab38af165134864e46ce2e56d087}{connect\+Enabled
 \item 
 int \mbox{\hyperlink{sh13_8c_a423ed9f606e34244ef0d22d0e8411c71}{chat\+Enable}} = -\/1
 \item 
+\mbox{\Hypertarget{sh13_8c_a1c8c3102d21fd30e2488af144d5aea63}\label{sh13_8c_a1c8c3102d21fd30e2488af144d5aea63}} 
+S\+D\+L\+\_\+\+Color {\bfseries couleur\+Noire} = \{0, 0, 0\}
+\item 
 char $\ast$ \mbox{\hyperlink{sh13_8c_aa63407817c0cca8a80fb934277a0b8a0}{nbobjets}} \mbox{[}$\,$\mbox{]} =\{\char`\"{}5\char`\"{},\char`\"{}5\char`\"{},\char`\"{}5\char`\"{},\char`\"{}5\char`\"{},\char`\"{}4\char`\"{},\char`\"{}3\char`\"{},\char`\"{}3\char`\"{},\char`\"{}3\char`\"{}\}
 \item 
-char $\ast$ \mbox{\hyperlink{sh13_8c_a170deefee6944bfd9474e64879d21284}{nbnoms}} \mbox{[}$\,$\mbox{]}
+char $\ast$ {\bfseries nbnoms} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\Hypertarget{sh13_8c_ac805c972dc2f1c2c89ea5e53ec2046e4}\label{sh13_8c_ac805c972dc2f1c2c89ea5e53ec2046e4}} 
+char {\bfseries texte\+\_\+courant} \mbox{[}1000\mbox{]}
+\item 
+\mbox{\Hypertarget{sh13_8c_acb559820d9ca11295b4500f179ef6392}\label{sh13_8c_acb559820d9ca11295b4500f179ef6392}} 
+int {\bfseries i} = 0
 \item 
 volatile int \mbox{\hyperlink{sh13_8c_a8225f160aecfab1365666fd07d1af31c}{synchro}}
 \end{DoxyCompactItemize}
@@ -117,7 +132,7 @@ $<$ \mbox{\Hypertarget{sh13_8c_aa6fd4f7eb54362ed558cdaeb5e5bd927}\label{sh13_8c_
 \hline
 {\em int} & portno est le port à utiliser pour le socket que l\textquotesingle{}on va créer \\
 \hline
-{\em char} & $\ast$mess est le message à envoyer \\
+{\em char} & $\ast$mess est le message à envoyer La fonction permet d\textquotesingle{}envoyer un message, en suivant le protocol mis en place \\
 \hline
 \end{DoxyParams}
 
@@ -233,7 +248,7 @@ Le mutex permet de proteger l\textquotesingle{}accès au serveur \mbox{\Hypertar
 \DoxyCodeLine{\textcolor{stringliteral}{"Mrs. Hudson"}, \textcolor{stringliteral}{"Mary Morstan"}, \textcolor{stringliteral}{"James Moriarty"}\}}
 
 \end{DoxyCode}
-Les noms des personnages du jeu sont stockés afin de les afficher, cela agis un peu comme un dictionnaire permttant de faire correspondre des indice entier à ce tableau \mbox{\Hypertarget{sh13_8c_aa63407817c0cca8a80fb934277a0b8a0}\label{sh13_8c_aa63407817c0cca8a80fb934277a0b8a0}} 
+\mbox{\Hypertarget{sh13_8c_aa63407817c0cca8a80fb934277a0b8a0}\label{sh13_8c_aa63407817c0cca8a80fb934277a0b8a0}} 
 \index{sh13.c@{sh13.c}!nbobjets@{nbobjets}}
 \index{nbobjets@{nbobjets}!sh13.c@{sh13.c}}
 \subsubsection{\texorpdfstring{nbobjets}{nbobjets}}

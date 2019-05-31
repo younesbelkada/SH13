@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['printclients',['printClients',['../server_8c.html#a3be7017ee4476744e47456935c39c509',1,'server.c']]],
-  ['printdeck',['printDeck',['../server_8c.html#a30dedb21b81bcab75c0b351087b64fa1',1,'server.c']]]
+  ['main',['main',['../server_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'server.c']]],
+  ['melangerdeck',['melangerDeck',['../server_8c.html#a0cb95e508c0ffc0101b4108ff250c870',1,'server.c']]]
 ];

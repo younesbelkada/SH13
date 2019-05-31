@@ -8,6 +8,7 @@
  * Le client sh13 permet de se connecter au serveur proposant un autre protocol que HTTP, pour
  * comprendre comment ce dernier fonctionne.
  */
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -40,15 +41,14 @@ int goEnabled; /*!< Un booléen indiquant si le client possède la main, si c'es
 int connectEnabled;/*!< Si le joueur est connecté, il n'a plus besoin du bouton connect qui doit donc disparaitre */
 int chatEnable = -1;/*!< Prototype permettant de gérer le chat */
 SDL_Color couleurNoire = {0, 0, 0};
-//int compteur = 0;
+
 
 char *nbobjets[]={"5","5","5","5","4","3","3","3"};/*!< Liste le nombre total de chaque objet par indices par exemple objet[0] = 5 */
 char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "inspector Gregson", "inspector Baynes", "inspector Bradstreet",
 "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
 "Mrs. Hudson", "Mary Morstan", "James Moriarty"};
-char tab_texte[8][256];
-char texte_courant[256];
+char texte_courant[1000];/*<!Stock les 8 derniers messages envoyés dans le chat */
 int i = 0;
 
 volatile int synchro; /*!< La syncro permet d'avoir des thread syncronisé, cependant il faut passer au dela du cache */
@@ -60,13 +60,13 @@ volatile int synchro; /*!< La syncro permet d'avoir des thread syncronisé, cepe
  */
 void *fn_serveur_tcp(void *arg)
 {
-  int sockfd, newsockfd, portno; /*Déclaration des socket et ports utilisés plus tard*/
+  int sockfd, newsockfd, portno; //Déclaration des socket et ports utilisés plus tard*/
   socklen_t clilen; /*Nombre maximum de clients acceptés sur le serveur */
   struct sockaddr_in serv_addr, cli_addr; /* Adresse IP pour la copie des sockets */
   int n;
 
   sockfd = socket(AF_INET, SOCK_STREAM, 0); /*On récupère le socket qui est une copie, une traduction de la connexion sous la forme de fichier  */
-  if (sockfd<0) /*\if permet de gérer les erreurs rare de récupération de socket */
+  if (sockfd<0) /* permet de gérer les erreurs rare de récupération de socket */
   {
     printf("sockfd error\n");
     exit(1);
@@ -84,7 +84,7 @@ void *fn_serveur_tcp(void *arg)
   }
   listen(sockfd,5); /* la socket est prête à recevoir des connection, et 5 indique le nombre maximum de personnes autorisé en attente pour se connecter  */
   clilen = sizeof(cli_addr); /* Taille de l'adresse du client*/
-  while (1) /*\while LA boucle permettant au serveur de tourner sans jamais s'arreter et accepter des connections */
+  while (1) /* LA boucle permettant au serveur de tourner sans jamais s'arreter et accepter des connections */
   {
     newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen); /*On accepte une socket donc une connexion  */
     if (newsockfd < 0)
@@ -100,8 +100,6 @@ void *fn_serveur_tcp(void *arg)
       printf("read error\n");
       exit(1);
     }
-    //printf("%s",gbuffer);
-
     pthread_mutex_lock( &mutex );
     synchro=1;
     pthread_mutex_unlock( &mutex );
@@ -116,6 +114,7 @@ void *fn_serveur_tcp(void *arg)
 * \param char *ipAddress est l'adresse iP du serveur auquel envoyer le messages
 * \param int portno est le port à utiliser pour le socket que l'on va créer
 * \param char *mess est le message à envoyer
+* La fonction permet d'envoyer un message, en suivant le protocol mis en place
 */
 
 void sendMessageToServer(char *ipAddress, int portno, char *mess)
@@ -150,12 +149,15 @@ void sendMessageToServer(char *ipAddress, int portno, char *mess)
   close(sockfd);
 }
 
+
+
 /**
- * \fn int   main(int argc, char *argv[])
+ * \fn int main(int argc, char *argv[])
  * \brief Fonction principale
- *
- *
- */
+ * \param char *argv[] prend le port du serveur, l'adresse IP du serveur, le port client à utiliser, l'adresse IP du client
+ * \warning Executer comme suis: ./sh13  <ip serveur>  <n°port serveur>  <ip client> <n°port client> <Nom du client>
+ * \bug Quand les clients quittent le jeu en pleine partie, les noms dans les chats sont écrasés
+**/
 
 int main(int argc, char ** argv)
 {
@@ -291,13 +293,13 @@ int main(int argc, char ** argv)
         case SDL_TEXTINPUT:
                     /* Add new text onto the end of our text */
                     strcat(text, event.text.text);
-                    break;
+        break;
 
         case SDL_QUIT:
           sprintf(sendBuffer,"Q %d",gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
           quit = 1;
-          break;
+        break;
         case  SDL_MOUSEBUTTONDOWN:
         SDL_GetMouseState( &mx, &my );
         //printf("mx=%d my=%d\n",mx,my);
@@ -461,10 +463,7 @@ int main(int argc, char ** argv)
 	        	if (compteur > strlen(texte_courant))
 	        	{
 	        		break;
-	        	}/*else if (texte_courant[compteur] == '@')
-	        	{
-	        		break;
-	        	}*/
+	        	}
 	        }
 	        if (texte_courant[compteur] == '@')
 	        {
