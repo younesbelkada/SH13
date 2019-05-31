@@ -48,7 +48,15 @@ char *nbnoms[]={"Sebastian Moran", "irene Adler", "inspector Lestrade",
 "inspector Gregson", "inspector Baynes", "inspector Bradstreet",
 "inspector Hopkins", "Sherlock Holmes", "John Watson", "Mycroft Holmes",
 "Mrs. Hudson", "Mary Morstan", "James Moriarty"};
+<<<<<<< HEAD
 char texte_courant[1000];/*<!Stock les 8 derniers messages envoyés dans le chat */
+=======
+
+
+char texte_courant[256];
+
+
+>>>>>>> fd9339e26f29ca0481fe463b0a06776e4606876f
 int i = 0;
 
 volatile int synchro; /*!< La syncro permet d'avoir des thread syncronisé, cependant il faut passer au dela du cache */
@@ -163,6 +171,7 @@ int main(int argc, char ** argv)
 {
   int ret;
   int i,j;
+  int messnb = 0;
   int Max_text_size = 10000;
   int iiii = 1;
   int quit = 0;
@@ -193,7 +202,7 @@ int main(int argc, char ** argv)
   SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
   SDL_Rect rect5 = {612, 480, 400, 300};
   char text[256] = "";
-  char tab_text[8][256];
+  char tab_text[8][256] = {"\0","\0","\0","\0","\0","\0","\0","\0"};
 
 
   strcat(text,"");
@@ -287,6 +296,8 @@ int main(int argc, char ** argv)
           sprintf(sendBuffer,"Q %d",gId);
           sendMessageToServer(gServerIpAddress, gServerPort, sendBuffer);
           quit =1;
+          // reinitialiser lesmessages?
+
         }
 
         break;

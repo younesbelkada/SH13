@@ -286,7 +286,7 @@ void broadcastMessage(char *mess){
   sendMessageToClient(tcpClients[i].ipAddress,
     tcpClients[i].port,
     mess);
-}
+  }
 
 /**
  * \fn void initialiser(struct _client Clients[4])
